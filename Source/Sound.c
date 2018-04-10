@@ -14,8 +14,10 @@
 // playing a sound of an even lesser priority.  Make sense?
 
 
-#include <Sound.h>
 #include "Externs.h"
+
+#include <Resources.h>
+#include <Sound.h>
 
 
 #define kMaxSounds				17			// Number of sounds to load.

@@ -10,7 +10,9 @@
 // Anyway, this file contains all the drawing routines.
 
 #include "Externs.h"
-#include <Palettes.h>
+
+#include <Fonts.h>
+#include <NumberFormatting.h>
 
 
 #define kUpperEyeHeight			100

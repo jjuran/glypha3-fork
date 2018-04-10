@@ -12,6 +12,11 @@
 
 #include "Externs.h"
 
+#include <Dialogs.h>
+#include <Events.h>
+#include <NumberFormatting.h>
+#include <ToolUtils.h>
+
 
 #define kFlapImpulse			48
 #define kGlideImpulse			12

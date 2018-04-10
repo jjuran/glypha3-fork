@@ -9,6 +9,9 @@
 // Glypha either starts up or quits.
 
 #include "Externs.h"
+
+#include <Dialogs.h>
+#include <LowMem.h>
 #include <Palettes.h>					// Need "Palettes.h" for the depth calls.
 
 

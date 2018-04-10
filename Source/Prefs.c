@@ -11,9 +11,11 @@
 // it to the System folder.
 
 #include "Externs.h"
+
 #include <Folders.h>							// Needed for creating a folder.
 #include <Gestalt.h>							// Needed for the Gestalt() call.
 #include <Script.h>								// I can't remember why I needed this.
+#include <ToolUtils.h>
 
 
 #define	kPrefCreatorType	'zade'				// Change this to reflect your apps creator.

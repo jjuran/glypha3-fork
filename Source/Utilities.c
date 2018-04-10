@@ -11,6 +11,11 @@
 
 #include "Externs.h"
 
+#include <Dialogs.h>
+#include <LowMem.h>
+#include <NumberFormatting.h>
+#include <Resources.h>
+
 
 #define kActive						0
 #define kInactive					255
