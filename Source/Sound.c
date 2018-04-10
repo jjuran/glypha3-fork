@@ -270,12 +270,12 @@ OSErr OpenSoundChannel (void)
 {
 	OSErr		theErr;
 	
-	#if USESROUTINEDESCRIPTORS
-		externalCallBackUPP = &ExternalCallBackRD;	// Handle Universal Header ugliness.
-		externalCallBackUPP2 = &ExternalCallBackRD2;
+	#if TARGET_RT_MAC_CFM
+		externalCallBackUPP = (SndCallBackUPP) &ExternalCallBackRD;
+		externalCallBackUPP2 = (SndCallBackUPP) &ExternalCallBackRD2;
 	#else
-		externalCallBackUPP = (SndCallBackUPP) &ExternalCallBack;
-		externalCallBackUPP2 = (SndCallBackUPP) &ExternalCallBack2;
+		externalCallBackUPP = &ExternalCallBack;
+		externalCallBackUPP2 = &ExternalCallBack2;
 	#endif
 	
 	theErr = noErr;									// Assume no errors.
