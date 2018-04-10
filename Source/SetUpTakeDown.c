@@ -105,10 +105,18 @@ void ToolBoxInit (void)
 
 Boolean DoWeHaveColor (void)
 {
+#if TARGET_API_MAC_CARBON
+	
+	return true;
+	
+#else
+	
 	SysEnvRec		thisWorld;
 	
 	SysEnvirons(2, &thisWorld);		// Call the old SysEnvirons() function.
 	return (thisWorld.hasColorQD);	// And return whether it has Color QuickDraw.
+	
+#endif
 }
 
 //--------------------------------------------------------------  DoWeHaveSystem605  
@@ -119,6 +127,12 @@ Boolean DoWeHaveColor (void)
 
 Boolean DoWeHaveSystem605 (void)
 {
+#if TARGET_API_MAC_CARBON
+	
+	return true;
+	
+#else
+	
 	SysEnvRec		thisWorld;
 	Boolean			haveIt;
 	
@@ -128,6 +142,8 @@ Boolean DoWeHaveSystem605 (void)
 	else							// or more recent
 		haveIt = FALSE;
 	return (haveIt);
+	
+#endif
 }
 
 //--------------------------------------------------------------  WhatsOurDepth  
