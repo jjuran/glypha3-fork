@@ -220,7 +220,7 @@ void GetDialogString (DialogPtr, short, StringPtr);
 void SetDialogString (DialogPtr, short, StringPtr);
 void SetDialogNumToStr (DialogPtr, short, long );
 void GetDialogNumFromStr (DialogPtr, short, long *);
-void DisableControl (DialogPtr, short);
+void DisableDialogControl (DialogPtr, short);
 
 
 #ifdef powerc

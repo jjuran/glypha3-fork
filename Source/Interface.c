@@ -593,7 +593,7 @@ void DoGameSettings (void)
 				thePrefs.highLevel[i] = 0;
 				openTheScores = TRUE;		// Bring up scores when dialog quits.
 			}
-			DisableControl(theDial, 2);		// Gray out Clear Scores button.
+			DisableDialogControl(theDial, 2);	// Gray out Clear Scores button.
 		}
 	}
 	

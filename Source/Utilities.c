@@ -497,7 +497,7 @@ void GetDialogNumFromStr (DialogPtr theDialog, short item, long *theNumber)
 
 // Another dialog utility for "graying out" buttons or other controls in a dialog.
 
-void DisableControl (DialogPtr theDialog, short whichItem)
+void DisableDialogControl (DialogPtr theDialog, short whichItem)
 {
 	Rect		iRect;
 	Handle		iHandle;
