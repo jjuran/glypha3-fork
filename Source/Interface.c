@@ -272,8 +272,8 @@ void DoMenuChoice (long menuChoice)
 
 void UpdateMainWindow (void)
 {
-	CopyBits(&((GrafPtr)backSrcMap)->portBits,
-			&mainWindow->portBits,
+	CopyBits(GetPortBitMapForCopyBits(backSrcMap),
+			GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 			&mainWindowRect, &mainWindowRect,
 			srcCopy, 0L);
 }

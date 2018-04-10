@@ -7,6 +7,9 @@
 
 #include <Quickdraw.h>
 
+#if ! TARGET_API_MAC_CARBON
+#define GetPortBitMapForCopyBits(port)  (&((GrafPtr)(port))->portBits)
+#endif
 
 #define	kPutInFront			(WindowPtr)-1L
 #define	kNormalUpdates		TRUE
