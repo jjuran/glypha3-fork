@@ -60,12 +60,12 @@ extern	Boolean		evenFrame;
 //==============================================================  Functions
 //--------------------------------------------------------------  DrawPlatforms
 
-// This function draws all the platforms on the background pixmap and the…
+// This function draws all the platforms on the background pixmap and the
 // work pixmap.  It needs to know merely how many of them to draw.
 
 void DrawPlatforms (short howMany)
 {
-	if (howMany > 3)			// If there are more than 3 platforms…
+	if (howMany > 3)			// If there are more than 3 platforms
 	{							// Draw a platform to background pixmap.
 		CopyBits(&((GrafPtr)platformSrcMap)->portBits,
 				&((GrafPtr)backSrcMap)->portBits,
@@ -85,7 +85,7 @@ void DrawPlatforms (short howMany)
 				&platformCopyRects[8], &platformCopyRects[8], srcCopy, playRgn);
 		AddToUpdateRects(&platformCopyRects[8]);
 	}
-	else						// If there are 3 or less platforms…
+	else						// If there are 3 or less platforms
 	{
 		CopyBits(&((GrafPtr)platformSrcMap)->portBits,
 				&((GrafPtr)backSrcMap)->portBits,
@@ -104,7 +104,7 @@ void DrawPlatforms (short howMany)
 		AddToUpdateRects(&platformCopyRects[8]);
 	}
 	
-	if (howMany > 5)		// If there are more than 5 platforms…
+	if (howMany > 5)		// If there are more than 5 platforms
 	{
 		CopyBits(&((GrafPtr)platformSrcMap)->portBits,
 				&((GrafPtr)backSrcMap)->portBits,
@@ -114,7 +114,7 @@ void DrawPlatforms (short howMany)
 				&platformCopyRects[6], &platformCopyRects[6], srcCopy, playRgn);
 		AddToUpdateRects(&platformCopyRects[6]);
 	}
-	else					// If there are 5 or less platforms…
+	else					// If there are 5 or less platforms
 	{
 		CopyBits(&((GrafPtr)platformSrcMap)->portBits,
 				&((GrafPtr)backSrcMap)->portBits,
@@ -128,7 +128,7 @@ void DrawPlatforms (short howMany)
 
 //--------------------------------------------------------------  ScrollHelp
 
-// This function scrolls the help screen.  You pass it a number of pixels…
+// This function scrolls the help screen.  You pass it a number of pixels
 // to scroll up or down (positive or negative number).
 
 void ScrollHelp (short scrollDown)
@@ -176,8 +176,8 @@ void OpenHelp (void)
 		wallSrc.bottom--;				// Shrink wall source.
 		wallDest.top++;					// Shrink wall dest.
 		
-										// So, as the help graphic grows, the wall graphic…
-										// shrinks.  Thus it is as though the wall is…
+										// So, as the help graphic grows, the wall graphic
+										// shrinks.  Thus it is as though the wall is
 										// lifting up to expose the help screen beneath.
 		
 										// Copy slightly larger help screen.
@@ -197,7 +197,7 @@ void OpenHelp (void)
 //--------------------------------------------------------------  CloseWall
 
 // Close the wall over whatever screen is up (help screen or high scores).
-// Since the wall just comes down over the opening - covering whatever was beneath,…
+// Since the wall just comes down over the opening - covering whatever was beneath,
 // it's simpler than the above function.
 
 void CloseWall (void)
@@ -223,8 +223,8 @@ void CloseWall (void)
 
 //--------------------------------------------------------------  OpenHighScores
 
-// This function is practically identical to the OpenHelp().  The only real…
-// difference is that we must first draw all the high scores offscreen before…
+// This function is practically identical to the OpenHelp().  The only real
+// difference is that we must first draw all the high scores offscreen before
 // lifting the wall to reveal them.
 
 void OpenHighScores (void)
@@ -319,8 +319,8 @@ void OpenHighScores (void)
 
 // During a game, this function is called to reflect the current number of lives.
 // This is "lives remaining", so 1 is subtracted before displaying it to the screen.
-// The lives is "wrapped around" after 99.  So 112 lives will display as 12.  It's…
-// a lot easier to handle numbers this way (it beats a recursive function that might…
+// The lives is "wrapped around" after 99.  So 112 lives will display as 12.  It's
+// a lot easier to handle numbers this way (it beats a recursive function that might
 // potentially draw across the entire screen.
 
 void UpdateLivesNumbers (void)
@@ -351,10 +351,10 @@ void UpdateLivesNumbers (void)
 
 //--------------------------------------------------------------  UpdateScoreNumbers
 
-// This function works just like the above function.  However, we allow the…
-// score to go to 6 digits (999,999) before rolling over.  Note however, that…
-// in both the case of the score, number of lives, etc., the game does in fact…
-// keep track of the "actual" number.  It is just that only so many digits are…
+// This function works just like the above function.  However, we allow the
+// score to go to 6 digits (999,999) before rolling over.  Note however, that
+// in both the case of the score, number of lives, etc., the game does in fact
+// keep track of the "actual" number.  It is just that only so many digits are
 // being displayed.
 
 void UpdateScoreNumbers (void)
@@ -435,7 +435,7 @@ void UpdateScoreNumbers (void)
 
 //--------------------------------------------------------------  UpdateLevelNumbers
 
-// Blah, blah, blah.  Just like the above functions but handles displaying the…
+// Blah, blah, blah.  Just like the above functions but handles displaying the
 // level the player is on.  We allow 3 digits here (up to 999) before wrapping.
 
 void UpdateLevelNumbers (void)
@@ -475,10 +475,10 @@ void UpdateLevelNumbers (void)
 
 //--------------------------------------------------------------  GenerateLightning
 
-// This function takes a point (h and v) and then generates two lightning bolts…
-// (one from the tip of each obelisk) to the point.  It does this by generating…
-// a list of segments (as the lightning is broken up into segements).  The drawing…
-// counterpart to this function will draw a line connecting these segements (a sort…
+// This function takes a point (h and v) and then generates two lightning bolts
+// (one from the tip of each obelisk) to the point.  It does this by generating
+// a list of segments (as the lightning is broken up into segements).  The drawing
+// counterpart to this function will draw a line connecting these segements (a sort
 // of dot-to-dot).
 
 void GenerateLightning (short h, short v)
@@ -491,12 +491,12 @@ void GenerateLightning (short h, short v)
 	
 	short		i, leftDeltaH, rightDeltaH, leftDeltaV, rightDeltaV, range;
 	
-	leftDeltaH = h - kLeftObeliskH;				// Determine the h and v distances between…
+	leftDeltaH = h - kLeftObeliskH;				// Determine the h and v distances between
 	rightDeltaH = h - kRightObeliskH;			// obelisks and the target point.
 	leftDeltaV = v - kLeftObeliskV;
 	rightDeltaV = v - kRightObeliskV;
 	
-	for (i = 0; i < kNumLightningPts; i++)		// Calculate an even spread of points between…
+	for (i = 0; i < kNumLightningPts; i++)		// Calculate an even spread of points between
 	{											// obelisk tips and the target point.
 		leftLightningPts[i].h = (leftDeltaH * i) / (kNumLightningPts - 1) + kLeftObeliskH;
 		leftLightningPts[i].v = (leftDeltaV * i) / (kNumLightningPts - 1) + kLeftObeliskV;
@@ -504,7 +504,7 @@ void GenerateLightning (short h, short v)
 		rightLightningPts[i].v = (rightDeltaV * i) / (kNumLightningPts - 1) + kRightObeliskV;
 	}
 	
-	range = kWander * 2 + 1;					// Randomly scatter the points vertically…
+	range = kWander * 2 + 1;					// Randomly scatter the points vertically
 	for (i = 1; i < kNumLightningPts - 1; i++)	// but NOT the 1st or last points.
 	{
 		leftLightningPts[i].v += RandomInt(range) - kWander;
@@ -515,7 +515,7 @@ void GenerateLightning (short h, short v)
 //--------------------------------------------------------------  FlashObelisks
 
 // This function either draws the obelisks "normal" or draws them inverted.
-// They're drawn "inverted" as if emanating energy or lit up by the bolts…
+// They're drawn "inverted" as if emanating energy or lit up by the bolts
 // of lightning.  The flag "flashThem" specifies how to draw them.
 
 void FlashObelisks (Boolean flashThem)
@@ -546,8 +546,8 @@ void FlashObelisks (Boolean flashThem)
 
 //--------------------------------------------------------------  StrikeLightning
 
-// This function draws the lightning bolts.  The PenMode() is set to patXOr…
-// so that the lines are drawn inverted (colorwise).  This way, drawing the…
+// This function draws the lightning bolts.  The PenMode() is set to patXOr
+// so that the lines are drawn inverted (colorwise).  This way, drawing the
 // lightning twice over will leave no pixels disturbed.
 
 void StrikeLightning (void)
@@ -577,7 +577,7 @@ void StrikeLightning (void)
 
 //--------------------------------------------------------------  DumpBackToWorkMap
 
-// Simple handy function that copies the entire background pixmap to the…
+// Simple handy function that copies the entire background pixmap to the
 // work pixmap.
 
 void DumpBackToWorkMap (void)
@@ -589,7 +589,7 @@ void DumpBackToWorkMap (void)
 
 //--------------------------------------------------------------  DumpBackToWorkMap
 
-// Simple handy function that copies the entire work pixmap to the…
+// Simple handy function that copies the entire work pixmap to the
 // screen.
 
 void DumpMainToWorkMap (void)
@@ -601,9 +601,9 @@ void DumpMainToWorkMap (void)
 
 //--------------------------------------------------------------  QuickUnionRect
 
-// The Mac Toolbox gives you a UnionRect() function, but, like any Toolbox…
-// routine, if we can do it faster, we ought to.  Well, the function below…
-// is quick because (among other reasons), it assumes that the two rects…
+// The Mac Toolbox gives you a UnionRect() function, but, like any Toolbox
+// routine, if we can do it faster, we ought to.  Well, the function below
+// is quick because (among other reasons), it assumes that the two rects
 // being compared are the same size.
 
 void QuickUnionRect (Rect *rect1, Rect *rect2, Rect *whole)
@@ -633,22 +633,22 @@ void QuickUnionRect (Rect *rect1, Rect *rect2, Rect *whole)
 
 //--------------------------------------------------------------  AddToUpdateRects
 
-// This is an elegant way to handle game animation.  It has some drawbacks, but…
-// for ease of use, you may not be able to beat it.  The idea is that any time…
-// you want something drawn to the screen (copied from an offscreen pixmap to…
-// the screen) you pass the rectangle to this routine.  This routine then adds…
-// the rectangle to a growing list of these rectangles.  When the game reaches…
-// drawing phase, another routine copies all these rectangles.  It is assumed, …
-// nonetheless, that you have copied the little graphic offscreen that you want…
-// moved to the screen (the shpinx or whatever).  This routine will take care of…
+// This is an elegant way to handle game animation.  It has some drawbacks, but
+// for ease of use, you may not be able to beat it.  The idea is that any time
+// you want something drawn to the screen (copied from an offscreen pixmap to
+// the screen) you pass the rectangle to this routine.  This routine then adds
+// the rectangle to a growing list of these rectangles.  When the game reaches
+// drawing phase, another routine copies all these rectangles.  It is assumed, 
+// nonetheless, that you have copied the little graphic offscreen that you want
+// moved to the screen (the shpinx or whatever).  This routine will take care of
 // drawing the shinx or whatever to the screen.
 
 void AddToUpdateRects (Rect *theRect)
 {
-	if (whichList)		// We alternate every odd frame between two lists…
+	if (whichList)		// We alternate every odd frame between two lists
 	{					// in order to hold a copy of rects from last frame.
 		if (numUpdateRects1 < (kMaxNumUpdateRects - 1))
-		{				// If we are below the maximum # of rects we can handle…
+		{				// If we are below the maximum # of rects we can handle
 						// Add the rect to the list (array).
 			updateRects1[numUpdateRects1] = *theRect;
 						// Increment the number of rects held in list.
@@ -684,10 +684,10 @@ void AddToUpdateRects (Rect *theRect)
 
 //--------------------------------------------------------------  CheckPlayerWrapAround
 
-// This handles drawing wrap-around.  It is such that, when a player walks partly…
-// off the right edge of the screen, you see the player peeking through on the left…
-// side of the screen.  Since we can't (shouldn't) assume that the physical screen…
-// memory wraps around, we'll draw the right player clipped against the right edge…
+// This handles drawing wrap-around.  It is such that, when a player walks partly
+// off the right edge of the screen, you see the player peeking through on the left
+// side of the screen.  Since we can't (shouldn't) assume that the physical screen
+// memory wraps around, we'll draw the right player clipped against the right edge
 // of the screen and draw a SECOND PLAYER on the left edge (clipped to the left).
 
 void CheckPlayerWrapAround (void)
@@ -726,7 +726,7 @@ void CheckPlayerWrapAround (void)
 		thePlayer.wrap = wrapRect;
 		AddToUpdateRects(&wrapRect);	// Add this to our list of update rects.
 	}
-	else if (thePlayer.dest.left < 0)	// Else if off the left edge…
+	else if (thePlayer.dest.left < 0)	// Else if off the left edge
 	{
 		thePlayer.wrapping = TRUE;		// Set "wrapping" flag.
 		wrapRect = thePlayer.dest;		// Start out with copy of player bounds.
@@ -764,7 +764,7 @@ void CheckPlayerWrapAround (void)
 
 //--------------------------------------------------------------  DrawTorches
 
-// This handles drawing the two torch's flames.  It chooses randomly from…
+// This handles drawing the two torch's flames.  It chooses randomly from
 // 4 torch graphics and draws right over the old torches.
 
 void DrawTorches (void)
@@ -772,7 +772,7 @@ void DrawTorches (void)
 	short		who;
 	
 	who = RandomInt(4);
-	if (evenFrame)		// Only draw 1 torch - left on even frames…
+	if (evenFrame)		// Only draw 1 torch - left on even frames
 	{
 		CopyBits(&((GrafPtr)flameSrcMap)->portBits,
 				&((GrafPtr)workSrcMap)->portBits,
@@ -790,8 +790,8 @@ void DrawTorches (void)
 
 //--------------------------------------------------------------  DrawHand
 
-// This function takes care of drawing the hand offscreen.  There are only…
-// two (well really three) choices - hand open, hand clutching (or no hand…
+// This function takes care of drawing the hand offscreen.  There are only
+// two (well really three) choices - hand open, hand clutching (or no hand
 // in which case both options are skipped).
 
 void DrawHand (void)
@@ -838,10 +838,10 @@ void DrawEye (void)
 
 //--------------------------------------------------------------  CopyAllRects
 
-// This function goes through the list of "update rects" and copies from an…
-// offscreen pixmap to the main screen.  It is at this instant (during the…
-// execution of the below function) that the screen actually changes.  The…
-// whole rest of Glypha is, in essence, there only to lead up, ultimately, …
+// This function goes through the list of "update rects" and copies from an
+// offscreen pixmap to the main screen.  It is at this instant (during the
+// execution of the below function) that the screen actually changes.  The
+// whole rest of Glypha is, in essence, there only to lead up, ultimately, 
 // to this function.
 
 void CopyAllRects (void)
@@ -904,9 +904,9 @@ void CopyAllRects (void)
 
 //--------------------------------------------------------------  DrawPlayer
 
-// Although called "DrawPlayer()", this function actually does its drawing…
-// offscreen.  It is the above routine that will finally copy our offscreen…
-// work to the main screen.  Anyway, the below function draws the player…
+// Although called "DrawPlayer()", this function actually does its drawing
+// offscreen.  It is the above routine that will finally copy our offscreen
+// work to the main screen.  Anyway, the below function draws the player
 // offscreen in the correct position and state.
 
 void DrawPlayer (void)
@@ -915,7 +915,7 @@ void DrawPlayer (void)
 	
 	if ((evenFrame) && (thePlayer.mode == kIdle))
 	{			// On even frames, we'll draw the "flashed" graphic of the player.
-				// If you've played Glypha, you notice that the player begins a…
+				// If you've played Glypha, you notice that the player begins a
 				// game flashing alternately between bones and a normal player.
 		CopyMask(&((GrafPtr)idleSrcMap)->portBits,
 				&((GrafPtr)playerMaskMap)->portBits,
@@ -925,7 +925,7 @@ void DrawPlayer (void)
 				&thePlayer.dest);
 	}
 	else if (thePlayer.mode == kBones)
-	{			// If the player is dead and a pile of bones…
+	{			// If the player is dead and a pile of bones
 		src = playerRects[thePlayer.srcNum];
 		src.bottom = src.top + thePlayer.frame;
 		CopyMask(&((GrafPtr)playerSrcMap)->portBits,
@@ -933,7 +933,7 @@ void DrawPlayer (void)
 				&((GrafPtr)workSrcMap)->portBits,
 				&src, &src, &thePlayer.dest);
 	}
-	else		// Else, if the player is neither idle nor dead…
+	else		// Else, if the player is neither idle nor dead
 	{
 		CopyMask(&((GrafPtr)playerSrcMap)->portBits,
 				&((GrafPtr)playerMaskMap)->portBits,
@@ -984,7 +984,7 @@ void CheckEnemyWrapAround (short who)
 					&((GrafPtr)workSrcMap)->portBits,
 					&src, &src, &wrapRect);
 		}
-		else								// Otherwise, if enemy not an egg…
+		else								// Otherwise, if enemy not an egg
 		{
 			CopyMask(&((GrafPtr)enemyFlySrcMap)->portBits,
 					&((GrafPtr)enemyFlyMaskMap)->portBits,
@@ -1053,7 +1053,7 @@ void DrawEnemies (void)
 					&((GrafPtr)workSrcMap)->portBits,
 					&src, &src, &theEnemies[i].dest);
 			AddToUpdateRects(&theEnemies[i].dest);
-										// Don't need to check wrap-around, when enemies…
+										// Don't need to check wrap-around, when enemies
 										// spawn, they're never on the edge of screen.
 			theEnemies[i].wasDest = theEnemies[i].dest;
 			theEnemies[i].wasH = theEnemies[i].h;
@@ -1080,7 +1080,7 @@ void DrawEnemies (void)
 					&enemyRects[theEnemies[i].srcNum], &enemyRects[theEnemies[i].srcNum],
 					&theEnemies[i].dest);
 			AddToUpdateRects(&theEnemies[i].dest);
-										// Don't need to check wrap-around, enemies walk…
+										// Don't need to check wrap-around, enemies walk
 										// only briefly, and never off edge of screen.
 			theEnemies[i].wasDest = theEnemies[i].dest;
 			theEnemies[i].wasH = theEnemies[i].h;
@@ -1101,7 +1101,7 @@ void DrawEnemies (void)
 			
 			case kEggTimer:				// These are idle, perhaps hatching, eggs.
 			if (theEnemies[i].frame < 24)
-			{							// Below countdown = 24, the egss are sinking…
+			{							// Below countdown = 24, the egss are sinking
 				src = eggSrcRect;		// into the platform (hatch time!).
 				src.bottom = src.top + theEnemies[i].frame;
 			}
@@ -1123,14 +1123,14 @@ void DrawEnemies (void)
 
 //--------------------------------------------------------------  DrawFrame
 
-// This function is the "master" drawing function that calls all the above…
+// This function is the "master" drawing function that calls all the above
 // routines.  It is called once per frame.
 
 void DrawFrame (void)
 {
 	DrawTorches();				// Gee, draws the torches?
 	DrawHand();					// Draws the hand?
-	DrawEye();					// A clue to easing your documentation demands…
+	DrawEye();					// A clue to easing your documentation demands
 	DrawPlayer();				// is to use "smart" names for your functions.
 	CheckPlayerWrapAround();	// Check for player wrap-around.
 	DrawEnemies();				// Handle all sphinx-type enemy drawing.

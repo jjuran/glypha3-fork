@@ -5,16 +5,16 @@
 //----------------------------------------------------------------------------
 //============================================================================
 
-// The below functions are grouped here becuase they are only called once when…
+// The below functions are grouped here becuase they are only called once when
 // Glypha either starts up or quits.
 
 #include "Externs.h"
 #include <Palettes.h>					// Need "Palettes.h" for the depth calls.
 
 
-#define kHandPictID				128		// These are all the resource ID's for…
-#define kHandMaskID				129		// the various PICT's were going to…
-#define kBackgroundPictID		130		// load up into offscreen pixmaps and…
+#define kHandPictID				128		// These are all the resource ID's for
+#define kHandMaskID				129		// the various PICT's were going to
+#define kBackgroundPictID		130		// load up into offscreen pixmaps and
 #define kHelpPictID				131		// offscreen bitmaps.
 #define kObeliskPictID			134
 #define kPlayerPictID			135
@@ -33,9 +33,9 @@
 #define kEyeMaskID				148
 
 
-Boolean DoWeHaveColor (void);			// Prototypes to below functions that are…
-Boolean DoWeHaveSystem605 (void);		// called locally.  These aren't really…
-short WhatsOurDepth (void);				// necessary, but I don't enjoy relying on…
+Boolean DoWeHaveColor (void);			// Prototypes to below functions that are
+Boolean DoWeHaveSystem605 (void);		// called locally.  These aren't really
+short WhatsOurDepth (void);				// necessary, but I don't enjoy relying on
 Boolean CanWeDisplay8Bit (GDHandle);	// the compiler to second guess me.
 void SwitchToDepth (short, Boolean);
 
@@ -69,7 +69,7 @@ extern	Boolean		helpOpen, scoresOpen, openTheScores;
 //==============================================================  Functions
 //--------------------------------------------------------------  ToolBoxInit
 
-// Here's the first function you ever call in Glypha (or any Mac program for…
+// Here's the first function you ever call in Glypha (or any Mac program for
 // that matter).  The calls herein MUST be called before you do anything else.
 // Otherwise, you'll get all sorts of System Errors.
 
@@ -97,7 +97,7 @@ void ToolBoxInit (void)
 
 //--------------------------------------------------------------  DoWeHaveColor  
 
-// Simple function that returns TRUE if we're running on a Mac that…
+// Simple function that returns TRUE if we're running on a Mac that
 // is running Color Quickdraw.
 
 Boolean DoWeHaveColor (void)
@@ -110,8 +110,8 @@ Boolean DoWeHaveColor (void)
 
 //--------------------------------------------------------------  DoWeHaveSystem605  
 
-// Another simple "environment" function.  Returns TRUE if the Mac we're running…
-// on has System 6.0.5 or more recent.  (6.0.5 introduced the ability to switch…
+// Another simple "environment" function.  Returns TRUE if the Mac we're running
+// on has System 6.0.5 or more recent.  (6.0.5 introduced the ability to switch
 // color depths.)
 
 Boolean DoWeHaveSystem605 (void)
@@ -121,7 +121,7 @@ Boolean DoWeHaveSystem605 (void)
 	
 	SysEnvirons(2, &thisWorld);		// Call the old SysEnvirons() function.
 	if (thisWorld.systemVersion >= 0x0605)
-		haveIt = TRUE;				// Check the System version for 6.0.5…
+		haveIt = TRUE;				// Check the System version for 6.0.5
 	else							// or more recent
 		haveIt = FALSE;
 	return (haveIt);
@@ -129,9 +129,9 @@ Boolean DoWeHaveSystem605 (void)
 
 //--------------------------------------------------------------  WhatsOurDepth  
 
-// Function returns the current bit depth.  For example, 4 = 16 colors, 8 = 256…
-// colors.  Note, this function assumes System 6.0.5 or more recent and Color…
-// Quickdraw capable.  You should haved called the previous two functions before…
+// Function returns the current bit depth.  For example, 4 = 16 colors, 8 = 256
+// colors.  Note, this function assumes System 6.0.5 or more recent and Color
+// Quickdraw capable.  You should haved called the previous two functions before
 // attempting this call.
 
 short WhatsOurDepth (void)
@@ -155,9 +155,9 @@ short WhatsOurDepth (void)
 
 //--------------------------------------------------------------  CanWeDisplay8Bit  
 
-// Simple function that returns TRUE if the current device (monitor) is…
-// capable of displaying 256 colors (or grays).  This function, the one above,…
-// and many following functions assume we have System 6.0.5 or more recent and…
+// Simple function that returns TRUE if the current device (monitor) is
+// capable of displaying 256 colors (or grays).  This function, the one above,
+// and many following functions assume we have System 6.0.5 or more recent and
 // are capable of Color QuickDraw.
 
 Boolean CanWeDisplay8Bit (GDHandle theDevice)
@@ -168,7 +168,7 @@ Boolean CanWeDisplay8Bit (GDHandle theDevice)
 	canDo = FALSE;		// Assume intially that we can't display 8 bit.
 						// Call HasDepth() to see if monitor supports 8 bit.
 	canDepth = HasDepth(theDevice, 8, 1, 0);
-	if (canDepth != 0)	// If HasDepth() returned anything other than 0…
+	if (canDepth != 0)	// If HasDepth() returned anything other than 0
 		canDo = TRUE;	// we can indeed switch it to 8 bit.
 	
 	return (canDo);		// Return the result.
@@ -176,9 +176,9 @@ Boolean CanWeDisplay8Bit (GDHandle theDevice)
 
 //--------------------------------------------------------------  SwitchToDepth
 
-// This handy function forces the device (monitor) in question to switch…
-// to a specific depth.  We'll call this function if we need to switch to…
-// 8-bit (256 colors).  We should have called the above function first in…
+// This handy function forces the device (monitor) in question to switch
+// to a specific depth.  We'll call this function if we need to switch to
+// 8-bit (256 colors).  We should have called the above function first in
 // order to be sure that we CAN in fact switch this monitor to 8-bit.
 
 void SwitchToDepth (short newDepth, Boolean doColor)
@@ -210,7 +210,7 @@ void SwitchToDepth (short newDepth, Boolean doColor)
 //--------------------------------------------------------------  CheckEnvirons
 
 // This is the "wrapper" function that calls all the above functions.
-// After calling ToolBoxInit(), Glypha will call this function to see…
+// After calling ToolBoxInit(), Glypha will call this function to see
 // if the current Mac we're running on is capable of running Glypha.
 
 void CheckEnvirons (void)
@@ -220,7 +220,7 @@ void CheckEnvirons (void)
 	
 	if (!DoWeHaveSystem605())		// We absolutely need System 6.0.5. or more recent.
 		RedAlert("\pGlypha II requires System 6.0.5 or better to run.");
-									// If we passed the above 2 tests, get a…
+									// If we passed the above 2 tests, get a
 	FindOurDevice();				// handle to the main device (monitor).
 	
 	wasDepth = WhatsOurDepth();		// Find out our monitor's depth.
@@ -235,10 +235,10 @@ void CheckEnvirons (void)
 
 //--------------------------------------------------------------  OpenMainWindow
 
-// This is a simple function that merely opens up a large black window and…
-// centers it in the monitor.  It assumes a 'WIND' (window) resource, which if you…
-// look at the resource file in ResEdit, you'll find it also has a 'WCTB'…
-// (window color table) resource.  The 'WCTB' resource specifies a content…
+// This is a simple function that merely opens up a large black window and
+// centers it in the monitor.  It assumes a 'WIND' (window) resource, which if you
+// look at the resource file in ResEdit, you'll find it also has a 'WCTB'
+// (window color table) resource.  The 'WCTB' resource specifies a content
 // color of black - thus this window comes up black.
 
 void OpenMainWindow (void)
@@ -286,17 +286,17 @@ void InitMenubar (void)
 
 //--------------------------------------------------------------  InitVariables
 
-// This function is called only once.  It initializes all the global variables…
-// used by Glypha.  It may not in fact be necessary to initialize many of these…
-// (your compiler should ensure that all globals are set to zero when your app…
+// This function is called only once.  It initializes all the global variables
+// used by Glypha.  It may not in fact be necessary to initialize many of these
+// (your compiler should ensure that all globals are set to zero when your app
 // launches), but it's a good idea to NEVER TRUST YOUR COMPILER.
 
 void InitVariables (void)
 {
 	short		i;
 	
-	quitting = FALSE;	// I won't describe every one of these, many are…
-	playing = FALSE;	// self explanatory.  Suffice it to say that first…
+	quitting = FALSE;	// I won't describe every one of these, many are
+	playing = FALSE;	// self explanatory.  Suffice it to say that first
 	pausing = FALSE;	// I'm initializing all the Boolean variables.
 	canPlay = FALSE;
 	whichList = TRUE;
@@ -549,8 +549,8 @@ void InitVariables (void)
 //--------------------------------------------------------------  ShutItDown
 
 // This function is called when the player has chosen to quit Glypha.
-// It "should" probably do more, but in fact all it does is to restore…
-// their Mac's monitor back to the depth it was before they launched…
+// It "should" probably do more, but in fact all it does is to restore
+// their Mac's monitor back to the depth it was before they launched
 // Glypha (recall that we may have changed it to 8-bit).
 
 void ShutItDown (void)

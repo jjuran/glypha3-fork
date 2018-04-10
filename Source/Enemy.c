@@ -5,7 +5,7 @@
 //----------------------------------------------------------------------------
 //============================================================================
 
-// This file contains all enemy related functions (enemy "AI").  It handles…
+// This file contains all enemy related functions (enemy "AI").  It handles
 // the enemy decision making proccess, moves the enemies, etc.
 
 #include "Externs.h"
@@ -61,9 +61,9 @@ extern	Boolean		evenFrame, doEnemyFlapSound, doEnemyScrapeSound;
 //==============================================================  Functions
 //--------------------------------------------------------------  SetEnemyInitialLocation
 
-// When a new enemy is about to be "born", this function is called to determine…
-// the enemies starting location.  The only thing important here is that the enemy…
-// appears on a valid platform for the particular level we're on.  As well, which…
+// When a new enemy is about to be "born", this function is called to determine
+// the enemies starting location.  The only thing important here is that the enemy
+// appears on a valid platform for the particular level we're on.  As well, which
 // platform he (it) appears on should be random.
 
 Boolean SetEnemyInitialLocation (Rect *theRect)
@@ -106,8 +106,8 @@ Boolean SetEnemyInitialLocation (Rect *theRect)
 
 //--------------------------------------------------------------  SetEnemyAttributes
 
-// Depending upon the type of enemy this function is passed (there are three…
-// types of sphinx enemies), this function sets up that enemies various…
+// Depending upon the type of enemy this function is passed (there are three
+// types of sphinx enemies), this function sets up that enemies various
 // attributes - such as maximum vertical velocity, etc.
 
 void SetEnemyAttributes (short i)
@@ -115,12 +115,12 @@ void SetEnemyAttributes (short i)
 	short		h;
 											// Point enemy toward center of screen.
 	h = (theEnemies[i].dest.left + theEnemies[i].dest.right) >> 1;
-	if (h < 320)							// If enemy in left half of screen…
+	if (h < 320)							// If enemy in left half of screen
 		theEnemies[i].facingRight = TRUE;	// the enemy will face to the right.
-	else									// Otherwise, if in right half of screen…
+	else									// Otherwise, if in right half of screen
 		theEnemies[i].facingRight = FALSE;	// face to the left.
 	
-	switch (theEnemies[i].kind)				// Okay, depending upon what "kind" of enemy…
+	switch (theEnemies[i].kind)				// Okay, depending upon what "kind" of enemy
 	{										// we're dealing with....
 		case kOwl:							// The owl is the simplest (wimpiest) enemy.
 		if (theEnemies[i].facingRight)		// Choose which graphic to use.
@@ -130,7 +130,7 @@ void SetEnemyAttributes (short i)
 											// Set owl's velocity limitations.
 		theEnemies[i].maxHVel = kOwlMaxHVel;
 		theEnemies[i].maxVVel = kOwlMaxVVel;
-											// This is the distance within which he will…
+											// This is the distance within which he will
 											// pursue the player (it's strictly Y distance).
 		theEnemies[i].heightSmell = kOwlHeightSmell;
 											// This is how powerful the owl's "flap" is.
@@ -145,7 +145,7 @@ void SetEnemyAttributes (short i)
 											// Set wolf's velocity limitations.
 		theEnemies[i].maxHVel = kWolfMaxHVel;
 		theEnemies[i].maxVVel = kWolfMaxVVel;
-											// This is the distance within which he will…
+											// This is the distance within which he will
 											// pursue the player (it's strictly Y distance).
 		theEnemies[i].heightSmell = kWolfHeightSmell;
 											// This is how powerful the wolf's "flap" is.
@@ -160,7 +160,7 @@ void SetEnemyAttributes (short i)
 											// Set jackal's velocity limitations.
 		theEnemies[i].maxHVel = kJackalMaxHVel;
 		theEnemies[i].maxVVel = kJackalMaxVVel;
-											// This is the distance within which he will…
+											// This is the distance within which he will
 											// pursue the player (it's strictly Y distance).
 		theEnemies[i].heightSmell = kJackalHeightSmell;
 											// This is how powerful the jackal's "flap" is.
@@ -171,9 +171,9 @@ void SetEnemyAttributes (short i)
 
 //--------------------------------------------------------------  AssignNewAltitude
 
-// The sphinxes "patrol" specific altitudes in the arena.  After wrapping around…
-// the screen a few times, they randomly select a new altitude to patrol (this…
-// keeps the player from finding a "safe" place to stand.  This function chooses…
+// The sphinxes "patrol" specific altitudes in the arena.  After wrapping around
+// the screen a few times, they randomly select a new altitude to patrol (this
+// keeps the player from finding a "safe" place to stand.  This function chooses
 // a new altitude for the enemy to patrol.
 
 short AssignNewAltitude (void)
@@ -181,13 +181,13 @@ short AssignNewAltitude (void)
 	short		which, altitude;
 	
 	which = RandomInt(4);		// There are only 4 "patrol altitudes".
-	switch (which)				// Depending on which random number came up…
+	switch (which)				// Depending on which random number came up
 	{
 		case 0:					// This is just below the ceiling.
 		altitude = 65 << 4;
 		break;
 		
-		case 1:					// This is below the top platforms but above the…
+		case 1:					// This is below the top platforms but above the
 		altitude = 150 << 4;	// center platform.
 		break;
 		
@@ -206,14 +206,14 @@ short AssignNewAltitude (void)
 //--------------------------------------------------------------  InitEnemy
 
 // This resets an enemies info.  It is called when a new enemy is to be born.
-// It is called if an egg is about to hatch, if a new level has begun, or if…
+// It is called if an egg is about to hatch, if a new level has begun, or if
 // if it is simply time to add a new enemy.
 
 void InitEnemy (short i, Boolean reincarnated)
 {
 	Boolean		facing;
 	
-	if (spawnedEnemies < numEnemiesThisLevel)	// New enemy to appear (in other words…
+	if (spawnedEnemies < numEnemiesThisLevel)	// New enemy to appear (in other words
 	{											// this enemy is not hatched).
 												// Call function to set new location.
 		facing = SetEnemyInitialLocation(&theEnemies[i].dest);
@@ -227,9 +227,9 @@ void InitEnemy (short i, Boolean reincarnated)
 		theEnemies[i].hVel = 0;					// Zero velocity vraiables.
 		theEnemies[i].vVel = 0;
 		theEnemies[i].pass = 0;					// Zero number of times wrapped around.
-		if ((levelOn % 5) == 4)					// If this is an Egg Wave…
+		if ((levelOn % 5) == 4)					// If this is an Egg Wave
 			theEnemies[i].mode = kEggTimer;		// set enemy in "wait to hatch" mode.
-		else									// Otherwise, just sut enemy in…
+		else									// Otherwise, just sut enemy in
 			theEnemies[i].mode = kIdle;			// idle mode.
 		if (i < numOwls)						// Determine what kind of enemy.
 			theEnemies[i].kind = kOwl;
@@ -240,13 +240,13 @@ void InitEnemy (short i, Boolean reincarnated)
 		theEnemies[i].facingRight = facing;
 		SetEnemyAttributes(i);					// Initialize enemy attributes.
 		
-		if (reincarnated)						// If this is an egg that will hatch…
+		if (reincarnated)						// If this is an egg that will hatch
 			theEnemies[i].frame = RandomInt(48) + 8 + (numOwls * 32);
 		else
 			theEnemies[i].frame = RandomInt(48) + 32 + (64 * i) + (numOwls * 32);
 		
 		if ((levelOn % 5) == 4)					// If this is an Egg Wave
-			theEnemies[i].kind--;				// Decrement "kind" (since it's incremented…
+			theEnemies[i].kind--;				// Decrement "kind" (since it's incremented
 												// when they hatch).
 		spawnedEnemies++;						// Keep track of number of enemies active.
 	}
@@ -254,19 +254,19 @@ void InitEnemy (short i, Boolean reincarnated)
 
 //--------------------------------------------------------------  GenerateEnemies
 
-// This function is called only for a new level.  It goes through and…
+// This function is called only for a new level.  It goes through and
 // intializes a whole host of enemies in one go.
 
 void GenerateEnemies (void)
 {
 	short		i;
 	
-	if ((levelOn % 5) == 4)			// If this is an Egg Wave…
+	if ((levelOn % 5) == 4)			// If this is an Egg Wave
 	{
 		numEnemies = kMaxEnemies;	// we insist upon the maximum number of enemies.
 		numEnemiesThisLevel = numEnemies;
 	}
-	else							// If not an egg wave, use a formula to determine…
+	else							// If not an egg wave, use a formula to determine
 	{								// the max number of enemies that are to be active.
 		numEnemies = ((levelOn / 5) + 2) * 2;
 		if (numEnemies > kMaxEnemies)
@@ -276,12 +276,12 @@ void GenerateEnemies (void)
 	
 	deadEnemies = 0;				// No dead enemies yet.
 	
-									// Use formula to determine the number of owls…
-									// to appear.  This number goes down as the levels…
-									// increase.  It is used not merely to determine…
-									// how many owls are to appear, but also how many…
-									// of the more advanced enemies.  For example, when…
-									// numOwls goes down to zero, all the enemies will…
+									// Use formula to determine the number of owls
+									// to appear.  This number goes down as the levels
+									// increase.  It is used not merely to determine
+									// how many owls are to appear, but also how many
+									// of the more advanced enemies.  For example, when
+									// numOwls goes down to zero, all the enemies will
 									// be of the more advanced breed (wolves and jackals).
 	numOwls = 4 - ((levelOn + 2) / 5);
 	if (numOwls < 0)
@@ -295,7 +295,7 @@ void GenerateEnemies (void)
 
 //--------------------------------------------------------------  CheckEnemyPlatformHit
 
-// This is the enemy counterpart to a similarly named function that tests for…
+// This is the enemy counterpart to a similarly named function that tests for
 // player collsions with the platforms.
 
 void CheckEnemyPlatformHit (short h)
@@ -306,21 +306,21 @@ void CheckEnemyPlatformHit (short h)
 	for (i = 0; i < numLedges; i++)					// Test all platforms.
 	{												// Do a simple bounds test.
 		if (SectRect(&theEnemies[h].dest, &platformRects[i], &whoCares))
-		{											// If the enemy has hit the platform…
+		{											// If the enemy has hit the platform
 			hRect.left = theEnemies[h].dest.left;	// Determine if enemy hit platform sides.
 			hRect.right = theEnemies[h].dest.right;
 			hRect.top = theEnemies[h].wasDest.top;
 			hRect.bottom = theEnemies[h].wasDest.bottom;
-													// Test this new special rect to see if…
+													// Test this new special rect to see if
 													// the enemy hit on of the platform sides.
 			if (SectRect(&hRect, &platformRects[i], &whoCares))
 			{										// If enemy hit from side, see which side.
-													// We handle left and right seperatrely…
-													// so that there's no ambiguity as to…
-													// what the new velocity and location…
-													// of the enemy is.  If we did not do it…
-													// this way, there is the chance that an…
-													// enemy get's "stuck" on the edge of…
+													// We handle left and right seperatrely
+													// so that there's no ambiguity as to
+													// what the new velocity and location
+													// of the enemy is.  If we did not do it
+													// this way, there is the chance that an
+													// enemy get's "stuck" on the edge of
 													// a platform (due to round-off errors).
 				if (theEnemies[h].h > theEnemies[h].wasH)
 				{									// Enemy was moving right (hit left side).
@@ -362,12 +362,12 @@ void CheckEnemyPlatformHit (short h)
 				vRect.bottom = theEnemies[h].dest.bottom;
 													// Special "test rect" for top/bottom hit.
 				if (SectRect(&vRect, &platformRects[i], &whoCares))
-				{									// If hit the top/bottom of platform…
+				{									// If hit the top/bottom of platform
 					if (theEnemies[h].mode == kFalling)
 					{								// Was the enemy a falling egg?
 													// Bounce egg (with some inelasticity).
 						theEnemies[i].hVel -= (theEnemies[i].hVel >> 3);
-													// When the eggs velocity is between…
+													// When the eggs velocity is between
 													// +/- 8, consider the egg at rest.
 						if ((theEnemies[i].hVel < 8) && (theEnemies[i].hVel > -8))
 						{
@@ -406,7 +406,7 @@ void CheckEnemyPlatformHit (short h)
 							{					// Special case where egg right on edge.
 								theEnemies[h].hVel = -32;
 							}
-							else				// If egg not on the edge of platform…
+							else				// If egg not on the edge of platform
 							{					// switch to "timer" mode.
 								theEnemies[h].mode = kEggTimer;
 								theEnemies[h].frame = (numOwls * 96) + 128;
@@ -445,7 +445,7 @@ void CheckEnemyPlatformHit (short h)
 
 //--------------------------------------------------------------  CheckEnemyRoofCollision
 
-// Like the player counterpart, this function checks to see if an enemy has hit…
+// Like the player counterpart, this function checks to see if an enemy has hit
 // the ceiling or the lava.  It handles the consequences of both cases.
 
 void CheckEnemyRoofCollision (short i)
@@ -453,7 +453,7 @@ void CheckEnemyRoofCollision (short i)
 	short		offset;
 	
 	if (theEnemies[i].dest.top < (kRoofHeight - 2))
-	{					// If enemy has hit the ceiling…
+	{					// If enemy has hit the ceiling
 		offset = kRoofHeight - theEnemies[i].dest.top;
 						// Move enemy down to a "legal" altitude.
 		theEnemies[i].dest.top += offset;
@@ -465,7 +465,7 @@ void CheckEnemyRoofCollision (short i)
 		theEnemies[i].vVel = -(theEnemies[i].vVel >> 2);
 	}
 	else if (theEnemies[i].dest.top > kLavaHeight)
-	{					// If enemy has fallen into lava…
+	{					// If enemy has fallen into lava
 						// kill that enemy.
 		theEnemies[i].mode = kDeadAndGone;
 		deadEnemies++;
@@ -478,15 +478,15 @@ void CheckEnemyRoofCollision (short i)
 
 //--------------------------------------------------------------  HandleIdleEnemies
 
-// The following functions handle the various enemy modes.  Enemies are…
+// The following functions handle the various enemy modes.  Enemies are
 // considered to be in a specific mode and each mode is handled differently.
-// Idle enemies are ones who are "invisible" - not yet born.  While idle, a…
+// Idle enemies are ones who are "invisible" - not yet born.  While idle, a
 // timer is ticking down - when it reaches zero, the enemy appears.
 
 void HandleIdleEnemies (short i)
 {
 	theEnemies[i].frame--;					// Decrement timer.
-	if (theEnemies[i].frame <= 0)			// If timer is zero or less…
+	if (theEnemies[i].frame <= 0)			// If timer is zero or less
 	{
 		theEnemies[i].mode = kSpawning;		// enemy is "born".
 		theEnemies[i].wasH = theEnemies[i].h;
@@ -501,7 +501,7 @@ void HandleIdleEnemies (short i)
 
 //--------------------------------------------------------------  HandleFlyingEnemies
 
-// Once an enemy takes off from a platform, they will always be in flying mode…
+// Once an enemy takes off from a platform, they will always be in flying mode
 // unless they should be killed.  This function handles the flying mode.
 
 void HandleFlyingEnemies (short i)
@@ -548,7 +548,7 @@ void HandleFlyingEnemies (short i)
 			shouldFlap = FALSE;
 	}
 	
-	if (shouldFlap)				// If the enemy has determined that it needs to flap…
+	if (shouldFlap)				// If the enemy has determined that it needs to flap
 	{							// Give the enemy lift & play the flap sound.
 		theEnemies[i].vVel -= theEnemies[i].flapImpulse;
 		doEnemyFlapSound = TRUE;
@@ -630,7 +630,7 @@ void HandleFlyingEnemies (short i)
 		theEnemies[i].h = theEnemies[i].dest.left << 4;
 		OffsetRect(&theEnemies[i].wasDest, -640, 0);
 		theEnemies[i].pass++;			// Increment number of "wrap-arounds" for this enemy.
-		if (theEnemies[i].pass > 2)		// After two screen passes (wrap arounds)…
+		if (theEnemies[i].pass > 2)		// After two screen passes (wrap arounds)
 		{								// enemy patrols a new altitude.
 			theEnemies[i].targetAlt = AssignNewAltitude();
 			theEnemies[i].pass = 0;
@@ -662,8 +662,8 @@ void HandleFlyingEnemies (short i)
 
 //--------------------------------------------------------------  HandleWalkingEnemy
 
-// This is a brief mode for an enemy.  When an enemy has hatched from an egg, it…
-// walks only for 8 game frames at which point it takes off and flies for the rest…
+// This is a brief mode for an enemy.  When an enemy has hatched from an egg, it
+// walks only for 8 game frames at which point it takes off and flies for the rest
 // of its life.
 
 void HandleWalkingEnemy (short i)
@@ -748,7 +748,7 @@ void HandleWalkingEnemy (short i)
 
 //--------------------------------------------------------------  HandleSpawningEnemy
 
-// This is an enemy "rising out of a platform".  Either an egg has just hatched…
+// This is an enemy "rising out of a platform".  Either an egg has just hatched
 // or a brand new enemy has been introduced.  Irregardless, the sphinx is born.
 // When the enemy is at its full height, it will begin to walk.
 
@@ -790,8 +790,8 @@ void HandleSpawningEnemy (short i)
 
 //--------------------------------------------------------------  HandleFallingEnemy
 
-// A "falling" enemy is an air borne egg.  The enemy was killed, turned into an egg, …
-// and the egg is in freefall.  If the egg comes to rest, it will begin a countdown…
+// A "falling" enemy is an air borne egg.  The enemy was killed, turned into an egg, 
+// and the egg is in freefall.  If the egg comes to rest, it will begin a countdown
 // until it is hatched.
 
 void HandleFallingEnemy (short i)
@@ -837,14 +837,14 @@ void HandleFallingEnemy (short i)
 	}
 	
 	CheckEnemyRoofCollision(i);	// See if egg hit ceiling or lava.
-	CheckEnemyPlatformHit(i);	// Handle platform hit (it is here it determines if…
+	CheckEnemyPlatformHit(i);	// Handle platform hit (it is here it determines if
 								// egg has come to rest and should begin countdown).
 }
 
 //--------------------------------------------------------------  HandleEggEnemy
 
-// This is the "idle" egg mode.  This is a static egg, sitting peacefully on…
-// a platform.  Waiting patiently so it might hatch into a death-sphinx and…
+// This is the "idle" egg mode.  This is a static egg, sitting peacefully on
+// a platform.  Waiting patiently so it might hatch into a death-sphinx and
 // slaughter the player.
 
 void HandleEggEnemy (short i)
@@ -855,7 +855,7 @@ void HandleEggEnemy (short i)
 	if (theEnemies[i].frame < 24)		// When it falls below 24, egg starts shrinking.
 	{									// Use "frame" to determine height of egg.
 		theEnemies[i].dest.top = theEnemies[i].dest.bottom - theEnemies[i].frame;
-		if (theEnemies[i].frame <= 0)	// When the egg is completely flat (gone)…
+		if (theEnemies[i].frame <= 0)	// When the egg is completely flat (gone)
 		{								// then BOOM! a sphinx is spawned!
 			theEnemies[i].frame = 0;
 			PlayExternalSound(kSpawnSound, kSpawnPriority);
@@ -882,7 +882,7 @@ void HandleEggEnemy (short i)
 
 //--------------------------------------------------------------  MoveEnemies
 
-// This is the "master" enemy function.  It goes through all the enemies…
+// This is the "master" enemy function.  It goes through all the enemies
 // and calls the above functions depending upon an enemy's mode.
 
 void MoveEnemies (void)
@@ -929,7 +929,7 @@ void MoveEnemies (void)
 		PlayExternalSound(kFlap2Sound, kFlap2Priority);
 	if (doEnemyScrapeSound)
 		PlayExternalSound(kScrape2Sound, kScrape2Priority);
-									// See if enough enemies were killed to advance to…
+									// See if enough enemies were killed to advance to
 									// next level (wave).
 	if ((deadEnemies >= numEnemiesThisLevel) && (countDownTimer == 0))
 		countDownTimer = 30;
@@ -970,8 +970,8 @@ void HandleHand (void)
 		{							// See if player in the "grab/clutch zone".
 			hDiff = theHand.dest.left - thePlayer.dest.left;
 			vDiff = theHand.dest.top - thePlayer.dest.top;
-									// Ah!  Player caught.  Move player to correct…
-									// location relative to the hand (so the player…
+									// Ah!  Player caught.  Move player to correct
+									// location relative to the hand (so the player
 									// appears to, in fact, be held).
 			if (thePlayer.facingRight)
 				hDiff -= 3;
@@ -1013,7 +1013,7 @@ void HandleHand (void)
 									// Player's movement is severely dampened.
 				thePlayer.hVel = thePlayer.hVel >> 3;
 				thePlayer.vVel = thePlayer.vVel >> 3;
-									// Hand pulls player down (strength is greater on…
+									// Hand pulls player down (strength is greater on
 									// higher levels).
 				pull = levelOn << 2;
 				if (pull > 48)		// Set an absolute limit on hand strength.
@@ -1034,7 +1034,7 @@ void HandleHand (void)
 				theHand.mode = kOutGrabeth;
 			}
 		}
-		else						// Player not even close to hand…
+		else						// Player not even close to hand
 		{							// Hand sinks back down into lava.
 			theHand.dest.top++;
 			theHand.dest.bottom++;
@@ -1085,7 +1085,7 @@ void KillOffEye (void)
 
 //--------------------------------------------------------------  HandleEye
 
-// But of course, the eye has modes as well.  This function handles the eye…
+// But of course, the eye has modes as well.  This function handles the eye
 // depending upon the mode it is in.
 
 void HandleEye (void)
@@ -1218,7 +1218,7 @@ void HandleEye (void)
 				PlayExternalSound(kBonusSound, kBonusPriority);
 				
 				KillOffEye();			// Slay eye!
-			}							// Hey, anyone remember that giant eye from…
+			}							// Hey, anyone remember that giant eye from
 		}								// Johnny Socko and his Flying Robot?
 	}									// As a kid, I thought that was cool!
 	else if (theEye.frame > 0)			// Eye has not yet appeared, but waits, lurking!
@@ -1250,7 +1250,7 @@ void ResolveEnemyPlayerHit (short i)
 	short		wasVel, diff, h, v;
 	
 	if ((theEnemies[i].mode == kFalling) || (theEnemies[i].mode == kEggTimer))
-	{						// Okay, if the enemy is an egg…
+	{						// Okay, if the enemy is an egg
 		deadEnemies++;		// simple - the enemy dies.
 		
 		theEnemies[i].mode = kDeadAndGone;

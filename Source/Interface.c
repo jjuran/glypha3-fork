@@ -5,8 +5,8 @@
 //----------------------------------------------------------------------------
 //============================================================================
 
-// I put all interface related code in here.  Interface would include event…
-// handling, menus, dialog boxes, etc.  All the user interaction that takes…
+// I put all interface related code in here.  Interface would include event
+// handling, menus, dialog boxes, etc.  All the user interaction that takes
 // place before and after an actual game is in play.
 
 #include "Externs.h"
@@ -54,27 +54,27 @@ extern	Boolean		pausing, playing, helpOpen, scoresOpen;
 //==============================================================  Functions
 //--------------------------------------------------------------  MenusReflectMode
 
-// Depending on whether a game is in progress (paused) or not, I want…
+// Depending on whether a game is in progress (paused) or not, I want
 // menu items grayed out in one case and not grayed out in the other.
-// This function, when called, displays the menus correctly depending…
+// This function, when called, displays the menus correctly depending
 // on the mode we're in (playing or not playing, pausing or not).
 
 void MenusReflectMode (void)
 {
-	if (playing)								// If a game is in progress…
+	if (playing)								// If a game is in progress
 	{
 		DisableItem(gameMenu, iNewGame);		// Cannot begin another New Game.
 		EnableItem(gameMenu, iPauseGame);		// Can Pause Game.
-		if (pausing)							// If we are paused…
+		if (pausing)							// If we are paused
 			SetItem(gameMenu, iPauseGame,
 					"\pResume Game");			// Rename item "Resume Game".
-		else									// If we are not paused…
+		else									// If we are not paused
 			SetItem(gameMenu, iPauseGame,
 					"\pPause Game");			// Rename item "Pause Game".
 		EnableItem(gameMenu, iEndGame);			// Can End Game.
 		DisableItem(optionsMenu, 0);			// Cannot change game settings.
 	}
-	else										// Else, if Glypha is idle…
+	else										// Else, if Glypha is idle
 	{
 		EnableItem(gameMenu, iNewGame);			// Can begin a New Game.
 		DisableItem(gameMenu, iPauseGame);		// Cannot Pause Game.
@@ -87,7 +87,7 @@ void MenusReflectMode (void)
 
 //--------------------------------------------------------------  DoAppleMenu
 
-// This function takes care of handling the Apple menu (Desk Assecories and the…
+// This function takes care of handling the Apple menu (Desk Assecories and the
 // About box).
 
 void DoAppleMenu (short theItem)
@@ -96,10 +96,10 @@ void DoAppleMenu (short theItem)
 	GrafPtr		wasPort;
 	short		daNumber;
 	
-	switch (theItem)							// Depending on the item selected…
+	switch (theItem)							// Depending on the item selected
 	{
-		case iAbout:							// If the About item was selected…
-		if ((scoresOpen) || (helpOpen))			// If high scores or help screens up…
+		case iAbout:							// If the About item was selected
+		if ((scoresOpen) || (helpOpen))			// If high scores or help screens up
 		{
 			CloseWall();						// hide them.
 			scoresOpen = FALSE;					// High scores no longer open.
@@ -111,7 +111,7 @@ void DoAppleMenu (short theItem)
 		DoAbout();								// Bring up the About dialog.
 		break;
 		
-		default:								// If any other item was selected (DA)…
+		default:								// If any other item was selected (DA)
 		GetItem(appleMenu, theItem, daName);	// Get the name of the item selected.
 		GetPort(&wasPort);						// Remember our port.
 		daNumber = OpenDeskAcc(daName);			// Launch the Desk Accesory.
@@ -122,15 +122,15 @@ void DoAppleMenu (short theItem)
 
 //--------------------------------------------------------------  DoGameMenu
 
-// This function handles a users interaction with the Game menu.  Quitting…
+// This function handles a users interaction with the Game menu.  Quitting
 // Glypha, starting a new game, resuming a paused game are handled here.
 
 void DoGameMenu (short theItem)
 {
-	switch (theItem)						// Depending on menu item selected…
+	switch (theItem)						// Depending on menu item selected
 	{
-		case iNewGame:						// If user selected New Game item…
-		if ((scoresOpen) || (helpOpen))		// If high scores or help screen is up,…
+		case iNewGame:						// If user selected New Game item
+		if ((scoresOpen) || (helpOpen))		// If high scores or help screen is up,
 		{									// close them first.
 			CloseWall();
 			scoresOpen = FALSE;
@@ -142,22 +142,22 @@ void DoGameMenu (short theItem)
 		MenusReflectMode();					// Properly gray out the right menu items.
 		break;
 		
-		case iPauseGame:					// If user selected Pause Game item…
+		case iPauseGame:					// If user selected Pause Game item
 		if (pausing)						// If we are paused, resume playing.
 		{
 			pausing = FALSE;				// Turn off pausing flag.
 			DumpBackToWorkMap();			// Restore off screen just in case.
-		}									// Actually pausing a game (not resuming)…
-		break;								// is not really handled here.  It's handled…
+		}									// Actually pausing a game (not resuming)
+		break;								// is not really handled here.  It's handled
 											// directly within the main game loop.
 											
-		case iEndGame:						// Ending a game in progress isn't really…
+		case iEndGame:						// Ending a game in progress isn't really
 		break;								// handled here - this is a dummy item.
-											// Ending a game is handled within the main…
-											// game loop by looking for the 'command'…
+											// Ending a game is handled within the main
+											// game loop by looking for the 'command'
 											// and 'E' key explicitly.
 		
-		case iQuit:							// If user selected Quit item…
+		case iQuit:							// If user selected Quit item
 		quitting = TRUE;					// Set quitting flag to TRUE.
 		break;
 	}
@@ -165,14 +165,14 @@ void DoGameMenu (short theItem)
 
 //--------------------------------------------------------------  DoOptionsMenu
 
-// This function handles the Options menu.  Options include game settings,…
+// This function handles the Options menu.  Options include game settings,
 // displaying the high scores, and bringing up the Help screen.
 
 void DoOptionsMenu (short theItem)
 {
-	switch (theItem)					// Depending on which item the user selected…
+	switch (theItem)					// Depending on which item the user selected
 	{
-		case iSettings:					// If user selected Game Settings item…
+		case iSettings:					// If user selected Game Settings item
 		if ((scoresOpen) || (helpOpen))	// Close high scores or help screen.
 		{
 			CloseWall();
@@ -184,7 +184,7 @@ void DoOptionsMenu (short theItem)
 		DoGameSettings();				// Bring up game settings dialog.
 		break;
 		
-		case iHelp:						// If user selected Help item…
+		case iHelp:						// If user selected Help item
 		if (helpOpen)					// If Help open, close it.
 		{
 			CloseWall();
@@ -192,7 +192,7 @@ void DoOptionsMenu (short theItem)
 		}
 		else							// Else, if Help is not open - open it.
 		{
-			if (scoresOpen)				// If the High Scores are up though,…
+			if (scoresOpen)				// If the High Scores are up though,
 			{
 				CloseWall();			// Close them first.
 				scoresOpen = FALSE;
@@ -203,13 +203,13 @@ void DoOptionsMenu (short theItem)
 		CheckItem(optionsMenu, iHelp, helpOpen);
 		break;
 		
-		case iHighScores:				// If user selected High Scores…
+		case iHighScores:				// If user selected High Scores
 		if (scoresOpen)					// If the High Scores are up, close them.
 		{
 			CloseWall();
 			scoresOpen = FALSE;
 		}
-		else							// If the High Scores are not up…
+		else							// If the High Scores are not up
 		{
 			if (helpOpen)				// First see if Help is open.
 			{
@@ -226,8 +226,8 @@ void DoOptionsMenu (short theItem)
 
 //--------------------------------------------------------------  DoMenuChoice
 
-// This is the main menu-handling function.  It examines which menu was selected…
-// by the user and passes on to the appropriate function, the item within that…
+// This is the main menu-handling function.  It examines which menu was selected
+// by the user and passes on to the appropriate function, the item within that
 // menu that was selected.
 
 void DoMenuChoice (long menuChoice)
@@ -240,17 +240,17 @@ void DoMenuChoice (long menuChoice)
 	theMenu = HiWord(menuChoice);	// Extract which menu was selected.
 	theItem = LoWord(menuChoice);	// Extract which item it was that was selected.
 	
-	switch (theMenu)				// Now, depending upon which menu was selected…
+	switch (theMenu)				// Now, depending upon which menu was selected
 	{
-		case kAppleMenuID:			// If the Apple menu selected…
+		case kAppleMenuID:			// If the Apple menu selected
 		DoAppleMenu(theItem);		// Call the function that handles the Apple menu.
 		break;
 		
-		case kGameMenuID:			// If the Game menu selected…
+		case kGameMenuID:			// If the Game menu selected
 		DoGameMenu(theItem);		// Call the function that handles the Game menu.
 		break;
 		
-		case kOptionsMenuID:		// If the Options menu selected…
+		case kOptionsMenuID:		// If the Options menu selected
 		DoOptionsMenu(theItem);		// Call the function that handles the Options menu.
 		break;
 	}
@@ -260,9 +260,9 @@ void DoMenuChoice (long menuChoice)
 
 //--------------------------------------------------------------  UpdateMainWindow
 
-// This is a simple function that simply copies the contents from the…
-// background offscreen pixmap to the main screen.  It is primarily…
-// called in response to an update event, but could be called any time…
+// This is a simple function that simply copies the contents from the
+// background offscreen pixmap to the main screen.  It is primarily
+// called in response to an update event, but could be called any time
 // when I want to force the screen to be redrawn.
 
 void UpdateMainWindow (void)
@@ -287,7 +287,7 @@ void HandleMouseEvent (EventRecord *theEvent)
 												// Determine window and where in window.
 	thePart = FindWindow(theEvent->where, &whichWindow);
 	
-	switch (thePart)							// Depending on where mouse was clicked…
+	switch (thePart)							// Depending on where mouse was clicked
 	{
 		case inSysWindow:						// In a Desk Accesory.
 		SystemClick(theEvent, whichWindow);		// (Is this stuff obsolete yet?)
@@ -299,9 +299,9 @@ void HandleMouseEvent (EventRecord *theEvent)
 			DoMenuChoice(menuChoice);
 		break;
 		
-		case inDrag:							// Like the lazy bastard I am…
+		case inDrag:							// Like the lazy bastard I am
 		case inGoAway:							// I'll just ignore these.
-		case inGrow:							// But, hey, the window isn't…
+		case inGrow:							// But, hey, the window isn't
 		case inZoomIn:							// movable or growable!
 		case inZoomOut:
 		break;
@@ -358,14 +358,14 @@ void HandleKeyEvent (EventRecord *theEvent)
 	theChar = theEvent->message & charCodeMask;				// Extract key hit.
 	commandDown = ((theEvent->modifiers & cmdKey) != 0);	// See if command key down.
 	
-	if (commandDown)								// If command key down, call menu…
+	if (commandDown)								// If command key down, call menu
 	{												// handling routine.
 		if (canPlay)
 			DoMenuChoice(MenuKey(theChar));
 	}
 	else
 	{
-		if (helpOpen)								// Handle special keys if the help…
+		if (helpOpen)								// Handle special keys if the help
 		{											// screen is up.
 			if (theChar == kUpArrowKeyASCII)		// Up arrow key scrolls help down.
 			{
@@ -390,14 +390,14 @@ void HandleKeyEvent (EventRecord *theEvent)
 				ScrollHelp(-199);
 			}
 			else if ((theChar == kHelpKeyASCII) && (!playing))
-			{										// Hitting Help key closes help…
+			{										// Hitting Help key closes help
 				CloseWall();						// (if it's already open).
 				helpOpen = FALSE;
 				CheckItem(optionsMenu, iHelp, helpOpen);
 			}
 		}
 		else if ((theChar == kHelpKeyASCII) && (!playing))
-		{											// Else, if help not open and Help…
+		{											// Else, if help not open and Help
 			if (scoresOpen)							// key is hit, open Help.
 			{										// Close high scores if open.
 				CloseWall();
@@ -419,7 +419,7 @@ void HandleUpdateEvent (EventRecord *theEvent)
 	if ((WindowPtr)theEvent->message == mainWindow)
 	{
 		SetPort((GrafPtr)mainWindow);		// Don't forget this line, BTW.
-		BeginUpdate((GrafPtr)mainWindow);	// I did once and it took me…
+		BeginUpdate((GrafPtr)mainWindow);	// I did once and it took me
 		UpdateMainWindow();					// ages to track down that bug.
 		EndUpdate((GrafPtr)mainWindow);		// Well, it took me a week I think.
 		canPlay = TRUE;
@@ -432,19 +432,19 @@ void HandleUpdateEvent (EventRecord *theEvent)
 
 void HandleOSEvent (EventRecord *theEvent)
 {	
-	if (theEvent->message & 0x01000000)		// If suspend or resume event…
+	if (theEvent->message & 0x01000000)		// If suspend or resume event
 	{
-		if (theEvent->message & 0x00000001)	// Specifically, if resume event…
+		if (theEvent->message & 0x00000001)	// Specifically, if resume event
 			switchedOut = FALSE;			// I keep thinking I should do more here.
-		else								// Or if suspend event…
+		else								// Or if suspend event
 			switchedOut = TRUE;				// What am I forgetting?
 	}
 }
 
 //--------------------------------------------------------------  HandleHighLevelEvent
 
-// Again, it's a fact I'm lazy.  AppleEvents are fairly easy to implement but…
-// a nightmare to try and explain.  Filling out the below function is left as…
+// Again, it's a fact I'm lazy.  AppleEvents are fairly easy to implement but
+// a nightmare to try and explain.  Filling out the below function is left as
 // and exercise to the reader.
 
 void HandleHighLevelEvent (EventRecord *theEvent)
@@ -454,8 +454,8 @@ void HandleHighLevelEvent (EventRecord *theEvent)
 
 //--------------------------------------------------------------  HandleEvent
 
-// Standard event stuff.  This is the culling function that calls all the above…
-// functions.  It looks for an event and if it detects one, it calls the appropriate…
+// Standard event stuff.  This is the culling function that calls all the above
+// functions.  It looks for an event and if it detects one, it calls the appropriate
 // function above to handle it.
 
 void HandleEvent (void)
@@ -493,7 +493,7 @@ void HandleEvent (void)
 		}
 	}
 	else if (openTheScores)					// Check for "auto open" flag.
-	{										// If TRUE, set the flag back to…
+	{										// If TRUE, set the flag back to
 		openTheScores = FALSE;				// FALSE and open the high scores.
 		OpenHighScores();
 	}
@@ -501,7 +501,7 @@ void HandleEvent (void)
 
 //--------------------------------------------------------------  DoAbout
 
-// This handles the About dialog.  It brings up the About box in a…
+// This handles the About dialog.  It brings up the About box in a
 // simple centered window with no drag bar, close box or anything.
 // Leaving the dialog is handled with a simple mouse click.
 
@@ -518,12 +518,12 @@ void DoAbout (void)
 	SetPort((GrafPtr)aboutWindow);
 	LoadGraphic(kAboutPictID);					// Draw About dialog graphic.
 	
-	do											// Make sure button not down…
+	do											// Make sure button not down
 	{											// before proceeding.
 	}
 	while (Button());							// Proceed.
-	do											// And now wait until the mouse…
-	{											// is pressed before closing the…
+	do											// And now wait until the mouse
+	{											// is pressed before closing the
 	}											// window (ABout dialog).
 	while (!Button());
 	
@@ -535,8 +535,8 @@ void DoAbout (void)
 
 //--------------------------------------------------------------  DoGameSettings
 
-// This one however is a good and proper dialog box.  It handles the meager…
-// preference settings for Glypha.  Nothing fancy here to report.  Just a…
+// This one however is a good and proper dialog box.  It handles the meager
+// preference settings for Glypha.  Nothing fancy here to report.  Just a
 // straight-forward dialog calling routine.
 
 void DoGameSettings (void)
@@ -573,13 +573,13 @@ void DoGameSettings (void)
 				leaving = TRUE;				// Bye.
 			}
 			else							// Otherwise, the volume entered is wrong.
-			{								// So we'll Beep, enter the last legal…
+			{								// So we'll Beep, enter the last legal
 				SysBeep(1);					// value and select the text again.
 				SetDialogNumToStr(theDial, 3, (long)thePrefs.wasVolume);
 				SelIText(theDial, 3, 0, 1024);
 			}
 		}
-		else if (item == 2)					// Did the user hit the "Clear Scores"…
+		else if (item == 2)					// Did the user hit the "Clear Scores"
 		{									// button?
 			for (i = 0; i < 10; i++)		// Walk through and zero scores.
 			{

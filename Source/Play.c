@@ -5,9 +5,9 @@
 //----------------------------------------------------------------------------
 //============================================================================
 
-// This (rather large) file handles all player routines while a game is in…
-// progress. It gets the player's input, moves the player, tests for collisions…
-// and generally handles the "main game loop".  Enemies and actually drawing…
+// This (rather large) file handles all player routines while a game is in
+// progress. It gets the player's input, moves the player, tests for collisions
+// and generally handles the "main game loop".  Enemies and actually drawing
 // the graphics to the screen are handled in other files.
 
 #include "Externs.h"
@@ -65,8 +65,8 @@ extern	Boolean		quitting, openTheScores;
 //==============================================================  Functions
 //--------------------------------------------------------------  InitNewGame
 
-// This funciton sets up variables and readies for a new game.  It is called…
-// only when a the user selects "New Game" - during the course of a game, it…
+// This funciton sets up variables and readies for a new game.  It is called
+// only when a the user selects "New Game" - during the course of a game, it
 // is  not called again.
 
 void InitNewGame (void)
@@ -103,9 +103,9 @@ void InitNewGame (void)
 
 //--------------------------------------------------------------  SetUpLevel
 
-// Primarily, this function is called to set up the ledges for the…
-// current level (wave) the player is on.  It determines how many…
-// are required and then draws these offscreen.  It also flashes…
+// Primarily, this function is called to set up the ledges for the
+// current level (wave) the player is on.  It determines how many
+// are required and then draws these offscreen.  It also flashes
 // the obelisks and strikes the lightning.
 
 void SetUpLevel (void)
@@ -119,23 +119,23 @@ void SetUpLevel (void)
 	
 	switch (waveMultiple)			// See which of the 5 we're on.
 	{
-		case 0:						// Waves 0, 5, 10, …
+		case 0:						// Waves 0, 5, 10, 
 		numLedges = 5;				// have 5 ledges (platforms) on screen.
 		break;
 		
-		case 1:						// Waves 1, 6, 11, …
+		case 1:						// Waves 1, 6, 11, 
 		numLedges = 6;				// are up to 6 ledges (platforms) on screen.
 		break;
 		
-		case 2:						// Waves 2, 7, 12, …
+		case 2:						// Waves 2, 7, 12, 
 		numLedges = 5;				// return to 5 ledges (platforms) on screen.
 		break;
 		
-		case 3:						// Waves 3, 8, 13, …
+		case 3:						// Waves 3, 8, 13, 
 		numLedges = 3;				// drop to 3 ledges (platforms) on screen.
 		break;
 		
-		case 4:						// Waves 4, 9, 14, …
+		case 4:						// Waves 4, 9, 14, 
 		numLedges = 6;				// and return to 6 ledges (platforms) on screen.
 		break;
 	}
@@ -190,8 +190,8 @@ void SetUpLevel (void)
 
 //--------------------------------------------------------------  ResetPlayer
 
-// This function prepares the player - it places the player and his/her mount…
-// in their proper starting location (depending on which platform they are to…
+// This function prepares the player - it places the player and his/her mount
+// in their proper starting location (depending on which platform they are to
 // begin on), and it sets all the player's variables to their initial state.
 
 void ResetPlayer (Boolean initialPlace)
@@ -201,12 +201,12 @@ void ResetPlayer (Boolean initialPlace)
 	thePlayer.srcNum = 5;			// Set which graphic (frame) the player is to use.
 	thePlayer.frame = 320;			// This variable will be used as a coutndown timer.
 	
-	if (initialPlace)				// If "initialPlace" is TRUE, …
+	if (initialPlace)				// If "initialPlace" is TRUE, 
 		location = 0;				// the player is to begin on the lowest platform.
 	else							// Otherwise, a random location is chosen.
 		location = RandomInt(numLedges);
 	
-	switch (location)				// Move player horizontally and vertically to their…
+	switch (location)				// Move player horizontally and vertically to their
 	{								// proper location (based on ledge # they're on).
 		case 0:
 		thePlayer.h = 296 << 4;		// Bottom center ledge.
@@ -278,13 +278,13 @@ void OffAMortal (void)
 
 //--------------------------------------------------------------  DoCommandKey
 
-// This function handles the case when the user has held down the command…
-// key.  Note, this only applies to input when a game is in session - otherwise…
+// This function handles the case when the user has held down the command
+// key.  Note, this only applies to input when a game is in session - otherwise
 // a standard event loop handles command keys and everything else.
 
 void DoCommandKey (void)
 {
-	if (BitTst(&theKeys, kEKeyMap))			// Test for "command - E"…
+	if (BitTst(&theKeys, kEKeyMap))			// Test for "command - E"
 	{
 		playing = FALSE;					// which would indicate "End Game".
 	}
@@ -303,10 +303,10 @@ void DoCommandKey (void)
 
 //--------------------------------------------------------------  GetPlayerInput
 
-// This function looks for keystrokes when a game is underway.  We don't use…
-// the more conventional event routines (like GetNextEvent()), because they're…
-// notoriously slow, allow background tasks, introduce possible INIT problems,…
-// and we don't have to.  Instead, we'll rely on GetKeys() (which has its own…
+// This function looks for keystrokes when a game is underway.  We don't use
+// the more conventional event routines (like GetNextEvent()), because they're
+// notoriously slow, allow background tasks, introduce possible INIT problems,
+// and we don't have to.  Instead, we'll rely on GetKeys() (which has its own
 // set of problems - but we deal with them).
 
 void GetPlayerInput (void)
@@ -315,7 +315,7 @@ void GetPlayerInput (void)
 	thePlayer.walking = FALSE;				// Assume too we're not walking.
 	
 	GetKeys(theKeys);						// Get the current keyboard keymap.
-	if (BitTst(&theKeys, kCommandKeyMap))	// See first if command key down…
+	if (BitTst(&theKeys, kCommandKeyMap))	// See first if command key down
 		DoCommandKey();						// and handle those seperately.
 	else									// If not command key, continue.
 	{										// Look for one of the two "flap" keys.
@@ -325,10 +325,10 @@ void GetPlayerInput (void)
 			{
 				thePlayer.mode = kWalking;	// Set the player's mode now to walking.
 				thePlayer.frame = 0;		// Used to note "state" of walking.
-			}								// Otherwise, if player is flying or walking…
+			}								// Otherwise, if player is flying or walking
 			else if ((thePlayer.mode == kFlying) || (thePlayer.mode == kWalking))
 			{
-				if (!flapKeyDown)			// If flap key was not down last frame…
+				if (!flapKeyDown)			// If flap key was not down last frame
 				{							// (this is to prevent "automatic fire").
 											// Give player lift.
 					thePlayer.vVel -= kFlapImpulse;
@@ -367,7 +367,7 @@ void GetPlayerInput (void)
 						thePlayer.wasH = thePlayer.h;
 						thePlayer.wasDest = thePlayer.dest;
 					}
-				}							// Otherwise, if facing right already…
+				}							// Otherwise, if facing right already
 				else
 				{							// If flying, add to their horizontal velocity.
 					if (thePlayer.mode == kFlying)
@@ -416,10 +416,10 @@ void GetPlayerInput (void)
 //--------------------------------------------------------------  HandlePlayerIdle
 
 // Following are a number of functions handling the player's different "modes".
-// This first function handles the player when in "idle" mode.  When idle, the…
-// player is standing on a platform - having just been "born".  This is when the…
-// player is in a "safe" mode - meaning no enemy can kill them.  The player remains…
-// in idle mode until they hit a key to flap or move or until a timer (thePlayer.frame)…
+// This first function handles the player when in "idle" mode.  When idle, the
+// player is standing on a platform - having just been "born".  This is when the
+// player is in a "safe" mode - meaning no enemy can kill them.  The player remains
+// in idle mode until they hit a key to flap or move or until a timer (thePlayer.frame)
 // counts down to zero.
 
 void HandlePlayerIdle (void)
@@ -433,22 +433,22 @@ void HandlePlayerIdle (void)
 
 //--------------------------------------------------------------  HandlePlayerFlying
 
-// This function handles a player in "flying" mode.  In flying mode, the player…
-// is alive and not standing/walking on any platform.  A plyaer remains in flying…
-// mode until the player dies (collides unfavorably with an enemy), is caught by…
-// the hand, or comes near the top of a platform (in which case they land and…
-// switch to walking mode).  While in flying mode, gravity pulls the player down…
+// This function handles a player in "flying" mode.  In flying mode, the player
+// is alive and not standing/walking on any platform.  A plyaer remains in flying
+// mode until the player dies (collides unfavorably with an enemy), is caught by
+// the hand, or comes near the top of a platform (in which case they land and
+// switch to walking mode).  While in flying mode, gravity pulls the player down
 // while friction acts to slow the player down.
 
 void HandlePlayerFlying (void)
 {	
-	if (thePlayer.hVel > 0)					// If player has a positive hori. velocity…
+	if (thePlayer.hVel > 0)					// If player has a positive hori. velocity
 	{										// subtract frictional constant from velocity.
 		thePlayer.hVel -= kAirResistance;
-		if (thePlayer.hVel < 0)				// Don't let it go negative (otherwise, you…
+		if (thePlayer.hVel < 0)				// Don't let it go negative (otherwise, you
 			thePlayer.hVel = 0;				// can get a "yo-yo" effect set up).
 	}
-	else if (thePlayer.hVel < 0)			// Otherwise, if horizontal velocity negative…
+	else if (thePlayer.hVel < 0)			// Otherwise, if horizontal velocity negative
 	{										// add firctional constant to hori. velocity.
 		thePlayer.hVel += kAirResistance;
 		if (thePlayer.hVel > 0)
@@ -468,10 +468,10 @@ void HandlePlayerFlying (void)
 	if (thePlayer.facingRight)				// There are the set of right-facing graphics.
 	{
 		thePlayer.srcNum = 1;				// Assume standard right-facing graphic.
-		if (thePlayer.vVel < -kDontFlapVel)	// Now we jump through a series of hoops…
-		{									// simply to determine whether we'll use…
-			if (thePlayer.flapping)			// the graphic of the player with the wings…
-				thePlayer.srcNum = 0;		// up (srcNum = 0) or with the wings down…
+		if (thePlayer.vVel < -kDontFlapVel)	// Now we jump through a series of hoops
+		{									// simply to determine whether we'll use
+			if (thePlayer.flapping)			// the graphic of the player with the wings
+				thePlayer.srcNum = 0;		// up (srcNum = 0) or with the wings down
 			else							// (srcNum = 1).
 				thePlayer.srcNum = 1;
 		}
@@ -485,9 +485,9 @@ void HandlePlayerFlying (void)
 		else if (thePlayer.flapping)
 			thePlayer.srcNum = 0;
 	}
-	else									// If the player is facing left…
-	{										// We jump through a similar set of hoops…
-		thePlayer.srcNum = 2;				// this time choosing between srcNum = 2 …
+	else									// If the player is facing left
+	{										// We jump through a similar set of hoops
+		thePlayer.srcNum = 2;				// this time choosing between srcNum = 2 
 		if (thePlayer.vVel < -kDontFlapVel)	// and srcNum = 3.
 		{
 			if (thePlayer.flapping)
@@ -516,21 +516,21 @@ void HandlePlayerFlying (void)
 
 //--------------------------------------------------------------  HandlePlayerWalking
 
-// This function handles a player in "walking" mode.  They remain in this mode…
-// until they walk off a platform's edge, flap to lift off the platform, or…
-// collide unfavorably with an enemy (die).  While in walking mode, we need only…
-// determine which frame of animation to display (if the player is taking steps)…
+// This function handles a player in "walking" mode.  They remain in this mode
+// until they walk off a platform's edge, flap to lift off the platform, or
+// collide unfavorably with an enemy (die).  While in walking mode, we need only
+// determine which frame of animation to display (if the player is taking steps)
 // and check for the usual set of collisions.
 
 void HandlePlayerWalking (void)
 {
 	short		desiredHVel;
 	
-	if (thePlayer.walking)					// This means user is actively holding down…
+	if (thePlayer.walking)					// This means user is actively holding down
 	{										// the left or right key.
-		if (evenFrame)						// Now we jump through a number of hoops…
-		{									// in order to get a semi-realistic…
-			if (thePlayer.facingRight)		// "stepping" animation going.  We take steps…
+		if (evenFrame)						// Now we jump through a number of hoops
+		{									// in order to get a semi-realistic
+			if (thePlayer.facingRight)		// "stepping" animation going.  We take steps
 			{								// only on "even frames".
 				if (thePlayer.srcNum == 4)
 					desiredHVel = 208;
@@ -569,7 +569,7 @@ void HandlePlayerWalking (void)
 			}
 		}
 	}
-	else									// If user is not actively holding down the…
+	else									// If user is not actively holding down the
 	{										// left or right key, bring player to a stop.
 		thePlayer.hVel -= thePlayer.hVel / 4;
 		if ((thePlayer.hVel < 4) && (thePlayer.hVel > -4))
@@ -578,17 +578,17 @@ void HandlePlayerWalking (void)
 			PlayExternalSound(kScreechSound, kScreechPriority);
 	}
 	
-	if (thePlayer.vVel > kMaxVVelocity)		// Keep player from moving too quickly…
+	if (thePlayer.vVel > kMaxVVelocity)		// Keep player from moving too quickly
 		thePlayer.vVel = kMaxVVelocity;		// left or right.
 	else if (thePlayer.vVel < -kMaxVVelocity)
 		thePlayer.vVel = -kMaxVVelocity;
 	
-	thePlayer.h += thePlayer.hVel;			// Move player horizontally and vertically…
+	thePlayer.h += thePlayer.hVel;			// Move player horizontally and vertically
 	thePlayer.v += thePlayer.vVel;			// by the corresponding velocity.
 	
 	if (thePlayer.walking)					// "If player holding down left or right keys…".
 	{
-		if (evenFrame)						// Here's where we toggle between the two…
+		if (evenFrame)						// Here's where we toggle between the two
 		{									// frames of "stepping" animation.
 			if (thePlayer.facingRight)
 				thePlayer.srcNum = 9 - thePlayer.srcNum;
@@ -596,7 +596,7 @@ void HandlePlayerWalking (void)
 				thePlayer.srcNum = 13 - thePlayer.srcNum;
 		}
 	}
-	else									// If the player not holding down keys…
+	else									// If the player not holding down keys
 	{										// draw the player just standing there.
 		if (thePlayer.facingRight)
 			thePlayer.srcNum = 5;
@@ -614,9 +614,9 @@ void HandlePlayerWalking (void)
 //--------------------------------------------------------------  HandlePlayerSinking
 
 // When the player is in "sinking" mode, they are on a one-way ticket to death.
-// The player is sinking into the lava.  We put the player into this mode (rather…
-// than kill them outright) so that we can have a number of frames of them slowly…
-// slipping beneath the surface of the lava.  When the get below the surface of…
+// The player is sinking into the lava.  We put the player into this mode (rather
+// than kill them outright) so that we can have a number of frames of them slowly
+// slipping beneath the surface of the lava.  When the get below the surface of
 // the lava, they will be officially "killed" and a new player will be "born",
 
 void HandlePlayerSinking (void)
@@ -633,10 +633,10 @@ void HandlePlayerSinking (void)
 
 //--------------------------------------------------------------  HandlePlayerFalling
 
-// "Falling" refers to a player who is dead already but is still careening…
-// down the screen as a skeleton.  If (when) the player lands on a ledge they…
-// will turn into a pile of bones for a short duration.  If instead they fall…
-// into the lava, they'll sink.  In any event, it is then that they are…
+// "Falling" refers to a player who is dead already but is still careening
+// down the screen as a skeleton.  If (when) the player lands on a ledge they
+// will turn into a pile of bones for a short duration.  If instead they fall
+// into the lava, they'll sink.  In any event, it is then that they are
 // officially pronounced dead and a new player is born.
 
 void HandlePlayerFalling (void)
@@ -661,7 +661,7 @@ void HandlePlayerFalling (void)
 	else if (thePlayer.vVel < -kMaxVVelocity)
 		thePlayer.vVel = -kMaxVVelocity;
 	
-	thePlayer.h += thePlayer.hVel;		// Move player's x and y (h and v)…
+	thePlayer.h += thePlayer.hVel;		// Move player's x and y (h and v)
 	thePlayer.v += thePlayer.vVel;		// by amount of velocity in each direction.
 	
 	SetAndCheckPlayerDest();			// Check for wrap-around, etc.
@@ -672,13 +672,13 @@ void HandlePlayerFalling (void)
 
 //--------------------------------------------------------------  HandlePlayerBones
 
-// This is when the player is just a static pile of bones on a platform.  They…
-// have been killed by an enemy and now are waiting to slip away so that a new…
+// This is when the player is just a static pile of bones on a platform.  They
+// have been killed by an enemy and now are waiting to slip away so that a new
 // player can be born.
 
 void HandlePlayerBones (void)
 {
-	if (evenFrame)					// To slow it down a bit, action only occurs…
+	if (evenFrame)					// To slow it down a bit, action only occurs
 	{								// on the even frames.
 		thePlayer.frame--;			// Drop the counter down by one.
 		if (thePlayer.frame == 0)	// When counter reaches zero, player officially dies.
@@ -690,10 +690,10 @@ void HandlePlayerBones (void)
 
 //--------------------------------------------------------------  MovePlayer
 
-// This function is the sort of "master movement" function.  It looks…
-// at what mode a player is in and calls the appropriate function from…
-// above.  Arcade games (at least this one) tend to be very "modal" in…
-// this way.  It's the actions of the user and the enemies in the game…
+// This function is the sort of "master movement" function.  It looks
+// at what mode a player is in and calls the appropriate function from
+// above.  Arcade games (at least this one) tend to be very "modal" in
+// this way.  It's the actions of the user and the enemies in the game
 // that cause the player's mode to move from one state to another.
 
 void MovePlayer (void)
@@ -729,13 +729,13 @@ void MovePlayer (void)
 //--------------------------------------------------------------  CheckTouchDownCollision
 
 // This function determines whether or not the player is landed on a ledge.
-// It does this by doing a rectangle collision between the player's bounding…
+// It does this by doing a rectangle collision between the player's bounding
 // rectangle and an imaginary rectangle enclosing an area above the ledges.
-// I call these imaginary rectangles "touchDownRects[]".  The trick was that…
-// you don't want the player to have to "hit" the top of a ledge in order to…
-// land on it - there is an arbitrary distance above a ledge where, if the player…
-// is within this area, the legs ought to come out and the player flagged as…
-// walking.  As well, this same function is used for a walking player to see…
+// I call these imaginary rectangles "touchDownRects[]".  The trick was that
+// you don't want the player to have to "hit" the top of a ledge in order to
+// land on it - there is an arbitrary distance above a ledge where, if the player
+// is within this area, the legs ought to come out and the player flagged as
+// walking.  As well, this same function is used for a walking player to see
 // if they are still on the ledge (they may walk off the edge).
 
 void CheckTouchDownCollision (void)
@@ -748,7 +748,7 @@ void CheckTouchDownCollision (void)
 	for (i = 0; i < numLedges; i++)				// Go through all ledges.
 	{
 		testRect = touchDownRects[i];			// Here's the imaginary rect.
-		if (thePlayer.mode == kWalking)			// We need an offset if player walking…
+		if (thePlayer.mode == kWalking)			// We need an offset if player walking
 			OffsetRect(&testRect, 0, 11);		// since the player graphic is taller.
 		
 		if (SectRect(&thePlayer.dest, &testRect, &whoCares))
@@ -776,7 +776,7 @@ void CheckTouchDownCollision (void)
 		}
 	}
 	
-	if (!sected)								// Now, if we didn't collide…
+	if (!sected)								// Now, if we didn't collide
 	{											// were we walking?
 		if (thePlayer.mode == kWalking)			// Did we walk off the ledge?
 		{
@@ -789,9 +789,9 @@ void CheckTouchDownCollision (void)
 
 //--------------------------------------------------------------  CheckPlatformCollision
 
-// Unlike the above function, this one tests the player's bounding rect against…
-// the bounding rect of each ledge (not an imaginary rect above the ledge).  This…
-// function is primarily for (then) collisions off the bottom and sides of the…
+// Unlike the above function, this one tests the player's bounding rect against
+// the bounding rect of each ledge (not an imaginary rect above the ledge).  This
+// function is primarily for (then) collisions off the bottom and sides of the
 // ledges.  In this way, the ledges are "solid" - not able to be passed through.
 
 void CheckPlatformCollision (void)
@@ -802,18 +802,18 @@ void CheckPlatformCollision (void)
 	for (i = 0; i < numLedges; i++)					// Walk through all ledges.
 	{												// Test rectangle overlap.
 		if (SectRect(&thePlayer.dest, &platformRects[i], &whoCares))
-		{											// If player intersecting ledge…
+		{											// If player intersecting ledge
 			hRect.left = thePlayer.dest.left;		// Create our special test rect.
 			hRect.right = thePlayer.dest.right;
 			hRect.top = thePlayer.wasDest.top;
 			hRect.bottom = thePlayer.wasDest.bottom;
-													// Determine if the player hit the…
-													// top/bottom of the ledge or the…
+													// Determine if the player hit the
+													// top/bottom of the ledge or the
 													// sides of the ledge.
 			if (SectRect(&hRect, &platformRects[i], &whoCares))
-			{										// We're fairly sure the player hit…
+			{										// We're fairly sure the player hit
 													// the left or right edge of ledge.
-				if (thePlayer.h > thePlayer.wasH)	// If player was heading right…
+				if (thePlayer.h > thePlayer.wasH)	// If player was heading right
 				{									// player will bounce to left.
 					offset = thePlayer.dest.right - platformRects[i].left;
 					thePlayer.dest.left -= offset;
@@ -823,7 +823,7 @@ void CheckPlatformCollision (void)
 						thePlayer.hVel = -(thePlayer.hVel >> 1);
 					else
 						thePlayer.hVel = thePlayer.hVel >> 1;
-				}									// Else if player was heading left…
+				}									// Else if player was heading left
 				else if (thePlayer.h < thePlayer.wasH)
 				{									// player will bounce right.
 					offset = platformRects[i].right - thePlayer.dest.left;
@@ -837,7 +837,7 @@ void CheckPlatformCollision (void)
 				}									// Play impact sound.
 				PlayExternalSound(kGrateSound, kGratePriority);
 			}
-			else									// It doesn't look like we hit the…
+			else									// It doesn't look like we hit the
 			{										// the left or right edge of ledge.
 				vRect.left = thePlayer.wasDest.left;
 				vRect.right = thePlayer.wasDest.right;
@@ -847,7 +847,7 @@ void CheckPlatformCollision (void)
 				if (SectRect(&vRect, &platformRects[i], &whoCares))
 				{									// We've decided we've hit top/bottom.
 					if (thePlayer.wasV < thePlayer.v)
-					{								// If we were heading down (hit top)…
+					{								// If we were heading down (hit top)
 													// keep player on top of ledge.
 						offset = thePlayer.dest.bottom - platformRects[i].top;
 						thePlayer.dest.top -= offset;
@@ -856,7 +856,7 @@ void CheckPlatformCollision (void)
 													// Play collision sound.
 						if (thePlayer.vVel > kDontFlapVel)
 							PlayExternalSound(kGrateSound, kGratePriority);
-													// If we were falling bones (dead)…
+													// If we were falling bones (dead)
 						if (thePlayer.mode == kFalling)
 						{							// we'll bounce.
 							if ((thePlayer.dest.right - 16) > platformRects[i].right)							{
@@ -874,7 +874,7 @@ void CheckPlatformCollision (void)
 								else
 									thePlayer.vVel = thePlayer.vVel >> 1;
 							}
-							else					// If we were nearly stopped…
+							else					// If we were nearly stopped
 							{						// turn into pile of bones.
 								PlayExternalSound(kBoom1Sound, kBoom1Priority);
 								thePlayer.vVel = 0;
@@ -885,16 +885,16 @@ void CheckPlatformCollision (void)
 								thePlayer.srcNum = 10;
 							}
 						}
-						else						// Okay, if we weren't falling bones…
+						else						// Okay, if we weren't falling bones
 						{							// bounce the player (-1/2 vel.).
 							if (thePlayer.vVel > 0)
 								thePlayer.vVel = -(thePlayer.vVel >> 1);
 							else
 								thePlayer.vVel = thePlayer.vVel >> 1;
 						}
-					}								// If the player was instead moving up…
+					}								// If the player was instead moving up
 					else if (thePlayer.wasV > thePlayer.v)
-					{								// the player likely hit the bottom of…
+					{								// the player likely hit the bottom of
 													// the ledge.  Keep player below ledge.
 						offset = platformRects[i].bottom - thePlayer.dest.top;
 						thePlayer.dest.top += offset;
@@ -915,15 +915,15 @@ void CheckPlatformCollision (void)
 
 //--------------------------------------------------------------  KeepPlayerOnPlatform
 
-// This is an alignment function.  It is called only if the player is standing or…
-// walking on a ledge.  It is designed to keep the player's mount's (bird's)…
-// feet firmly planted on the ledge.  Consider that, with the addition of gravity…
-// to a player's downward velocity, there is a problem where the player can appear…
-// to slowly sink down through the ledge.  There may be any number of methods you…
-// might want to try to prevent this from becoming a problem in the first place, …
-// but my experience has been that all the methods I've tried have flaws - correcting…
-// for those flaws points out other flaws and you start getting a messy sort of…
-// patchwork.  Should you ever get it to work, the mess that is your function has come…
+// This is an alignment function.  It is called only if the player is standing or
+// walking on a ledge.  It is designed to keep the player's mount's (bird's)
+// feet firmly planted on the ledge.  Consider that, with the addition of gravity
+// to a player's downward velocity, there is a problem where the player can appear
+// to slowly sink down through the ledge.  There may be any number of methods you
+// might want to try to prevent this from becoming a problem in the first place, 
+// but my experience has been that all the methods I've tried have flaws - correcting
+// for those flaws points out other flaws and you start getting a messy sort of
+// patchwork.  Should you ever get it to work, the mess that is your function has come
 // to resemble the Knot of ????.
 
 void KeepPlayerOnPlatform (void)
@@ -931,10 +931,10 @@ void KeepPlayerOnPlatform (void)
 	Rect		whoCares;
 	short		i, offset;
 	
-	for (i = 0; i < numLedges; i++)		// For each ledge for this wave…
+	for (i = 0; i < numLedges; i++)		// For each ledge for this wave
 	{									// test for a collision.
 		if ((SectRect(&thePlayer.dest, &platformRects[i], &whoCares)) && (thePlayer.vVel > 0))
-		{								// If collided (player sinking), force…
+		{								// If collided (player sinking), force
 										// player to top of ledge.
 			offset = thePlayer.dest.bottom - platformRects[i].top - 1;
 			thePlayer.dest.top -= offset;
@@ -949,7 +949,7 @@ void KeepPlayerOnPlatform (void)
 
 //--------------------------------------------------------------  CheckLavaRoofCollision
 
-// This is a simple high/low test to see if the player has either bounced off…
+// This is a simple high/low test to see if the player has either bounced off
 // the roof of the "arena" or dipped down into the lava below.
 
 void CheckLavaRoofCollision (void)
@@ -978,7 +978,7 @@ void CheckLavaRoofCollision (void)
 
 //--------------------------------------------------------------  SetAndCheckPlayerDest
 
-// This function keeps our player's screen coordinates and "scaled" coordinates…
+// This function keeps our player's screen coordinates and "scaled" coordinates
 // in agreement.  As well, it checks for wrap-around and handles it.
 
 void SetAndCheckPlayerDest (void)
@@ -1009,9 +1009,9 @@ void SetAndCheckPlayerDest (void)
 
 //--------------------------------------------------------------  HandleLightning
 
-// Lightning is handled here.  Obelisks are flashed, lightning is generated, …
-// lighting strikes, and the lightning counter decremented.  This is pretty…
-// nice - we can just set "lightningCount" to a non-zero number and this…
+// Lightning is handled here.  Obelisks are flashed, lightning is generated, 
+// lighting strikes, and the lightning counter decremented.  This is pretty
+// nice - we can just set "lightningCount" to a non-zero number and this
 // function will strike lightning every fram until the counter returns to zero.
 
 void HandleLightning (void)
@@ -1027,8 +1027,8 @@ void HandleLightning (void)
 
 //--------------------------------------------------------------  FinishLightning
 
-// This undoes what the lightning did.  It "undraws" the lightning and returns…
-// the obelisks to their "non lit" state.  I see that it is HERE where the counter…
+// This undoes what the lightning did.  It "undraws" the lightning and returns
+// the obelisks to their "non lit" state.  I see that it is HERE where the counter
 // is decremented and not in the function above.
 
 void FinishLightning (void)
@@ -1037,7 +1037,7 @@ void FinishLightning (void)
 	{
 		StrikeLightning();						// Undraw lightning (exclusive Or).
 		lightningCount--;						// Descrement lightning counter.
-		if (lightningCount == 0)				// If this is the last lightning strike…
+		if (lightningCount == 0)				// If this is the last lightning strike
 			FlashObelisks(FALSE);				// return obelisk to normal.
 												// "BOOOOM!"
 		PlayExternalSound(kLightningSound, kLightningPriority);
@@ -1046,17 +1046,17 @@ void FinishLightning (void)
 
 //--------------------------------------------------------------  HandleCountDownTimer
 
-// This is a pretty boring function.  It is here so that when one level ends,…
-// the next one does begin immediately.  It gives the player a few seconds of…
-// breathing time.  Essentially, to engage it, we need merely set "countDownTimer"…
-// to a positive number.  Each frame the counter gets decremented.  When it…
+// This is a pretty boring function.  It is here so that when one level ends,
+// the next one does begin immediately.  It gives the player a few seconds of
+// breathing time.  Essentially, to engage it, we need merely set "countDownTimer"
+// to a positive number.  Each frame the counter gets decremented.  When it
 // reaches zero, the level is advanced to the next wave.
 
 void HandleCountDownTimer (void)
 {
 	if (countDownTimer == 0)		// If already zero, do nothing.
 		return;
-	else							// Otherwise, if greater than zero…
+	else							// Otherwise, if greater than zero
 	{
 		countDownTimer--;			// decrememnt counter.
 		if (countDownTimer == 0)	// Did it just hit zero?
@@ -1072,8 +1072,8 @@ void HandleCountDownTimer (void)
 
 //--------------------------------------------------------------  PlayGame
 
-// Here is the "core" of the "game loop".  When a player has elected to…
-// begin a game, Glypha falls into this function and remains in a loop…
+// Here is the "core" of the "game loop".  When a player has elected to
+// begin a game, Glypha falls into this function and remains in a loop
 // herein until the player either quits, or loses their last "bird".
 // Each pass through the main loop below constitutes one "frame" of the game.
 
@@ -1121,8 +1121,8 @@ void PlayGame (void)
 
 //--------------------------------------------------------------  CheckHighScore
 
-// This function handles testing to see if the player's score is in the …
-// high scores.  If that is the case, the function prompts the user for…
+// This function handles testing to see if the player's score is in the 
+// high scores.  If that is the case, the function prompts the user for
 // a name to enter, and sorts and stores off the new score list.
 
 void CheckHighScore (void)
@@ -1133,7 +1133,7 @@ void CheckHighScore (void)
 	short		i, item;
 	Boolean		leaving;
 	
-	if (theScore > thePrefs.highScores[9])		// To see if on high scores, we need…
+	if (theScore > thePrefs.highScores[9])		// To see if on high scores, we need
 	{											// merely see if the last guy is beat out.
 		openTheScores = TRUE;					// Will automatically bring up high scores.
 												// Play some congratulatory music.
@@ -1151,7 +1151,7 @@ void CheckHighScore (void)
 		thePrefs.highScores[i] = theScore;		// Pop the new score in place.
 		thePrefs.highLevel[i] = levelOn + 1;	// Drop in the new highest level.
 		
-		NumToString((long)i + 1L, placeStr);	// Convert place to a string to display…
+		NumToString((long)i + 1L, placeStr);	// Convert place to a string to display
 		ParamText(placeStr, "\p", "\p", "\p");	// in the dialog (via ParamText()).
 		
 		InitCursor();							// Show cursor.
@@ -1170,7 +1170,7 @@ void CheckHighScore (void)
 		{
 			ModalDialog(0L, &item);				// Use standard filtering.
 			
-			if (item == 1)						// If player hit the "Okay" button…
+			if (item == 1)						// If player hit the "Okay" button
 			{									// Get the name entered in text edit box.
 				GetDialogString(theDial, 2, tempStr);
 												// Copy the name into high score list.
@@ -1182,7 +1182,7 @@ void CheckHighScore (void)
 		
 		DisposDialog(theDial);					// Clean up.
 	}
-	else										// But if player didn't get on high scores…
+	else										// But if player didn't get on high scores
 		openTheScores = FALSE;					// no need to rub their face in it.
 }
 

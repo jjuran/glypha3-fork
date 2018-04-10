@@ -5,9 +5,9 @@
 //----------------------------------------------------------------------------
 //============================================================================
 
-// This is a slick little file that I re-use and re-use.  I wrote it toÉ
-// seemlessly handle System 6 or System 7 with but a single call.  You needÉ
-// to define your own "prefs" struct, but these routines will read and writeÉ
+// This is a slick little file that I re-use and re-use.  I wrote it to
+// seemlessly handle System 6 or System 7 with but a single call.  You need
+// to define your own "prefs" struct, but these routines will read and write
 // it to the System folder.
 
 #include "Externs.h"
@@ -69,7 +69,7 @@ Boolean GetPrefsFPath (long *prefDirID, short *systemVolRef)
 	OSErr		theErr;
 									// Here's the wiley FindFolder() call.
 	theErr = FindFolder(kOnSystemDisk, kPreferencesFolderType, kCreateFolder,
-		systemVolRef, prefDirID);	// It returns to us the directory and volume ref.É
+		systemVolRef, prefDirID);	// It returns to us the directory and volume ref.
 	if (theErr != noErr)			// Assuming it worked at all!
 		return(FALSE);
 	
@@ -78,7 +78,7 @@ Boolean GetPrefsFPath (long *prefDirID, short *systemVolRef)
 
 //--------------------------------------------------------------  CreatePrefsFolder
 
-// This function won't be necessary for System 7, for System 6 though, it createsÉ
+// This function won't be necessary for System 7, for System 6 though, it creates
 // a folder ("Preferences") in the System folder and returns whether or not it worked.
 
 Boolean CreatePrefsFolder (short *systemVolRef)
@@ -86,8 +86,8 @@ Boolean CreatePrefsFolder (short *systemVolRef)
 	HFileParam	fileParamBlock;
 	Str255		folderName;
 	OSErr		theErr;
-										// Here's our localization.  Rather thanÉ
-										// hard-code the name "Preferences" in the codeÉ
+										// Here's our localization.  Rather than
+										// hard-code the name "Preferences" in the code
 										// we pull up the text from a string resource.
 	GetIndString(folderName, kPrefsStringsID, kPrefsFNameIndex);
 										// Set up a file parameter block.
@@ -107,12 +107,12 @@ Boolean CreatePrefsFolder (short *systemVolRef)
 
 //--------------------------------------------------------------  GetPrefsFPath6
 
-// If ever there was a case to drop support for System 6 (and require System 7),É
-// this is it.  Look at how insidious handling System 6 files can be.  The followingÉ
-// function is the "System 6 pedigree" of the above GetPrefsFPath() function.  NoteÉ
-// that the GetPrefsFPath() function was ONE CALL!  TWO LINES OF CODE!  The belowÉ
-// function is like a page or so.  Anyway, this function is called if Glypha isÉ
-// running under System 6 and essentially returns a volume reference pointing toÉ
+// If ever there was a case to drop support for System 6 (and require System 7),
+// this is it.  Look at how insidious handling System 6 files can be.  The following
+// function is the "System 6 pedigree" of the above GetPrefsFPath() function.  Note
+// that the GetPrefsFPath() function was ONE CALL!  TWO LINES OF CODE!  The below
+// function is like a page or so.  Anyway, this function is called if Glypha is
+// running under System 6 and essentially returns a volume reference pointing to
 // the preferences folder.
 
 Boolean GetPrefsFPath6 (short *systemVolRef)
@@ -141,7 +141,7 @@ Boolean GetPrefsFPath6 (short *systemVolRef)
 	theErr = PBGetCatInfo(&catalogInfoPB, FALSE);
 	if (theErr != noErr)						// Did we fail to find Prefs folder?
 	{
-		if (theErr != fnfErr)					// If it WASN'T a file not found errorÉ
+		if (theErr != fnfErr)					// If it WASN'T a file not found error
 		{										// then something more sinister is afoot.
 			RedAlert("\pPrefs Filepath Error");
 		}										// Otherwise, need to create prefs folder.
@@ -160,7 +160,7 @@ Boolean GetPrefsFPath6 (short *systemVolRef)
 	}
 	prefDirID = directoryInfo->ioDrDirID;		// Alright, the dir. ID for prefs folder.
 	
-	workingDirPB.ioNamePtr = whoCares;			// Now convert working dir. into a "real"É
+	workingDirPB.ioNamePtr = whoCares;			// Now convert working dir. into a "real"
 	workingDirPB.ioVRefNum = *systemVolRef;		// dir. ID so we can get volume number.
 	workingDirPB.ioWDIndex = 0;
 	workingDirPB.ioWDProcID = 0;
@@ -175,12 +175,12 @@ Boolean GetPrefsFPath6 (short *systemVolRef)
 	*systemVolRef = workingDirPB.ioWDVRefNum;
 	
 	workingDirPB.ioNamePtr = whoCares;
-	workingDirPB.ioWDDirID = prefDirID;			// Okay, finally, with a directory ID, É
-	workingDirPB.ioVRefNum = *systemVolRef;		// and a "hard" volume numberÉ
-	workingDirPB.ioWDProcID = 0;				// É
-	workingDirPB.ioCompletion = 0L;				// É
-	theErr = PBOpenWD(&workingDirPB, FALSE);	// we can create a working directoryÉ
-	if (theErr != noErr)						// control block with which to accessÉ
+	workingDirPB.ioWDDirID = prefDirID;			// Okay, finally, with a directory ID, 
+	workingDirPB.ioVRefNum = *systemVolRef;		// and a "hard" volume number
+	workingDirPB.ioWDProcID = 0;				// 
+	workingDirPB.ioCompletion = 0L;				// 
+	theErr = PBOpenWD(&workingDirPB, FALSE);	// we can create a working directory
+	if (theErr != noErr)						// control block with which to access
 	{											// files in the prefs folder.
 		RedAlert("\pPrefs PBOpenWD() Error");
 	}
@@ -192,11 +192,11 @@ Boolean GetPrefsFPath6 (short *systemVolRef)
 
 //--------------------------------------------------------------  WritePrefs
 
-// This is the System 7 version that handles all the above functions when youÉ
-// want to write out the preferences file.  It is called by SavePrefs() belowÉ
-// if we're running under System 7.  It creates an FSSpec record to holdÉ
-// information about where the preferences file is located, creates Glypha'sÉ
-// preferences if they are not found, opens the prefences file, writes outÉ
+// This is the System 7 version that handles all the above functions when you
+// want to write out the preferences file.  It is called by SavePrefs() below
+// if we're running under System 7.  It creates an FSSpec record to hold
+// information about where the preferences file is located, creates Glypha's
+// preferences if they are not found, opens the prefences file, writes out
 // the preferences, and the closes the prefs.  Bam, bam, bam.
 
 Boolean WritePrefs (long *prefDirID, short *systemVolRef, prefsInfo *thePrefs)
@@ -236,7 +236,7 @@ Boolean WritePrefs (long *prefDirID, short *systemVolRef, prefsInfo *thePrefs)
 
 //--------------------------------------------------------------  WritePrefs6
 
-// This is the System 6 equivalent of the above function.  It handles prefsÉ
+// This is the System 6 equivalent of the above function.  It handles prefs
 // opening, writing and closing for System 6.
 
 Boolean WritePrefs6 (short *systemVolRef, prefsInfo *thePrefs)
@@ -278,9 +278,9 @@ Boolean WritePrefs6 (short *systemVolRef, prefsInfo *thePrefs)
 
 // This is the single function called externally to save the preferences.
 // You pass it a pointer to your preferences struct and a version number.
-// One of the fields in your preferences struct should be a version numberÉ
-// (short prefVersion).  This function determines if we're on System 6 or 7É
-// and then calls the appropriate routines.  It returns TRUE if all went wellÉ
+// One of the fields in your preferences struct should be a version number
+// (short prefVersion).  This function determines if we're on System 6 or 7
+// and then calls the appropriate routines.  It returns TRUE if all went well
 // or FALSE if any step failed.
 
 Boolean SavePrefs (prefsInfo *thePrefs, short versionNow)
@@ -319,8 +319,8 @@ Boolean SavePrefs (prefsInfo *thePrefs, short versionNow)
 
 //--------------------------------------------------------------  ReadPrefs
 
-// This is the System 7 version for reading in the preferences.  It handlesÉ
-// opening the prefs, reading in the data to your prefs struct and closingÉ
+// This is the System 7 version for reading in the preferences.  It handles
+// opening the prefs, reading in the data to your prefs struct and closing
 // the file.
 
 OSErr ReadPrefs (long *prefDirID, short *systemVolRef, prefsInfo *thePrefs)
@@ -347,7 +347,7 @@ OSErr ReadPrefs (long *prefDirID, short *systemVolRef, prefsInfo *thePrefs)
 	byteCount = sizeof(*thePrefs);	// Determine the number of bytes to read in.
 									// Read 'em into your prefs struct.
 	theErr = FSRead(fileRefNum, &byteCount, thePrefs);
-	if (theErr != noErr)			// If there was an error reading the fileÉ
+	if (theErr != noErr)			// If there was an error reading the file
 	{								// close the file and we'll revert to defaults.
 		if (theErr == eofErr)
 			theErr = FSClose(fileRefNum);
@@ -365,7 +365,7 @@ OSErr ReadPrefs (long *prefDirID, short *systemVolRef, prefsInfo *thePrefs)
 
 //--------------------------------------------------------------  ReadPrefs6
 
-// This is the System 6 version of the above function.  It's basically the same,É
+// This is the System 6 version of the above function.  It's basically the same,
 // but doesn't have the luxury of using FSSpec records.
 
 OSErr ReadPrefs6 (short *systemVolRef, prefsInfo *thePrefs)
@@ -405,15 +405,15 @@ OSErr ReadPrefs6 (short *systemVolRef, prefsInfo *thePrefs)
 
 //--------------------------------------------------------------  DeletePrefs
 
-// It can happen that you introduce a game with only a few preference settingsÉ
-// but then later update your game and end up having to add additional settingsÉ
-// to be stored in your games preferences.  In this case, the size of the oldÉ
-// prefs won't match the size of the new.  Or even if the size is the same, youÉ
-// may have re-ordered the prefs and attempting to load the old prefs will resultÉ
-// in garbage.  It is for this reason that I use the "versionNeed" variable andÉ
-// the "prefVersion" field in the prefs struct.  In such a case, the below functionÉ
-// will be called to delte the old prefs.  When the prefs are then written out, aÉ
-// new pref file will be created.  This particular function is the System 7 versionÉ
+// It can happen that you introduce a game with only a few preference settings
+// but then later update your game and end up having to add additional settings
+// to be stored in your games preferences.  In this case, the size of the old
+// prefs won't match the size of the new.  Or even if the size is the same, you
+// may have re-ordered the prefs and attempting to load the old prefs will result
+// in garbage.  It is for this reason that I use the "versionNeed" variable and
+// the "prefVersion" field in the prefs struct.  In such a case, the below function
+// will be called to delte the old prefs.  When the prefs are then written out, a
+// new pref file will be created.  This particular function is the System 7 version
 // for deleting the old preferences.
 
 Boolean DeletePrefs (long *dirID, short *volRef)
@@ -425,7 +425,7 @@ Boolean DeletePrefs (long *dirID, short *volRef)
 	theErr = FSMakeFSSpec(*volRef, *dirID, fileName, &theSpecs);
 	if (theErr != noErr)					// Test to see if it worked.
 		return(FALSE);
-	else									// If it workedÉ
+	else									// If it worked
 		theErr = FSpDelete(&theSpecs);		// delete the file.
 	
 	if (theErr != noErr)
@@ -453,9 +453,9 @@ Boolean DeletePrefs6 (short *volRef)
 
 //--------------------------------------------------------------  LoadPrefs
 
-// Here is the single call for loading in preferences.  It handles all theÉ
-// above function onvolved with opening and reading in preferences.  ItÉ
-// determines whether we are on System 6 or 7 (FSSpecs) and makes the rightÉ
+// Here is the single call for loading in preferences.  It handles all the
+// above function onvolved with opening and reading in preferences.  It
+// determines whether we are on System 6 or 7 (FSSpecs) and makes the right
 // calls.
 
 Boolean LoadPrefs (prefsInfo *thePrefs, short versionNeed)
@@ -501,8 +501,8 @@ Boolean LoadPrefs (prefsInfo *thePrefs, short versionNeed)
 		else if (theErr != noErr)
 			return(FALSE);
 	}
-										// Okay, maybe the read worked, but we stillÉ
-										// need to check the version number to seeÉ
+										// Okay, maybe the read worked, but we still
+										// need to check the version number to see
 										// if it's current.
 	if (thePrefs->prefVersion != versionNeed)
 	{									// We'll delete the file if old version.
