@@ -223,10 +223,5 @@ void GetDialogNumFromStr (DialogPtr, short, long *);
 void DisableDialogControl (DialogPtr, short);
 
 
-#ifdef powerc
-	extern pascal void SetSoundVol(short level);		// for old Sound Manager
-	extern pascal void GetSoundVol(short *level)
-	THREEWORDINLINE(0x4218, 0x10B8, 0x0260);
-#endif
-
-
+void SetSoundVol(short level);
+void GetSoundVol(short* level);

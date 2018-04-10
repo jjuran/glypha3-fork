@@ -367,3 +367,22 @@ void KillSound (void)
 	theErr = CloseSoundChannel();	// Close down the sound channels.
 }
 
+/*
+	Sound Manager volume levels range from 0 (silent) to 0x100 (full volume).
+*/
+
+void SetSoundVol(short level)
+{
+	short volume = level * 0x0100 / 7;
+	
+	SetDefaultOutputVolume(volume * 0x00010001);
+}
+
+void GetSoundVol(short* level)
+{
+	long volume = 0;
+	GetDefaultOutputVolume(&volume);
+	volume += volume >> 16;
+	
+	*level = ((short) volume * 7 + 511) / 512;
+}
