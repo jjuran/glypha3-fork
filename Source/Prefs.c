@@ -12,7 +12,7 @@
 
 #include "Externs.h"
 #include <Folders.h>							// Needed for creating a folder.
-#include <GestaltEqu.h>							// Needed for the Gestalt() call.
+#include <Gestalt.h>							// Needed for the Gestalt() call.
 #include <Script.h>								// I can't remember why I needed this.
 
 
