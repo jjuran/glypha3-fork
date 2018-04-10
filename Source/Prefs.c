@@ -68,7 +68,7 @@ Boolean GetPrefsFPath (long *prefDirID, short *systemVolRef)
 {
 	OSErr		theErr;
 									// Here's the wiley FindFolder() call.
-	theErr = FindFolder(kOnSystemDisk, kPreferencesFolderType, kCreateFolder, 
+	theErr = FindFolder(kOnSystemDisk, kPreferencesFolderType, kCreateFolder,
 		systemVolRef, prefDirID);	// It returns to us the directory and volume ref.É
 	if (theErr != noErr)			// Assuming it worked at all!
 		return(FALSE);

@@ -66,10 +66,10 @@ void MenusReflectMode (void)
 		DisableItem(gameMenu, iNewGame);		// Cannot begin another New Game.
 		EnableItem(gameMenu, iPauseGame);		// Can Pause Game.
 		if (pausing)							// If we are pausedÉ
-			SetItem(gameMenu, iPauseGame, 
+			SetItem(gameMenu, iPauseGame,
 					"\pResume Game");			// Rename item "Resume Game".
 		else									// If we are not pausedÉ
-			SetItem(gameMenu, iPauseGame, 
+			SetItem(gameMenu, iPauseGame,
 					"\pPause Game");			// Rename item "Pause Game".
 		EnableItem(gameMenu, iEndGame);			// Can End Game.
 		DisableItem(optionsMenu, 0);			// Cannot change game settings.
@@ -78,7 +78,7 @@ void MenusReflectMode (void)
 	{
 		EnableItem(gameMenu, iNewGame);			// Can begin a New Game.
 		DisableItem(gameMenu, iPauseGame);		// Cannot Pause Game.
-		SetItem(gameMenu, iPauseGame, 
+		SetItem(gameMenu, iPauseGame,
 				"\pPause Game");				// Rename item "Pause Game".
 		DisableItem(gameMenu, iEndGame);		// Cannot End Game.
 		EnableItem(optionsMenu, 0);				// Can change game settings.
@@ -267,9 +267,9 @@ void DoMenuChoice (long menuChoice)
 
 void UpdateMainWindow (void)
 {
-	CopyBits(&((GrafPtr)backSrcMap)->portBits, 
-			&(((GrafPtr)mainWindow)->portBits), 
-			&mainWindowRect, &mainWindowRect, 
+	CopyBits(&((GrafPtr)backSrcMap)->portBits,
+			&(((GrafPtr)mainWindow)->portBits),
+			&mainWindowRect, &mainWindowRect,
 			srcCopy, 0L);
 }
 

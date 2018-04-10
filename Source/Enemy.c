@@ -393,15 +393,15 @@ void CheckEnemyPlatformHit (short h)
 							theEnemies[h].vVel = -(theEnemies[h].vVel >> 1);
 						else
 							theEnemies[h].vVel = theEnemies[h].vVel >> 1;
-						if ((theEnemies[h].vVel < 8) && (theEnemies[h].vVel > -8) && 
+						if ((theEnemies[h].vVel < 8) && (theEnemies[h].vVel > -8) &&
 								(theEnemies[h].hVel == 0) && (theEnemies[h].mode == kFalling))
 						{						// Here we handle an egg come to rest.
-							if (((theEnemies[h].dest.right - 8) > platformRects[i].right) && 
+							if (((theEnemies[h].dest.right - 8) > platformRects[i].right) &&
 									(theEnemies[h].hVel == 0))
 							{					// Special case where egg right on edge.
 								theEnemies[h].hVel = 32;
 							}
-							else if (((theEnemies[h].dest.left + 8) < platformRects[i].left) && 
+							else if (((theEnemies[h].dest.left + 8) < platformRects[i].left) &&
 									(theEnemies[h].hVel == 0))
 							{					// Special case where egg right on edge.
 								theEnemies[h].hVel = -32;
@@ -429,7 +429,7 @@ void CheckEnemyPlatformHit (short h)
 							theEnemies[h].vVel = -(theEnemies[h].vVel >> 2);
 						else
 							theEnemies[h].vVel = theEnemies[h].vVel >> 2;
-						if ((theEnemies[h].vVel < 8) && (theEnemies[h].vVel > -8) && 
+						if ((theEnemies[h].vVel < 8) && (theEnemies[h].vVel > -8) &&
 								(theEnemies[h].hVel == 0) && (theEnemies[h].mode == kFalling))
 						{
 							theEnemies[h].mode = kEggTimer;
@@ -515,7 +515,7 @@ void HandleFlyingEnemies (short i)
 	if (dist < 0)
 		dist = -dist;
 								// See if the player is within the enemy's "seek" range.
-	if ((dist < theEnemies[i].heightSmell) && 
+	if ((dist < theEnemies[i].heightSmell) &&
 			((thePlayer.mode == kFlying) || (thePlayer.mode == kWalking)))
 	{							// Enemy will actively seek the player.
 		if (thePlayer.dest.left < theEnemies[i].dest.left)
@@ -1184,7 +1184,7 @@ void HandleEye (void)
 		if (diffV < 0)
 			diffV = -diffV;
 										// See if player close enough to be killed!
-		if ((diffH < 16) && (diffV < 16) && (!theEye.entering) && 
+		if ((diffH < 16) && (diffV < 16) && (!theEye.entering) &&
 				(!theEye.killed))		// Close enough to call it a kill.
 		{
 			if (theEye.srcNum == 0)		// If eye was open, player is killed.

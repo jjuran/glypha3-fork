@@ -110,7 +110,7 @@ void CreateOffScreenPixMap (Rect *theRect, CGrafPtr *offScreen)
 	{
 		OpenCPort(newCGrafPtr);
 		thisDepth = (**(*newCGrafPtr).portPixMap).pixelSize;
-		offRowBytes = ((((long)thisDepth * 
+		offRowBytes = ((((long)thisDepth *
 				(long)(theRect->right - theRect->left)) + 15L) >> 4L) << 1L;
 		sizeOfOff = (long)(theRect->bottom - theRect->top) * offRowBytes;
 		OffsetRect(theRect, -theRect->left, -theRect->top);
@@ -159,7 +159,7 @@ void CreateOffScreenBitMap (Rect *theRect, GrafPtr *offScreen)
 	OpenPort(theBWPort);
 	theRowBytes = (long)((theRect->right - theRect->left + 15L) / 16L) * 2L;
 	theBitMap.rowBytes = (short)theRowBytes;
-	theBitMap.baseAddr = NewPtr((long)theBitMap.rowBytes * 
+	theBitMap.baseAddr = NewPtr((long)theBitMap.rowBytes *
 		(theRect->bottom - theRect->top));
 	if (theBitMap.baseAddr == 0L)
 		RedAlert("\pCouldn't Create Bitmaps");

@@ -45,7 +45,7 @@ Boolean				channelOpen, soundOn;
 //==============================================================  Functions
 //--------------------------------------------------------------  PlaySound1
 // This function takes a sound ID and a priority, and forces that sound to 
-// play through channel 1 - and saves the priority globally.  As well, a 
+// play through channel 1 - and saves the priority globally.  As well, a
 // callback command is queues up in channel 1.
 
 void PlaySound1 (short soundID, short priority)
@@ -156,7 +156,7 @@ void PlayExternalSound (short soundID, short priority)
 // of the interupt situation, we need to handle setting A5 to point to our…
 // app's A5 and then set it back again.
 
-RoutineDescriptor ExternalCallBackRD = 
+RoutineDescriptor ExternalCallBackRD =
 		BUILD_ROUTINE_DESCRIPTOR(uppSndCallBackProcInfo, ExternalCallBack);
 
 pascal void ExternalCallBack (SndChannelPtr theChannel, SndCommand *theCommand)
@@ -177,7 +177,7 @@ pascal void ExternalCallBack (SndChannelPtr theChannel, SndCommand *theCommand)
 //--------------------------------------------------------  ExternalCallBack2
 // This function is identical to the above function but handles sound channel 2.
 
-RoutineDescriptor ExternalCallBackRD2 = 
+RoutineDescriptor ExternalCallBackRD2 =
 		BUILD_ROUTINE_DESCRIPTOR(uppSndCallBackProcInfo, ExternalCallBack2);
 
 pascal void ExternalCallBack2 (SndChannelPtr theChannel, SndCommand *theCommand)
@@ -283,14 +283,14 @@ OSErr OpenSoundChannel (void)
 	
 	externalChannel = 0L;
 	theErr = SndNewChannel(&externalChannel, 		// Open channel 1.
-			sampledSynth, initNoInterp + initMono, 
+			sampledSynth, initNoInterp + initMono,
 			(SndCallBackUPP)externalCallBackUPP);
 	if (theErr == noErr)							// See if it worked.
 		channelOpen = TRUE;
 	
 	externalChannel2 = 0L;
 	theErr = SndNewChannel(&externalChannel2, 		// Open channel 2.
-			sampledSynth, initNoInterp + initMono, 
+			sampledSynth, initNoInterp + initMono,
 			(SndCallBackUPP)externalCallBackUPP2);
 	if (theErr == noErr)							// See if it worked.
 		channelOpen = TRUE;

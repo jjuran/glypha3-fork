@@ -344,9 +344,9 @@ void GetPlayerInput (void)
 			flapKeyDown = FALSE;			// If flap key not down, remember this.
 		
 											// Test now for one of three "right" keys.
-		if ((BitTst(&theKeys, kRightArrowKeyMap) || 
-				BitTst(&theKeys, kSKeyMap) || 
-				BitTst(&theKeys, kQuoteMap)) && 
+		if ((BitTst(&theKeys, kRightArrowKeyMap) ||
+				BitTst(&theKeys, kSKeyMap) ||
+				BitTst(&theKeys, kQuoteMap)) &&
 				(thePlayer.hVel < kMaxHVelocity))
 		{
 			if (thePlayer.mode == kIdle)	// Handle special case when player idle.
@@ -377,9 +377,9 @@ void GetPlayerInput (void)
 				}
 			}
 		}									// Test now for one of three "left" keys.
-		else if ((BitTst(&theKeys, kLeftArrowKeyMap) || 
-				BitTst(&theKeys, kAKeyMap) || 
-				BitTst(&theKeys, kColonMap)) && 
+		else if ((BitTst(&theKeys, kLeftArrowKeyMap) ||
+				BitTst(&theKeys, kAKeyMap) ||
+				BitTst(&theKeys, kColonMap)) &&
 				(thePlayer.hVel > -kMaxHVelocity))
 		{
 			if (thePlayer.mode == kIdle)	// Handle special case when player idle.
@@ -1085,7 +1085,7 @@ void PlayGame (void)
 	
 	offsetPt.h = 0;								// Set up ShieldCursor() point.
 	offsetPt.v = 20;
-	ShieldCursor(&mainWindowRect, offsetPt);	// Hide the cursor. 
+	ShieldCursor(&mainWindowRect, offsetPt);	// Hide the cursor.
 	waitUntil = TickCount() + kTicksPerFrame;	// Set up speed governor variable.
 	
 	do											// Main game loop!!!!
