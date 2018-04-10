@@ -1168,7 +1168,7 @@ void CheckHighScore (void)
 		FlushEvents(everyEvent, 0);				// Flush any events queued up.
 												// Put a default name in text edit box.
 		SetDialogString(theDial, 2, thePrefs.highName);
-		SelIText(theDial, 2, 0, 1024);			// Select the whole text edit string.
+		SelectDialogItemText(theDial, 2, 0, 1024);	// Select the whole text edit string.
 		leaving = FALSE;						// Flag for noting when player hit "Okay".
 		
 		while (!leaving)						// Simple modal dialog loop.
@@ -1185,7 +1185,7 @@ void CheckHighScore (void)
 			}
 		}
 		
-		DisposDialog(theDial);					// Clean up.
+		DisposeDialog(theDial);					// Clean up.
 	}
 	else										// But if player didn't get on high scores
 		openTheScores = FALSE;					// no need to rub their face in it.

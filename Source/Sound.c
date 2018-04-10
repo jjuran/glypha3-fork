@@ -251,7 +251,7 @@ OSErr DumpBufferSounds (void)
 	for (i = 0; i < kMaxSounds; i++)		// Go through all sound pointers.
 	{
 		if (theSoundData[i] != 0L)			// Make sure it exists.
-			DisposPtr(theSoundData[i]);		// Dispose of it.
+			DisposePtr(theSoundData[i]);	// Dispose of it.
 		theSoundData[i] = 0L;				// Make sure it reflects its "nonexistence".
 	}
 	

@@ -71,10 +71,10 @@ void MenusReflectMode (void)
 		DisableItem(gameMenu, iNewGame);		// Cannot begin another New Game.
 		EnableItem(gameMenu, iPauseGame);		// Can Pause Game.
 		if (pausing)							// If we are paused
-			SetItem(gameMenu, iPauseGame,
+			SetMenuItemText(gameMenu, iPauseGame,
 					"\pResume Game");			// Rename item "Resume Game".
 		else									// If we are not paused
-			SetItem(gameMenu, iPauseGame,
+			SetMenuItemText(gameMenu, iPauseGame,
 					"\pPause Game");			// Rename item "Pause Game".
 		EnableItem(gameMenu, iEndGame);			// Can End Game.
 		DisableItem(optionsMenu, 0);			// Cannot change game settings.
@@ -83,7 +83,7 @@ void MenusReflectMode (void)
 	{
 		EnableItem(gameMenu, iNewGame);			// Can begin a New Game.
 		DisableItem(gameMenu, iPauseGame);		// Cannot Pause Game.
-		SetItem(gameMenu, iPauseGame,
+		SetMenuItemText(gameMenu, iPauseGame,
 				"\pPause Game");				// Rename item "Pause Game".
 		DisableItem(gameMenu, iEndGame);		// Cannot End Game.
 		EnableItem(optionsMenu, 0);				// Can change game settings.
@@ -117,7 +117,7 @@ void DoAppleMenu (short theItem)
 		break;
 		
 		default:								// If any other item was selected (DA)
-		GetItem(appleMenu, theItem, daName);	// Get the name of the item selected.
+		GetMenuItemText(appleMenu, theItem, daName);	// Get the name of the item selected.
 		GetPort(&wasPort);						// Remember our port.
 		daNumber = OpenDeskAcc(daName);			// Launch the Desk Accesory.
 		SetPort((GrafPtr)wasPort);				// When we return, restore port.
@@ -560,7 +560,7 @@ void DoGameSettings (void)
 	FlushEvents(everyEvent, 0);
 											// Put in a default sound volume.
 	SetDialogNumToStr(theDial, 3, (long)thePrefs.wasVolume);
-	SelIText(theDial, 3, 0, 1024);			// Select it.
+	SelectDialogItemText(theDial, 3, 0, 1024);	// Select it.
 	
 	leaving = FALSE;
 	
@@ -581,7 +581,7 @@ void DoGameSettings (void)
 			{								// So we'll Beep, enter the last legal
 				SysBeep(1);					// value and select the text again.
 				SetDialogNumToStr(theDial, 3, (long)thePrefs.wasVolume);
-				SelIText(theDial, 3, 0, 1024);
+				SelectDialogItemText(theDial, 3, 0, 1024);
 			}
 		}
 		else if (item == 2)					// Did the user hit the "Clear Scores"
@@ -597,6 +597,6 @@ void DoGameSettings (void)
 		}
 	}
 	
-	DisposDialog(theDial);					// Clean up before going.
+	DisposeDialog(theDial);					// Clean up before going.
 }
 

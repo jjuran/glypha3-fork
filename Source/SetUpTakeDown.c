@@ -271,7 +271,7 @@ void InitMenubar (void)
 	appleMenu = GetMenu(128);		// Get the Apple menu (About…).
 	if (appleMenu == 0L)			// See that it loaded okay.
 		RedAlert("\pCouldn't Load Menus Error");
-	AddResMenu(appleMenu, 'DRVR');	// Add Desk Accesories.
+	AppendResMenu(appleMenu, 'DRVR');	// Add Desk Accesories.
 	InsertMenu(appleMenu, 0);		// Add to menu bar.
 	
 	gameMenu = GetMenu(129);		// Next load the Game menu.

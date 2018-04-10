@@ -401,7 +401,7 @@ void DrawDefaultButton (DialogPtr theDialog)
 	Handle		itemHandle;
 	short		itemType;
 										// Get at the item's bounds.
-	GetDItem(theDialog, 1, &itemType, &itemHandle, &itemRect);
+	GetDialogItem(theDialog, 1, &itemType, &itemHandle, &itemRect);
 	InsetRect(&itemRect, -4, -4);		// Inset (outset?) bounds by -4 pixels.
 	PenSize(3, 3);						// Set the pen 3 pixels thick.
 	FrameRoundRect(&itemRect, 16, 16);	// Draw the button outline.
@@ -440,8 +440,8 @@ void GetDialogString (DialogPtr theDialog, short item, StringPtr theString)
 	Handle		itemHandle;
 	short		itemType;
 										// Get handle to dialog item.
-	GetDItem(theDialog, item, &itemType, &itemHandle, &itemRect);
-	GetIText(itemHandle, theString);	// Extract text from item handle.
+	GetDialogItem(theDialog, item, &itemType, &itemHandle, &itemRect);
+	GetDialogItemText(itemHandle, theString);	// Extract text from item handle.
 }
 
 //--------------------------------------------------------------  SetDialogString
@@ -455,8 +455,8 @@ void SetDialogString (DialogPtr theDialog, short item, StringPtr theString)
 	Handle		itemHandle;
 	short		itemType;
 										// Get handle to dialog item.
-	GetDItem(theDialog, item, &itemType, &itemHandle, &itemRect);
-	SetIText(itemHandle, theString);	// Set the items text to theString.
+	GetDialogItem(theDialog, item, &itemType, &itemHandle, &itemRect);
+	SetDialogItemText(itemHandle, theString);	// Set the items text to theString.
 }
 
 //--------------------------------------------------------------  SetDialogNumToStr
@@ -472,8 +472,8 @@ void SetDialogNumToStr (DialogPtr theDialog, short item, long theNumber)
 	short		itemType;
 	
 	NumToString(theNumber, theString);	// Convert long to a string.
-	GetDItem(theDialog, item, &itemType, &itemHandle, &itemRect);
-	SetIText(itemHandle, theString);	// Set the item's text to this number/string.
+	GetDialogItem(theDialog, item, &itemType, &itemHandle, &itemRect);
+	SetDialogItemText(itemHandle, theString);	// Set the item's text to this number/string.
 }
 
 //--------------------------------------------------------------  GetDialogNumFromStr
@@ -488,8 +488,8 @@ void GetDialogNumFromStr (DialogPtr theDialog, short item, long *theNumber)
 	Handle		itemHandle;
 	short		itemType;
 										// Get a handle to the dialog item.
-	GetDItem(theDialog, item, &itemType, &itemHandle, &itemRect);
-	GetIText(itemHandle, theString);	// Get the item's text.
+	GetDialogItem(theDialog, item, &itemType, &itemHandle, &itemRect);
+	GetDialogItemText(itemHandle, theString);	// Get the item's text.
 	StringToNum(theString, theNumber);	// Convert the text to a long.
 }
 
@@ -503,7 +503,7 @@ void DisableDialogControl (DialogPtr theDialog, short whichItem)
 	Handle		iHandle;
 	short		iType;
 										// Get a handle to the dialog item.
-	GetDItem(theDialog, whichItem, &iType, &iHandle, &iRect);
+	GetDialogItem(theDialog, whichItem, &iType, &iHandle, &iRect);
 										// Set it's "hilite state" to "grayed out".
 	HiliteControl((ControlHandle)iHandle, kInactive);
 }

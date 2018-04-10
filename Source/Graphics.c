@@ -250,7 +250,7 @@ void OpenHighScores (void)
 	
 	GetForeColor(&wasColor);						// Save the foreground color.
 	
-	TextFont(geneva);								// Use Geneva 12 point Bold font.
+	TextFont(kFontIDGeneva);						// Use Geneva 12 point Bold font.
 	TextSize(12);
 	TextFace(bold);
 	
@@ -259,7 +259,7 @@ void OpenHighScores (void)
 	MoveTo(scoreSrc.left + 36, scoreSrc.top + 20);	// Get pen in right position to draw.
 	DrawString("\pGlypha III High Scores");			// Draw the title.
 	
-	TextFont(geneva);								// Use Geneva 9 point Bold font.
+	TextFont(kFontIDGeneva);						// Use Geneva 9 point Bold font.
 	TextSize(9);
 	TextFace(bold);
 	
