@@ -1162,8 +1162,8 @@ void CheckHighScore (void)
 		InitCursor();							// Show cursor.
 		CenterDialog(kHighNameDialogID);		// Center the dialog and then bring it up.
 		theDial = GetNewDialog(kHighNameDialogID, 0L, kPutInFront);
-		SetPort((GrafPtr)theDial);
-		ShowWindow((GrafPtr)theDial);			// Make dialog visible.
+		SetPort(theDial);
+		ShowWindow(theDial);					// Make dialog visible.
 		DrawDefaultButton(theDial);				// Draw outline around "Okay" button.
 		FlushEvents(everyEvent, 0);				// Flush any events queued up.
 												// Put a default name in text edit box.

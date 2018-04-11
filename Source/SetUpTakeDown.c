@@ -276,13 +276,13 @@ void OpenMainWindow (void)
 	SetRect(&mainWindowRect, 0, 0, 640, 460);			// Our window size.
 	mainWindow = GetNewCWindow(128, 0L, kPutInFront);	// Load window from resource.
 														// Make it the right size.
-	SizeWindow((GrafPtr)mainWindow, mainWindowRect.right - mainWindowRect.left,
+	SizeWindow(mainWindow, mainWindowRect.right - mainWindowRect.left,
 			mainWindowRect.bottom - mainWindowRect.top, FALSE);
 														// Center the window.
-	MoveWindow((GrafPtr)mainWindow, (qd.screenBits.bounds.right - 640) / 2,
+	MoveWindow(mainWindow, (qd.screenBits.bounds.right - 640) / 2,
 			((qd.screenBits.bounds.bottom - 480) / 2) + LMGetMBarHeight(), TRUE);
-	ShowWindow((GrafPtr)mainWindow);					// Now display it.
-	SetPort((GrafPtr)mainWindow);						// Make its port current.
+	ShowWindow(mainWindow);								// Now display it.
+	SetPort(mainWindow);								// Make its port current.
 	ClipRect(&mainWindowRect);							// Set its clip region.
 	ForeColor(blackColor);								// Set its pen color to black.
 	BackColor(whiteColor);								// Set background color white.
@@ -570,7 +570,7 @@ void InitVariables (void)
 	CreateOffScreenPixMap(&helpSrcRect, &helpSrcMap);
 	LoadGraphic(kHelpPictID);
 	
-	SetPort((GrafPtr)mainWindow);
+	SetPort(mainWindow);
 }
 
 //--------------------------------------------------------------  ShutItDown
