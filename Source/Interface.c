@@ -423,7 +423,7 @@ void HandleUpdateEvent (EventRecord *theEvent)
 {	
 	if ((WindowPtr)theEvent->message == mainWindow)
 	{
-		SetPort(mainWindow);				// Don't forget this line, BTW.
+		SetPortWindowPort(mainWindow);		// Don't forget this line, BTW.
 		BeginUpdate(mainWindow);			// I did once and it took me
 		UpdateMainWindow();					// ages to track down that bug.
 		EndUpdate(mainWindow);				// Well, it took me a week I think.
@@ -520,7 +520,7 @@ void DoAbout (void)
 	aboutWindow = GetNewCWindow(129, 0L, kPutInFront);
 	MoveWindow(aboutWindow, aboutRect.left, aboutRect.top, TRUE);
 	ShowWindow(aboutWindow);
-	SetPort(aboutWindow);
+	SetPortWindowPort(aboutWindow);
 	LoadGraphic(kAboutPictID);					// Draw About dialog graphic.
 	
 	do											// Make sure button not down
@@ -554,8 +554,8 @@ void DoGameSettings (void)
 	
 	CenterDialog(kGameSettingsDialogID);	// Center dialog, then call up.
 	theDial = GetNewDialog(kGameSettingsDialogID, 0L, kPutInFront);
-	SetPort(theDial);
-	ShowWindow(theDial);			// Make visible (after centering).
+	SetPortDialogPort(theDial);
+	ShowWindow(GetDialogWindow(theDial));	// Make visible (after centering).
 	DrawDefaultButton(theDial);				// Draw border around Okay button.
 	FlushEvents(everyEvent, 0);
 											// Put in a default sound volume.

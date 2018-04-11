@@ -293,7 +293,7 @@ void OpenHighScores (void)
 	
 	RGBForeColor(&wasColor);						// Restore foreground color.
 	
-	SetPort(mainWindow);
+	SetPortWindowPort(mainWindow);
 	
 	for (i = 0; i < 199; i ++)						// Now the standard scroll functions.
 	{
@@ -556,7 +556,7 @@ void StrikeLightning (void)
 {
 	short		i;
 	
-	SetPort(mainWindow);						// Draw straight to screen.
+	SetPortWindowPort(mainWindow);				// Draw straight to screen.
 	PenSize(1, 2);								// Use a tall pen.
 	PenMode(patXor);							// Use XOR mode.
 												// Draw lightning bolts with inverted pen.

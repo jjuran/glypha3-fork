@@ -282,7 +282,7 @@ void OpenMainWindow (void)
 	MoveWindow(mainWindow, (qd.screenBits.bounds.right - 640) / 2,
 			((qd.screenBits.bounds.bottom - 480) / 2) + LMGetMBarHeight(), TRUE);
 	ShowWindow(mainWindow);								// Now display it.
-	SetPort(mainWindow);								// Make its port current.
+	SetPortWindowPort(mainWindow);						// Make its port current.
 	ClipRect(&mainWindowRect);							// Set its clip region.
 	ForeColor(blackColor);								// Set its pen color to black.
 	BackColor(whiteColor);								// Set background color white.
@@ -570,7 +570,7 @@ void InitVariables (void)
 	CreateOffScreenPixMap(&helpSrcRect, &helpSrcMap);
 	LoadGraphic(kHelpPictID);
 	
-	SetPort(mainWindow);
+	SetPortWindowPort(mainWindow);
 }
 
 //--------------------------------------------------------------  ShutItDown
