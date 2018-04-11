@@ -18,6 +18,11 @@
 #include <ToolUtils.h>
 
 
+#if TARGET_API_MAC_CARBON
+#define EnableItem  EnableMenuItem
+#define DisableItem DisableMenuItem
+#endif
+
 #define kAppleMenuID		128
 #define iAbout				1
 #define kGameMenuID			129
@@ -110,8 +115,8 @@ void DoAppleMenu (short theItem)
 			scoresOpen = FALSE;					// High scores no longer open.
 			helpOpen = FALSE;					// Help screen is no longer open.
 												// Uncheck help & high scores menu items.
-			CheckItem(optionsMenu, iHelp, helpOpen);
-			CheckItem(optionsMenu, iHighScores, scoresOpen);
+			CheckMenuItem(optionsMenu, iHelp, helpOpen);
+			CheckMenuItem(optionsMenu, iHighScores, scoresOpen);
 		}
 		DoAbout();								// Bring up the About dialog.
 		break;
@@ -140,8 +145,8 @@ void DoGameMenu (short theItem)
 			CloseWall();
 			scoresOpen = FALSE;
 			helpOpen = FALSE;
-			CheckItem(optionsMenu, iHelp, helpOpen);
-			CheckItem(optionsMenu, iHighScores, scoresOpen);
+			CheckMenuItem(optionsMenu, iHelp, helpOpen);
+			CheckMenuItem(optionsMenu, iHighScores, scoresOpen);
 		}
 		InitNewGame();						// Initialize variables for a new game.
 		MenusReflectMode();					// Properly gray out the right menu items.
@@ -183,8 +188,8 @@ void DoOptionsMenu (short theItem)
 			CloseWall();
 			scoresOpen = FALSE;
 			helpOpen = FALSE;
-			CheckItem(optionsMenu, iHelp, helpOpen);
-			CheckItem(optionsMenu, iHighScores, scoresOpen);
+			CheckMenuItem(optionsMenu, iHelp, helpOpen);
+			CheckMenuItem(optionsMenu, iHighScores, scoresOpen);
 		}
 		DoGameSettings();				// Bring up game settings dialog.
 		break;
@@ -201,11 +206,11 @@ void DoOptionsMenu (short theItem)
 			{
 				CloseWall();			// Close them first.
 				scoresOpen = FALSE;
-				CheckItem(optionsMenu, iHighScores, scoresOpen);
+				CheckMenuItem(optionsMenu, iHighScores, scoresOpen);
 			}
 			OpenHelp();					// Now open the Help screen.
 		}
-		CheckItem(optionsMenu, iHelp, helpOpen);
+		CheckMenuItem(optionsMenu, iHelp, helpOpen);
 		break;
 		
 		case iHighScores:				// If user selected High Scores
@@ -220,11 +225,11 @@ void DoOptionsMenu (short theItem)
 			{
 				CloseWall();			// And close the Help screen.
 				helpOpen = FALSE;
-				CheckItem(optionsMenu, iHelp, helpOpen);
+				CheckMenuItem(optionsMenu, iHelp, helpOpen);
 			}
 			OpenHighScores();			// Now open the High Scores.
 		}
-		CheckItem(optionsMenu, iHighScores, scoresOpen);
+		CheckMenuItem(optionsMenu, iHighScores, scoresOpen);
 		break;
 	}
 }
@@ -398,7 +403,7 @@ void HandleKeyEvent (EventRecord *theEvent)
 			{										// Hitting Help key closes help
 				CloseWall();						// (if it's already open).
 				helpOpen = FALSE;
-				CheckItem(optionsMenu, iHelp, helpOpen);
+				CheckMenuItem(optionsMenu, iHelp, helpOpen);
 			}
 		}
 		else if ((theChar == kHelpKeyASCII) && (!playing))
@@ -407,10 +412,10 @@ void HandleKeyEvent (EventRecord *theEvent)
 			{										// Close high scores if open.
 				CloseWall();
 				scoresOpen = FALSE;
-				CheckItem(optionsMenu, iHighScores, scoresOpen);
+				CheckMenuItem(optionsMenu, iHighScores, scoresOpen);
 			}
 			OpenHelp();								// Open help.
-			CheckItem(optionsMenu, iHelp, helpOpen);
+			CheckMenuItem(optionsMenu, iHelp, helpOpen);
 		}
 	}
 }
