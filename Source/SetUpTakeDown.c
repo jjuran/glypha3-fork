@@ -273,13 +273,15 @@ void CheckEnvirons (void)
 static
 void CenterMainWindow(WindowRef window)
 {
-	Rect portRect = window->portRect;
+	BitMap screenBits;
+	Rect portRect;
 	
 	const short mbarHeight = GetMBarHeight();
 	
+	GetPortBounds(GetWindowPort(window), &portRect);
 	portRect.bottom += mbarHeight;
 	
-	CenterRectInRect(&portRect, &qd.screenBits.bounds);
+	CenterRectInRect(&portRect, &GetQDGlobalsScreenBits(&screenBits)->bounds);
 	
 	MoveWindow(window, portRect.left, portRect.top + mbarHeight, TRUE);
 }
@@ -287,7 +289,7 @@ void CenterMainWindow(WindowRef window)
 void OpenMainWindow (void)
 {
 	mainWindow = GetNewCWindow(128, 0L, kPutInFront);	// Load window from resource.
-	mainWindowRect = mainWindow->portRect;
+	GetPortBounds(GetWindowPort(mainWindow), &mainWindowRect);
 	CenterMainWindow(mainWindow);
 	ShowWindow(mainWindow);								// Now display it.
 	SetPortWindowPort(mainWindow);						// Make its port current.

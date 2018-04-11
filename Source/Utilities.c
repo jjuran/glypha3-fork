@@ -304,7 +304,9 @@ void CenterDialog (short dialogID)
 	Rect		theScreen, dlogBounds;
 	short		hPos, vPos;
 	
-	theScreen = qd.screenBits.bounds;			// Get main monitor's bounds.
+	BitMap screenBits;
+	
+	theScreen = GetQDGlobalsScreenBits(&screenBits)->bounds;			// Get main monitor's bounds.
 	theScreen.top += GetMBarHeight();			// Add menuBar's height.
 												// Load up dialog from resource.
 	dlogHandle = (DialogTHndl)GetResource('DLOG', dialogID);

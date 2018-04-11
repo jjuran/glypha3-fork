@@ -518,9 +518,12 @@ void HandleEvent (void)
 static
 void CenterWindow(WindowRef window)
 {
-	Rect portRect = window->portRect;
+	BitMap screenBits;
+	Rect portRect;
 	
-	CenterRectInRect(&portRect, &qd.screenBits.bounds);
+	GetPortBounds(GetWindowPort(window), &portRect);
+	
+	CenterRectInRect(&portRect, &GetQDGlobalsScreenBits(&screenBits)->bounds);
 	
 	MoveWindow(window, portRect.left, portRect.top, TRUE);
 }
