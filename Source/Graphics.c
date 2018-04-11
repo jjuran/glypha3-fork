@@ -191,6 +191,9 @@ void OpenHelp (void)
 				GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 				&wallSrc, &wallDest, srcCopy, 0L);
 		
+		if (TARGET_API_MAC_CARBON)
+			QDFlushPortBuffer(GetWindowPort(mainWindow), NULL);
+		
 		WaitForNextTick();				// Speed governor.
 	}
 	helpOpen = TRUE;					// When done, set flag to indicate help is open.
@@ -220,6 +223,9 @@ void CloseWall (void)
 		CopyBits(GetPortBitMapForCopyBits(backSrcMap),
 				GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 				&wallSrc, &wallDest, srcCopy, 0L);
+		
+		if (TARGET_API_MAC_CARBON)
+			QDFlushPortBuffer(GetWindowPort(mainWindow), NULL);
 	}									// Note, no speed governing (why bother?).
 }
 
@@ -311,6 +317,9 @@ void OpenHighScores (void)
 				GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 				&wallSrc, &wallDest, srcCopy, 0L);
 		
+		if (TARGET_API_MAC_CARBON)
+			QDFlushPortBuffer(GetWindowPort(mainWindow), NULL);
+		
 		WaitForNextTick();
 	}
 	
@@ -349,6 +358,9 @@ void UpdateLivesNumbers (void)
 	CopyBits(GetPortBitMapForCopyBits(backSrcMap),
 			GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 			&numbersDest[1], &numbersDest[1], srcCopy, 0L);
+	
+	if (TARGET_API_MAC_CARBON)
+		QDFlushPortBuffer(GetWindowPort(mainWindow), NULL);
 }
 
 //--------------------------------------------------------------  UpdateScoreNumbers
@@ -433,6 +445,9 @@ void UpdateScoreNumbers (void)
 	CopyBits(GetPortBitMapForCopyBits(backSrcMap),
 			GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 			&numbersDest[7], &numbersDest[7], srcCopy, 0L);
+	
+	if (TARGET_API_MAC_CARBON)
+		QDFlushPortBuffer(GetWindowPort(mainWindow), NULL);
 }
 
 //--------------------------------------------------------------  UpdateLevelNumbers
@@ -473,6 +488,9 @@ void UpdateLevelNumbers (void)
 	CopyBits(GetPortBitMapForCopyBits(backSrcMap),
 			GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 			&numbersDest[10], &numbersDest[10], srcCopy, 0L);
+	
+	if (TARGET_API_MAC_CARBON)
+		QDFlushPortBuffer(GetWindowPort(mainWindow), NULL);
 }
 
 //--------------------------------------------------------------  GenerateLightning
@@ -544,6 +562,9 @@ void FlashObelisks (Boolean flashThem)
 				&obeliskRects[3], &obeliskRects[3],
 				srcCopy, 0L);
 	}
+	
+	if (TARGET_API_MAC_CARBON)
+		QDFlushPortBuffer(GetWindowPort(mainWindow), NULL);
 }
 
 //--------------------------------------------------------------  StrikeLightning
@@ -575,6 +596,9 @@ void StrikeLightning (void)
 	}
 	
 	PenNormal();								// Return pen to normal.
+	
+	if (TARGET_API_MAC_CARBON)
+		QDFlushPortBuffer(GetWindowPort(mainWindow), NULL);
 }
 
 //--------------------------------------------------------------  DumpBackToWorkMap
@@ -870,6 +894,9 @@ void CopyAllRects (void)
 		numUpdateRects1 = 0;	// Reset number of rects to zero.
 		whichList = !whichList;	// Toggle flag to use other list next frame.
 	}
+	
+	if (TARGET_API_MAC_CARBON)
+		QDFlushPortBuffer(GetWindowPort(mainWindow), NULL);
 }
 
 //--------------------------------------------------------------  DrawPlayer

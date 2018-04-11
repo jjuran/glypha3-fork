@@ -540,6 +540,9 @@ void DoAbout (void)
 	SetPortWindowPort(aboutWindow);
 	LoadGraphic(kAboutPictID);					// Draw About dialog graphic.
 	
+	if (TARGET_API_MAC_CARBON)
+		QDFlushPortBuffer(GetWindowPort(aboutWindow), NULL);
+	
 	do											// Make sure button not down
 	{											// before proceeding.
 	}
