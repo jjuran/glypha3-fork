@@ -221,6 +221,8 @@ void WaitForNextTick (void)
 // A nice "test function" that test for the existence of some ToolBox trap.
 // Returns TRUE if the function exists, FALSE if it doesn't.
 
+#if ! TARGET_API_MAC_CARBON
+
 Boolean TrapExists (short trapNumber)
 {
 	#define		kUnimpTrap		0x9F
@@ -229,6 +231,8 @@ Boolean TrapExists (short trapNumber)
 	return ((NGetTrapAddress(trapNumber, ToolTrap) !=
 			NGetTrapAddress(kUnimpTrap, ToolTrap)));
 }
+
+#endif
 
 //--------------------------------------------------------------  DoWeHaveGestalt  
 
@@ -240,7 +244,7 @@ Boolean DoWeHaveGestalt (void)
 	#define		kGestaltTrap	0xAD
 	
 				// Call above function (TrapExists()) with the Gestalt() trap number.
-	return (TrapExists(kGestaltTrap));
+	return TARGET_API_MAC_CARBON  ||  TrapExists(kGestaltTrap);
 }
 
 //--------------------------------------------------------------  RectWide
