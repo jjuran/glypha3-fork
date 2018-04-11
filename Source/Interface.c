@@ -104,7 +104,6 @@ void DoAppleMenu (short theItem)
 {
 	Str255		daName;
 	GrafPtr		wasPort;
-	short		daNumber;
 	
 	switch (theItem)							// Depending on the item selected
 	{
@@ -124,7 +123,9 @@ void DoAppleMenu (short theItem)
 		default:								// If any other item was selected (DA)
 		GetMenuItemText(appleMenu, theItem, daName);	// Get the name of the item selected.
 		GetPort(&wasPort);						// Remember our port.
-		daNumber = OpenDeskAcc(daName);			// Launch the Desk Accesory.
+	#if ! TARGET_API_MAC_CARBON
+		OpenDeskAcc(daName);					// Launch the Desk Accessory.
+	#endif
 		SetPort(wasPort);						// When we return, restore port.
 		break;
 	}
@@ -299,9 +300,11 @@ void HandleMouseEvent (EventRecord *theEvent)
 	
 	switch (thePart)							// Depending on where mouse was clicked
 	{
+	#if ! TARGET_API_MAC_CARBON
 		case inSysWindow:						// In a Desk Accesory.
 		SystemClick(theEvent, whichWindow);		// (Is this stuff obsolete yet?)
 		break;
+	#endif
 		
 		case inMenuBar:							// Selected a menu item.
 		menuChoice = MenuSelect(theEvent->where);
@@ -309,11 +312,7 @@ void HandleMouseEvent (EventRecord *theEvent)
 			DoMenuChoice(menuChoice);
 		break;
 		
-		case inDrag:							// Like the lazy bastard I am
-		case inGoAway:							// I'll just ignore these.
-		case inGrow:							// But, hey, the window isn't
-		case inZoomIn:							// movable or growable!
-		case inZoomOut:
+		default:
 		break;
 		
 		case inContent:							// Click in the window itself.
