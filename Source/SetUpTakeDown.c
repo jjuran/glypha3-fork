@@ -78,6 +78,10 @@ extern	Boolean		helpOpen, scoresOpen, openTheScores;
 
 void ToolBoxInit (void)
 {
+	unsigned long dateTime;
+	
+#if ! TARGET_API_MAC_CARBON
+	
 	InitGraf(&qd.thePort);		// Initialize QuickDraw variables for our program.
 	InitFonts();				// Initialize fonts.
 	FlushEvents(everyEvent, 0);	// Clear event queue of any pending events.
@@ -85,9 +89,12 @@ void ToolBoxInit (void)
 	InitMenus();				// Ditto for the Menu Manager.
 	TEInit();					// blah, blah Text Edit.
 	InitDialogs(0L);			// blah, blah Dialog Manager.
-	InitCursor();				// Set the cursor to the arrow cursor and init.
 	
 	MaxApplZone();				// Grab application memory.
+	
+#endif
+	
+	InitCursor();
 	
 	MoreMasters();				// Allocate a block of master pointers.
 	MoreMasters();				// And allocate more.
@@ -95,7 +102,9 @@ void ToolBoxInit (void)
 	MoreMasters();				// Hey, lets do it again too.
 	
 	switchedOut = FALSE;		// We "should" be the foreground app at this time.
-	GetDateTime((unsigned long *)&qd.randSeed);		// Randomize random seed.
+	GetDateTime(&dateTime);		// Randomize random seed.
+	
+	SetQDGlobalsRandomSeed(dateTime);
 }
 
 //--------------------------------------------------------------  DoWeHaveColor  
