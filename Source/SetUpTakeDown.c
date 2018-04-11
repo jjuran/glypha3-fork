@@ -141,15 +141,11 @@ Boolean DoWeHaveSystem605 (void)
 short WhatsOurDepth (void)
 {
 	short			thisDepth;
-	char			wasState;
 	
 	if (thisGDevice != 0L)							// Make sure we have device handle.
 	{
-		wasState = HGetState((Handle)thisGDevice);	// Remember the handle's state.
-		HLock((Handle)thisGDevice);					// Lock the device handle down.
 													// Get it's depth (pixelSize).
 		thisDepth = (**(**thisGDevice).gdPMap).pixelSize;
-		HSetState((Handle)thisGDevice, wasState);	// Restore handle's state.
 	}
 	else
 		RedAlert("\pUnknown Error.");				// Post generic error message.
@@ -189,7 +185,6 @@ void SwitchToDepth (short newDepth, Boolean doColor)
 {
 	OSErr			theErr;
 	short			colorFlag;
-	char			tagByte;
 	
 	if (doColor)					// We can switch to either colors or grays.
 		colorFlag = 1;
@@ -197,13 +192,9 @@ void SwitchToDepth (short newDepth, Boolean doColor)
 		colorFlag = 0;
 	
 	if (thisGDevice != 0L)			// Make sure we have a device.
-	{								// Remember handle's state (as usual).
-		tagByte = HGetState((Handle)thisGDevice);
-		HLock((Handle)thisGDevice);	// Lock it.
+	{
 									// Call SetDepth() (System 6.0.5 or more recent).
 		theErr = SetDepth(thisGDevice, newDepth, 1, colorFlag);
-									// Restore handle's state.
-		HSetState((Handle)thisGDevice, tagByte);
 		if (theErr != noErr)		// If call failed, go to error dialog.
 			RedAlert("\pUnknown Error.");
 	}
@@ -545,8 +536,6 @@ void InitVariables (void)
 	LineTo(640, 0);
 	LineTo(0, 0);
 	CloseRgn(playRgn);		// Stop region definition.
-	MoveHHi((Handle)playRgn);
-	HLock((Handle)playRgn);
 	
 	SetRect(&platformSrcRect, 0, 0, 191, 192);
 	platformSrcMap = 0L;	// Create pixmap to hold "platform" graphic.

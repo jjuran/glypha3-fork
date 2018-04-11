@@ -83,9 +83,7 @@ void LoadGraphic (short resID)
 	if (thePicture == 0L)						// Check to see if nil (did it load?)
 		RedAlert("\pA Graphic Couldn't Be Loaded");
 	
-	HLock((Handle)thePicture);					// If we made it this far, lock handle.
 	bounds = (*thePicture)->picFrame;			// Get a copy of the picture's bounds.
-	HUnlock((Handle)thePicture);				// We can unlock the picture now.
 	OffsetRect(&bounds, -bounds.left, -bounds.top);	// Offset bounds rect to (0, 0).
 	DrawPicture(thePicture, &bounds);			// Draw picture to current port.
 	
@@ -282,16 +280,13 @@ void CenterAlert (short alertID)
 	AlertTHndl	alertHandle;
 	Rect		theScreen, alertRect;
 	short		horiOff, vertOff;
-	Byte		wasState;
 	
 	theScreen = qd.screenBits.bounds;		// Get main monitor's bounds.
 	theScreen.top += LMGetMBarHeight();		// Account for menubar height.
 											// Get handle to alert resource.
 	alertHandle = (AlertTHndl)GetResource('ALRT', alertID);
 	if (alertHandle != 0L)					// Make sure we got it!
-	{										// Remember its "state" (locked, etc.)
-		wasState = HGetState((Handle)alertHandle);
-		HLock((Handle)alertHandle);			// We'll lock it.
+	{
 											// Get a copy of it's bounds and zero.
 		alertRect = (**alertHandle).boundsRect;
 		OffsetRect(&alertRect, -alertRect.left, -alertRect.top);
@@ -302,7 +297,6 @@ void CenterAlert (short alertID)
 		OffsetRect(&alertRect, horiOff, vertOff + LMGetMBarHeight());
 											// Set alerts bounds to our centered rect.
 		(**alertHandle).boundsRect = alertRect;
-		HSetState((Handle)alertHandle, wasState);
 	}
 }
 
@@ -366,16 +360,13 @@ void CenterDialog (short dialogID)
 	DialogTHndl	dlogHandle;
 	Rect		theScreen, dlogBounds;
 	short		hPos, vPos;
-	Byte		wasState;
 	
 	theScreen = qd.screenBits.bounds;			// Get main monitor's bounds.
 	theScreen.top += LMGetMBarHeight();			// Add menuBar's height.
 												// Load up dialog from resource.
 	dlogHandle = (DialogTHndl)GetResource('DLOG', dialogID);
 	if (dlogHandle != 0L)						// If it loaded....!
-	{											// Remember handle state.
-		wasState = HGetState((Handle)dlogHandle);
-		HLock((Handle)dlogHandle);				// We're going to lock it.
+	{
 												// Get a copy of the dialog's bounds.
 		dlogBounds = (**dlogHandle).boundsRect;
 		OffsetRect(&dlogBounds, -dlogBounds.left, -dlogBounds.top);
@@ -386,7 +377,6 @@ void CenterDialog (short dialogID)
 		OffsetRect(&dlogBounds, hPos, vPos + LMGetMBarHeight());
 												// Set dlg's bounds to centered rect.
 		(**dlogHandle).boundsRect = dlogBounds;
-		HSetState((Handle)dlogHandle, wasState);// Restore handle's state.
 	}
 }
 

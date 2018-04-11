@@ -219,18 +219,14 @@ OSErr LoadBufferSounds (void)
 		if (theSound == 0L)				// Make sure it loaded okay.
 			return (ResError());		// Return reason it failed (if it did).
 		
-		HLock(theSound);				// If we got this far, lock sound down.
 										// Calculate size of sound minus header.
 		soundDataSize = GetHandleSize(theSound) - 20L;
-		HUnlock(theSound);				// Okay, unlock.
 										// Create pointer the size calculated above.
 		theSoundData[i] = NewPtr(soundDataSize);
 		if (theSoundData[i] == 0L)		// See if we created it okay.
 			return (MemError());		// If failed, return the reason why.
-		HLock(theSound);				// Okay, lock the sound handle again.
 										// Copy sound data (minus header) to our pointer.
 		BlockMove((Ptr)(*theSound + 20L), theSoundData[i], soundDataSize);
-		HUnlock(theSound);				// Unlock sound handle again.
 		ReleaseResource(theSound);		// And toss it from memory.
 	}
 	
