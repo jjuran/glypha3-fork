@@ -12,7 +12,6 @@
 
 #include <Dialogs.h>
 #include <Gestalt.h>
-#include <LowMem.h>
 #include <Palettes.h>					// Need "Palettes.h" for the depth calls.
 
 
@@ -280,7 +279,7 @@ void OpenMainWindow (void)
 			mainWindowRect.bottom - mainWindowRect.top, FALSE);
 														// Center the window.
 	MoveWindow(mainWindow, (qd.screenBits.bounds.right - 640) / 2,
-			((qd.screenBits.bounds.bottom - 480) / 2) + LMGetMBarHeight(), TRUE);
+			((qd.screenBits.bounds.bottom - 480) / 2) + GetMBarHeight(), TRUE);
 	ShowWindow(mainWindow);								// Now display it.
 	SetPortWindowPort(mainWindow);						// Make its port current.
 	ClipRect(&mainWindowRect);							// Set its clip region.

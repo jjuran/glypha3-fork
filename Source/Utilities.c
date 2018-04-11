@@ -12,7 +12,6 @@
 #include "Externs.h"
 
 #include <Dialogs.h>
-#include <LowMem.h>
 #include <NumberFormatting.h>
 #include <Resources.h>
 
@@ -306,7 +305,7 @@ void CenterDialog (short dialogID)
 	short		hPos, vPos;
 	
 	theScreen = qd.screenBits.bounds;			// Get main monitor's bounds.
-	theScreen.top += LMGetMBarHeight();			// Add menuBar's height.
+	theScreen.top += GetMBarHeight();			// Add menuBar's height.
 												// Load up dialog from resource.
 	dlogHandle = (DialogTHndl)GetResource('DLOG', dialogID);
 	if (dlogHandle != 0L)						// If it loaded....!
@@ -318,7 +317,7 @@ void CenterDialog (short dialogID)
 		hPos = ((theScreen.right - theScreen.left) - dlogBounds.right) / 2;
 		vPos = ((theScreen.bottom - theScreen.top) - dlogBounds.bottom) / 3;
 												// Offset ourt copy of the bounds.
-		OffsetRect(&dlogBounds, hPos, vPos + LMGetMBarHeight());
+		OffsetRect(&dlogBounds, hPos, vPos + GetMBarHeight());
 												// Set dlg's bounds to centered rect.
 		(**dlogHandle).boundsRect = dlogBounds;
 	}
