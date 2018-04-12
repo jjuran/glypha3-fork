@@ -11,9 +11,15 @@
 
 #include "Externs.h"
 
+#ifndef __FONTS__
 #include <Fonts.h>
+#endif
+#ifndef __MACWINDOWS__
 #include <MacWindows.h>
+#endif
+#ifndef __NUMBERFORMATTING__
 #include <NumberFormatting.h>
+#endif
 
 
 #define kUpperEyeHeight			100

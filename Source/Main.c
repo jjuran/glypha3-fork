@@ -10,7 +10,10 @@
 // Also included are the preference calls.
 
 #include "Externs.h"
+
+#ifndef __SOUND__
 #include <Sound.h>
+#endif
 
 
 #define kPrefsVersion			0x0001

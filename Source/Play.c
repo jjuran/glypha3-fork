@@ -12,10 +12,18 @@
 
 #include "Externs.h"
 
+#ifndef __DIALOGS__
 #include <Dialogs.h>
+#endif
+#ifndef __EVENTS__
 #include <Events.h>
+#endif
+#ifndef __NUMBERFORMATTING__
 #include <NumberFormatting.h>
+#endif
+#ifndef __TOOLUTILS__
 #include <ToolUtils.h>
+#endif
 
 
 #define kFlapImpulse			48

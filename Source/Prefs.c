@@ -12,10 +12,18 @@
 
 #include "Externs.h"
 
+#ifndef __FOLDERS__
 #include <Folders.h>							// Needed for creating a folder.
+#endif
+#ifndef __GESTALT__
 #include <Gestalt.h>							// Needed for the Gestalt() call.
+#endif
+#ifndef __SCRIPT__
 #include <Script.h>								// I can't remember why I needed this.
+#endif
+#ifndef __TOOLUTILS__
 #include <ToolUtils.h>
+#endif
 
 
 #define	kPrefCreatorType	'zade'				// Change this to reflect your apps creator.

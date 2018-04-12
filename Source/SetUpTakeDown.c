@@ -10,9 +10,15 @@
 
 #include "Externs.h"
 
+#ifndef __DIALOGS__
 #include <Dialogs.h>
+#endif
+#ifndef __GESTALT__
 #include <Gestalt.h>
+#endif
+#ifndef __PALETTES__
 #include <Palettes.h>					// Need "Palettes.h" for the depth calls.
+#endif
 
 
 #define kHandPictID				128		// These are all the resource ID's for

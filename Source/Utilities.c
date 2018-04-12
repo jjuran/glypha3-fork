@@ -11,9 +11,15 @@
 
 #include "Externs.h"
 
+#ifndef __DIALOGS__
 #include <Dialogs.h>
+#endif
+#ifndef __NUMBERFORMATTING__
 #include <NumberFormatting.h>
+#endif
+#ifndef __RESOURCES__
 #include <Resources.h>
+#endif
 
 
 #define kActive						0

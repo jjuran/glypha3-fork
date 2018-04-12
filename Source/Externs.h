@@ -5,7 +5,13 @@
 //----------------------------------------------------------------------------
 //============================================================================
 
+#ifdef __APPLE__
+#include <Carbon/Carbon.h>
+#endif
+
+#ifndef __QUICKDRAW__
 #include <Quickdraw.h>
+#endif
 
 #if ! TARGET_API_MAC_CARBON
 #define GetPortBitMapForCopyBits(port)  (&((GrafPtr)(port))->portBits)

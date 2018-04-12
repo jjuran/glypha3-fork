@@ -11,11 +11,21 @@
 
 #include "Externs.h"
 
+#ifndef __DEVICES__
 #include <Devices.h>
+#endif
+#ifndef __DIALOGS__
 #include <Dialogs.h>
+#endif
+#ifndef __MENUS__
 #include <Menus.h>
+#endif
+#ifndef __SOUND__
 #include <Sound.h>
+#endif
+#ifndef __TOOLUTILS__
 #include <ToolUtils.h>
+#endif
 
 
 #if TARGET_API_MAC_CARBON

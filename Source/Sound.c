@@ -16,9 +16,15 @@
 
 #include "Externs.h"
 
+#ifndef __GESTALT__
 #include <Gestalt.h>
+#endif
+#ifndef __RESOURCES__
 #include <Resources.h>
+#endif
+#ifndef __SOUND__
 #include <Sound.h>
+#endif
 
 #include <math.h>
 
