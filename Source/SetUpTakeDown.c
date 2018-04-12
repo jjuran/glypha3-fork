@@ -22,6 +22,13 @@
 #endif
 #endif
 
+// missing-macos
+#ifdef MAC_OS_X_VERSION_10_7
+#ifndef MISSING_QUICKDRAW_H
+#include "missing/Quickdraw.h"
+#endif
+#endif
+
 
 #define kHandPictID				128		// These are all the resource ID's for
 #define kHandMaskID				129		// the various PICT's were going to

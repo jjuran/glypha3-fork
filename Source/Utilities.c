@@ -21,6 +21,14 @@
 #include <Resources.h>
 #endif
 
+// missing-macos
+#ifdef MAC_OS_X_VERSION_10_7
+#ifndef MISSING_QUICKDRAW_H
+#include "missing/QDOffscreen.h"
+#include "missing/Quickdraw.h"
+#endif
+#endif
+
 
 #define kActive						0
 #define kInactive					255

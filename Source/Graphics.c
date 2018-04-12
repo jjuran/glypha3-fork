@@ -21,6 +21,15 @@
 #include <NumberFormatting.h>
 #endif
 
+// missing-macos
+#ifdef MAC_OS_X_VERSION_10_7
+#ifndef MISSING_QUICKDRAW_H
+#include "missing/Fonts.h"
+#include "missing/Quickdraw.h"
+#include "missing/QuickdrawText.h"
+#endif
+#endif
+
 
 #define kUpperEyeHeight			100
 #define kLowerEyeHeight			200
