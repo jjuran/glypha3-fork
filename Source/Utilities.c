@@ -407,8 +407,8 @@ void PasStringCopyNum (StringPtr p1, StringPtr p2, short charsToCopy)
 	
 	*p2 = charsToCopy;			// Set 2nd string's length to charsToCopy.
 	
-	*p2++;						// Point to first character in 2nd string.
-	*p1++;						// Point to first character in 1st string.
+	p2++;						// Point to first character in 2nd string.
+	p1++;						// Point to first character in 1st string.
 	
 	for (i = 0; i < charsToCopy; i++)
 		*p2++ = *p1++;			// Copy the specified number of chars over.
