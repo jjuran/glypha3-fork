@@ -284,7 +284,6 @@ void OpenMainWindow (void)
 	ShowWindow((GrafPtr)mainWindow);					// Now display it.
 	SetPort((GrafPtr)mainWindow);						// Make its port current.
 	ClipRect(&mainWindowRect);							// Set its clip region.
-	CopyRgn(mainWindow->clipRgn, mainWindow->visRgn);	// Set its visRgn.
 	ForeColor(blackColor);								// Set its pen color to black.
 	BackColor(whiteColor);								// Set background color white.
 }
