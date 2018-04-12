@@ -21,7 +21,6 @@
 
 void ReadInPrefs (void);
 void WriteOutPrefs (void);
-void main (void);
 
 
 prefsInfo	thePrefs;
@@ -78,7 +77,7 @@ void WriteOutPrefs (void)
 //	until the user chooses to quit.  At that point, it cleans up
 //	and exits.
 
-void main (void)
+int main (void)
 {
 	long		tickWait;
 	
@@ -112,5 +111,7 @@ void main (void)
 	KillSound();			// Dispose of sound channels.
 	ShutItDown();			// Dispose of other structures.
 	WriteOutPrefs();		// Save preferences to disk.
+	
+	return 0;
 }
 
