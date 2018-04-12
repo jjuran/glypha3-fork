@@ -16,8 +16,10 @@
 #ifndef __GESTALT__
 #include <Gestalt.h>
 #endif
+#ifndef MAC_OS_X_VERSION_10_7
 #ifndef __PALETTES__
 #include <Palettes.h>					// Need "Palettes.h" for the depth calls.
+#endif
 #endif
 
 
@@ -196,10 +198,15 @@ Boolean CanWeDisplay8Bit (GDHandle theDevice)
 	Boolean		canDo;
 	
 	canDo = FALSE;		// Assume intially that we can't display 8 bit.
+	
+#ifndef MAC_OS_X_VERSION_10_7
+	
 						// Call HasDepth() to see if monitor supports 8 bit.
 	canDepth = HasDepth(theDevice, 8, 1, 0);
 	if (canDepth != 0)	// If HasDepth() returned anything other than 0
 		canDo = TRUE;	// we can indeed switch it to 8 bit.
+	
+#endif
 	
 	return (canDo);		// Return the result.
 }
@@ -223,10 +230,14 @@ void SwitchToDepth (short newDepth, Boolean doColor)
 	
 	if (thisGDevice != 0L)			// Make sure we have a device.
 	{
+	#ifndef MAC_OS_X_VERSION_10_7
+		
 									// Call SetDepth() (System 6.0.5 or more recent).
 		theErr = SetDepth(thisGDevice, newDepth, 1, colorFlag);
 		if (theErr != noErr)		// If call failed, go to error dialog.
 			RedAlert("\pUnknown Error.");
+	
+	#endif
 	}
 	else							// Call error dialog if no device handle.
 		RedAlert("\pUnknown Error.");
