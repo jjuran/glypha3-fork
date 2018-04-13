@@ -1140,6 +1140,8 @@ void CheckHighScore (void)
 	
 	if (theScore > thePrefs.highScores[9])		// To see if on high scores, we need
 	{											// merely see if the last guy is beat out.
+		GrafPtr savedPort;
+		
 		openTheScores = TRUE;					// Will automatically bring up high scores.
 												// Play some congratulatory music.
 		PlayExternalSound(kBonusSound, kMusicPriority - 1);
@@ -1160,6 +1162,7 @@ void CheckHighScore (void)
 		ParamText(placeStr, "\p", "\p", "\p");	// in the dialog (via ParamText()).
 		
 		InitCursor();							// Show cursor.
+		GetPort(&savedPort);
 		CenterDialog(kHighNameDialogID);		// Center the dialog and then bring it up.
 		theDial = GetNewDialog(kHighNameDialogID, 0L, kPutInFront);
 		SetPortDialogPort(theDial);
@@ -1186,6 +1189,7 @@ void CheckHighScore (void)
 		}
 		
 		DisposeDialog(theDial);					// Clean up.
+		SetPort(savedPort);
 	}
 	else										// But if player didn't get on high scores
 		openTheScores = FALSE;					// no need to rub their face in it.

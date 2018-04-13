@@ -531,6 +531,9 @@ void DoAbout (void)
 {
 	WindowPtr	aboutWindow;
 	
+	GrafPtr savedPort;
+	
+	GetPort(&savedPort);
 	aboutWindow = GetNewCWindow(129, 0L, kPutInFront);
 	CenterWindow(aboutWindow);
 	ShowWindow(aboutWindow);
@@ -550,6 +553,7 @@ void DoAbout (void)
 	
 	if (aboutWindow != 0L)
 		DisposeWindow(aboutWindow);				// Close the About dialog.
+	SetPort(savedPort);
 }
 
 //--------------------------------------------------------------  DoGameSettings
@@ -566,6 +570,9 @@ void DoGameSettings (void)
 	short		i, item;
 	Boolean		leaving;
 	
+	GrafPtr savedPort;
+	
+	GetPort(&savedPort);
 	CenterDialog(kGameSettingsDialogID);	// Center dialog, then call up.
 	theDial = GetNewDialog(kGameSettingsDialogID, 0L, kPutInFront);
 	SetPortDialogPort(theDial);
@@ -612,5 +619,6 @@ void DoGameSettings (void)
 	}
 	
 	DisposeDialog(theDial);					// Clean up before going.
+	SetPort(savedPort);
 }
 
