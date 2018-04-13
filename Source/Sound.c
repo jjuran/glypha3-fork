@@ -16,8 +16,11 @@
 
 #include "Externs.h"
 
+#include <Gestalt.h>
 #include <Resources.h>
 #include <Sound.h>
+
+#include <math.h>
 
 
 #define kMaxSounds				17			// Number of sounds to load.
@@ -308,11 +311,35 @@ void KillSound (void)
 
 /*
 	Sound Manager volume levels range from 0 (silent) to 0x100 (full volume).
+	However, testing reveals that this is a linear scale in classic Mac OS
+	but logarithmic in Mac OS X.  How droll.
 */
+
+static inline
+Boolean LinearVolumeLevel()
+{
+	SInt32 vers;
+	
+	if (! TARGET_API_MAC_CARBON)
+	{
+		return TRUE;
+	}
+	
+	if (TARGET_API_MAC_OSX)
+	{
+		return FALSE;
+	}
+	
+	Gestalt(gestaltSystemVersion, &vers);
+	
+	return vers < 0x1000;
+}
 
 void SetSoundVol(short level)
 {
-	short volume = level * 0x0100 / 7;
+	short volume = LinearVolumeLevel() ? level * 0x0100 / 7
+	             : level != 0          ? pow(256, level / 7.0)
+	             :                       0;
 	
 	SetDefaultOutputVolume(volume * 0x00010001);
 }
@@ -323,5 +350,7 @@ void GetSoundVol(short* level)
 	GetDefaultOutputVolume(&volume);
 	volume += volume >> 16;
 	
-	*level = ((short) volume * 7 + 511) / 512;
+	*level = LinearVolumeLevel() ? ((short) volume * 7 + 511) / 512
+	       : volume != 0         ? log((short) volume / 2) / log(256) * 7
+	       :                       0;
 }
