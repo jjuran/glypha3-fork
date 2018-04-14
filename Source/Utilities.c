@@ -89,6 +89,16 @@ void LoadGraphic (short resID)
 		RedAlert("\pA Graphic Couldn't Be Loaded");
 	
 	bounds = (*thePicture)->picFrame;			// Get a copy of the picture's bounds.
+	
+#ifdef __LITTLE_ENDIAN__
+	
+	bounds.top    = Endian16_Swap( bounds.top    );
+	bounds.left   = Endian16_Swap( bounds.left   );
+	bounds.bottom = Endian16_Swap( bounds.bottom );
+	bounds.right  = Endian16_Swap( bounds.right  );
+	
+#endif
+	
 	OffsetRect(&bounds, -bounds.left, -bounds.top);	// Offset bounds rect to (0, 0).
 	DrawPicture(thePicture, &bounds);			// Draw picture to current port.
 	
