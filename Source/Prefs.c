@@ -62,11 +62,8 @@ Boolean CanUseFindFolder (void)
 	theErr = Gestalt(gestaltFindFolderAttr, &theFeature);
 	if (theErr != noErr)		// Use selector for FindFolder() attribute.
 		return(FALSE);
-								// Now do a bit test specifically for FindFolder().
-	if (!BitTst(&theFeature, 31 - gestaltFindFolderPresent))
-		return(FALSE);
-	else
-		return(TRUE);
+	
+	return(TRUE);
 }
 
 //--------------------------------------------------------------  GetPrefsFPath
