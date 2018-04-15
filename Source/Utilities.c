@@ -110,6 +110,22 @@ void LoadGraphic (short resID)
 	OffsetRect(&bounds, -bounds.left, -bounds.top);	// Offset bounds rect to (0, 0).
 	DrawPicture(thePicture, &bounds);			// Draw picture to current port.
 	
+#ifdef __LITTLE_ENDIAN__
+	
+	if (QDError())
+	{
+		/*
+			Yes, we've actually witnessed kQDCorruptPICTDataErr from QDError()
+			after DrawPicture() failed to draw a format 1 'PICT' resource on
+			macOS 10.12, and a preceding sleep(0) "fixes" it.
+		*/
+		
+		sleep(0);
+		DrawPicture(thePicture, &bounds);
+	}
+	
+#endif
+	
 	ReleaseResource((Handle)thePicture);		// Dispose of picture from heap.
 }
 
