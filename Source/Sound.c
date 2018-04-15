@@ -23,91 +23,61 @@
 #define kMaxSounds				17			// Number of sounds to load.
 #define	kBaseBufferSoundID		1000		// ID of first sound (assumed sequential).
 #define kSoundDone				913			// Just a number I chose.
-#define kSoundDone2				749			// Just a number I chose.
 
+enum
+{
+	kNumChannels = 2,
+};
 
-void PlaySound1 (short, short);
-void PlaySound2 (short, short);
 pascal void ExternalCallBack (SndChannelPtr, SndCommand *);
-pascal void ExternalCallBack2 (SndChannelPtr, SndCommand *);
 void LoadAllSounds (void);
 OSErr LoadBufferSounds (void);
 OSErr DumpBufferSounds (void);
 OSErr OpenSoundChannel (void);
 OSErr CloseSoundChannel (void);
 
+static SndChannelPtr soundChannels  [kNumChannels];
+static short         soundPriorities[kNumChannels];
 
-SndCallBackUPP		externalCallBackUPP, externalCallBackUPP2;
-SndChannelPtr		externalChannel, externalChannel2;
 Ptr					theSoundData[kMaxSounds];
-short				externalPriority, externalPriority2;
 Boolean				channelOpen, soundOn;
 
 
 //==============================================================  Functions
-//--------------------------------------------------------------  PlaySound1
+//--------------------------------------------------------------  PlaySound
 // This function takes a sound ID and a priority, and forces that sound to 
-// play through channel 1 - and saves the priority globally.  As well, a
-// callback command is queues up in channel 1.
+// play through channel i - and saves the priority globally.  As well, a
+// callback command is queued up in channel i.
 
-void PlaySound1 (short soundID, short priority)
+static
+void PlaySound (short i, short soundID, short priority)
 {
 	SndCommand	theCommand;
 	OSErr		theErr;
 	
-	theCommand.cmd = flushCmd;			// Send 1st a flushCmd to clear the sound queue.
-	theCommand.param1 = 0;
-	theCommand.param2 = 0L;
-	theErr = SndDoImmediate(externalChannel, &theCommand);
-	
-	theCommand.cmd = quietCmd;			// Send quietCmd to stop any current sound.
-	theCommand.param1 = 0;
-	theCommand.param2 = 0L;
-	theErr = SndDoImmediate(externalChannel, &theCommand);
-	
-	externalPriority = priority;		// Copy priority to global variable.
-	
-	theCommand.cmd = bufferCmd;			// Then, send a bufferCmd to channel 1.
-	theCommand.param1 = 0;				// The sound played will be soundID.
-	theCommand.param2 = (long)(theSoundData[soundID]);
-	theErr = SndDoImmediate(externalChannel, &theCommand);
-	
-	theCommand.cmd = callBackCmd;		// Lastly, queue up a callBackCmd to notify us
-	theCommand.param1 = kSoundDone;		// when the sound has finished playing.
-	theCommand.param2 = SetCurrentA5();
-	theErr = SndDoCommand(externalChannel, &theCommand, TRUE);
-}
-
-//--------------------------------------------------------------  PlaySound2
-// This function is identical to the above function except that it handles
-// playing sounds through channel 2.
-
-void PlaySound2 (short soundID, short priority)
-{
-	SndCommand	theCommand;
-	OSErr		theErr;
+	SndChannelPtr channel = soundChannels[i];
 	
 	theCommand.cmd = flushCmd;			// Send 1st a flushCmd to clear the sound queue.
 	theCommand.param1 = 0;
 	theCommand.param2 = 0L;
-	theErr = SndDoImmediate(externalChannel2, &theCommand);
+	theErr = SndDoImmediate(channel, &theCommand);
 	
 	theCommand.cmd = quietCmd;			// Send quietCmd to stop any current sound.
 	theCommand.param1 = 0;
 	theCommand.param2 = 0L;
-	theErr = SndDoImmediate(externalChannel2, &theCommand);
+	theErr = SndDoImmediate(channel, &theCommand);
 	
-	externalPriority2 = priority;		// Copy priority to global variable.
+	soundPriorities[i] = priority;		// Copy priority to global variable.
 	
 	theCommand.cmd = bufferCmd;			// Then, send a bufferCmd to channel 1.
 	theCommand.param1 = 0;				// The sound played will be soundID.
 	theCommand.param2 = (long)(theSoundData[soundID]);
-	theErr = SndDoImmediate(externalChannel2, &theCommand);
+	theErr = SndDoImmediate(channel, &theCommand);
 	
 	theCommand.cmd = callBackCmd;		// Lastly, queue up a callBackCmd to notify us
-	theCommand.param1 = kSoundDone2;	// when the sound has finished playing.
+	theCommand.param1 = kSoundDone + i;	// when the sound has finished playing.
 	theCommand.param2 = SetCurrentA5();
-	theErr = SndDoCommand(externalChannel2, &theCommand, TRUE);
+	theErr = SndDoCommand(channel, &theCommand, TRUE);
 }
 
 //--------------------------------------------------------  PlayExternalSound
@@ -134,15 +104,14 @@ void PlayExternalSound (short soundID, short priority)
 	{
 		if (soundOn)		// More error-checking.
 		{					// Find channel with lowest priority.
-			if (externalPriority < externalPriority2)
-			{				// Compare priority with that of channel 1.
-				if (priority >= externalPriority)
-					PlaySound1(soundID, priority);
-			}
-			else
-			{				// Compare priority with that of channel 2.
-				if (priority >= externalPriority2)
-					PlaySound2(soundID, priority);
+			const short pri0 = soundPriorities[0];
+			const short pri1 = soundPriorities[1];
+			
+			short channel = pri0 < pri1 ? 0 : 1;
+			
+			if (priority >= soundPriorities[channel])
+			{
+				PlaySound(channel, soundID, priority);
 			}
 		}
 	}
@@ -163,38 +132,13 @@ RoutineDescriptor ExternalCallBackRD =
 
 pascal void ExternalCallBack (SndChannelPtr theChannel, SndCommand *theCommand)
 {
-	long		thisA5, gameA5;
+	long savedA5 = SetA5(theCommand->param2);
 	
-	if (theCommand->param1 == kSoundDone)	// See if it's OUR callback.
-	{
-		gameA5 = theCommand->param2;			// Extract our A5 from sound command.
-		thisA5 = SetA5(gameA5);				// Point A5 to our app (save off current A5).
-		
-		externalPriority = 0;				// Set global to reflect no sound playing.
-		
-		thisA5 = SetA5(thisA5);				// Restire A5.
-	}
-}
-
-//--------------------------------------------------------  ExternalCallBack2
-// This function is identical to the above function but handles sound channel 2.
-
-RoutineDescriptor ExternalCallBackRD2 =
-		BUILD_ROUTINE_DESCRIPTOR(uppSndCallBackProcInfo, ExternalCallBack2);
-
-pascal void ExternalCallBack2 (SndChannelPtr theChannel, SndCommand *theCommand)
-{
-	long		thisA5, gameA5;
+	short channel = theCommand->param1 - kSoundDone;
 	
-	if (theCommand->param1 == kSoundDone2)	// See if it's OUR callback.
-	{
-		gameA5 = theCommand->param2;			// Extract our A5 from sound command.
-		thisA5 = SetA5(gameA5);				// Point A5 to our app (save off current A5).
-		
-		externalPriority2 = 0;				// Set global to reflect no sound playing.
-		
-		thisA5 = SetA5(thisA5);				// Restire A5.
-	}
+	soundPriorities[channel] = 0;			// Set global to reflect no sound playing.
+	
+	SetA5(savedA5);
 }
 
 //--------------------------------------------------------  LoadBufferSounds
@@ -264,14 +208,14 @@ OSErr DumpBufferSounds (void)
 
 OSErr OpenSoundChannel (void)
 {
+	static SndCallBackUPP externalCallBackUPP;
+	
 	OSErr		theErr;
 	
 	#if TARGET_RT_MAC_CFM
 		externalCallBackUPP = (SndCallBackUPP) &ExternalCallBackRD;
-		externalCallBackUPP2 = (SndCallBackUPP) &ExternalCallBackRD2;
 	#else
 		externalCallBackUPP = &ExternalCallBack;
-		externalCallBackUPP2 = &ExternalCallBack2;
 	#endif
 	
 	theErr = noErr;									// Assume no errors.
@@ -279,17 +223,15 @@ OSErr OpenSoundChannel (void)
 	if (channelOpen)								// Error checking.
 		return (theErr);
 	
-	externalChannel = 0L;
-	theErr = SndNewChannel(&externalChannel, 		// Open channel 1.
+	theErr = SndNewChannel(&soundChannels[0], 		// Open channel 1.
 			sampledSynth, initNoInterp + initMono,
 			(SndCallBackUPP)externalCallBackUPP);
 	if (theErr == noErr)							// See if it worked.
 		channelOpen = TRUE;
 	
-	externalChannel2 = 0L;
-	theErr = SndNewChannel(&externalChannel2, 		// Open channel 2.
+	theErr = SndNewChannel(&soundChannels[1], 		// Open channel 2.
 			sampledSynth, initNoInterp + initMono,
-			(SndCallBackUPP)externalCallBackUPP2);
+			(SndCallBackUPP)externalCallBackUPP);
 	if (theErr == noErr)							// See if it worked.
 		channelOpen = TRUE;
 	
@@ -309,13 +251,13 @@ OSErr CloseSoundChannel (void)
 	if (!channelOpen)			// Error checking.
 		return (theErr);
 	
-	if (externalChannel != 0L)	// Dispose of channel 1 (if open).
-		theErr = SndDisposeChannel(externalChannel, TRUE);
-	externalChannel = 0L;		// Flag it closed.
+	if (soundChannels[0])		// Dispose of channel 1 (if open).
+		theErr = SndDisposeChannel(soundChannels[0], TRUE);
+	soundChannels[0] = 0L;		// Flag it closed.
 	
-	if (externalChannel2 != 0L)	// Dispose of channel 2 (if open).
-		theErr = SndDisposeChannel(externalChannel2, TRUE);
-	externalChannel2 = 0L;		// Flag it closed.
+	if (soundChannels[1] != 0L)	// Dispose of channel 2 (if open).
+		theErr = SndDisposeChannel(soundChannels[1], TRUE);
+	soundChannels[1] = 0L;		// Flag it closed.
 	
 	if (theErr == noErr)
 		channelOpen = FALSE;
@@ -336,10 +278,6 @@ void InitSound (void)
 	
 	soundOn = TRUE;			// Note that initialization of sounds has occurred
 							// (or rather is just about to this instant!).
-	externalChannel = 0L;	// Flag channels as nonexistant.
-	externalChannel2 = 0L;
-	externalPriority = 0;	// Set priorities to 0 (no sound playing).
-	externalPriority2 = 0;
 							// Load up all sounds (see above function).
 	theErr = LoadBufferSounds();
 	if (theErr != noErr)	// If it fails, we'll quit Glypha.
