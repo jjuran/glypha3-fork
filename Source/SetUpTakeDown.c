@@ -270,13 +270,25 @@ void CheckEnvirons (void)
 // (window color table) resource.  The 'WCTB' resource specifies a content
 // color of black - thus this window comes up black.
 
+static
+void CenterMainWindow(WindowRef window)
+{
+	Rect portRect = window->portRect;
+	
+	const short mbarHeight = GetMBarHeight();
+	
+	portRect.bottom += mbarHeight;
+	
+	CenterRectInRect(&portRect, &qd.screenBits.bounds);
+	
+	MoveWindow(window, portRect.left, portRect.top + mbarHeight, TRUE);
+}
+
 void OpenMainWindow (void)
 {
 	mainWindow = GetNewCWindow(128, 0L, kPutInFront);	// Load window from resource.
 	mainWindowRect = mainWindow->portRect;
-														// Center the window.
-	MoveWindow(mainWindow, (qd.screenBits.bounds.right - 640) / 2,
-			((qd.screenBits.bounds.bottom - 480) / 2) + GetMBarHeight(), TRUE);
+	CenterMainWindow(mainWindow);
 	ShowWindow(mainWindow);								// Now display it.
 	SetPortWindowPort(mainWindow);						// Make its port current.
 	ClipRect(&mainWindowRect);							// Set its clip region.
