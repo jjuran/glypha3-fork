@@ -515,15 +515,22 @@ void HandleEvent (void)
 // simple centered window with no drag bar, close box or anything.
 // Leaving the dialog is handled with a simple mouse click.
 
+static
+void CenterWindow(WindowRef window)
+{
+	Rect portRect = window->portRect;
+	
+	CenterRectInRect(&portRect, &qd.screenBits.bounds);
+	
+	MoveWindow(window, portRect.left, portRect.top, TRUE);
+}
+
 void DoAbout (void)
 {
-	Rect		aboutRect;
 	WindowPtr	aboutWindow;
 	
 	aboutWindow = GetNewCWindow(129, 0L, kPutInFront);
-	aboutRect = aboutWindow->portRect;
-	CenterRectInRect(&aboutRect, &qd.screenBits.bounds);
-	MoveWindow(aboutWindow, aboutRect.left, aboutRect.top, TRUE);
+	CenterWindow(aboutWindow);
 	ShowWindow(aboutWindow);
 	SetPortWindowPort(aboutWindow);
 	LoadGraphic(kAboutPictID);					// Draw About dialog graphic.
