@@ -272,11 +272,8 @@ void CheckEnvirons (void)
 
 void OpenMainWindow (void)
 {
-	SetRect(&mainWindowRect, 0, 0, 640, 460);			// Our window size.
 	mainWindow = GetNewCWindow(128, 0L, kPutInFront);	// Load window from resource.
-														// Make it the right size.
-	SizeWindow(mainWindow, mainWindowRect.right - mainWindowRect.left,
-			mainWindowRect.bottom - mainWindowRect.top, FALSE);
+	mainWindowRect = mainWindow->portRect;
 														// Center the window.
 	MoveWindow(mainWindow, (qd.screenBits.bounds.right - 640) / 2,
 			((qd.screenBits.bounds.bottom - 480) / 2) + GetMBarHeight(), TRUE);

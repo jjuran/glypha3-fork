@@ -520,9 +520,9 @@ void DoAbout (void)
 	Rect		aboutRect;
 	WindowPtr	aboutWindow;
 	
-	SetRect(&aboutRect, 0, 0, 325, 318);		// Bring up centered window.
-	CenterRectInRect(&aboutRect, &qd.screenBits.bounds);
 	aboutWindow = GetNewCWindow(129, 0L, kPutInFront);
+	aboutRect = aboutWindow->portRect;
+	CenterRectInRect(&aboutRect, &qd.screenBits.bounds);
 	MoveWindow(aboutWindow, aboutRect.left, aboutRect.top, TRUE);
 	ShowWindow(aboutWindow);
 	SetPortWindowPort(aboutWindow);
