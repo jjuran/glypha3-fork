@@ -189,33 +189,6 @@ void ZeroRectCorner (Rect *theRect)
 	theRect->top = 0;					// Can set top edge to zero as well.
 }
 
-//--------------------------------------------------------------  FlashShort
-
-// This is a simple debugging function that will display the short passed to it
-// in the upper left corner of the screen.  It's a handy way to watch the value
-// of a variable while the program is running.
-
-void FlashShort (short theValue)
-{
-	GrafPtr			wasPort, tempPort;
-	Str255			tempStr;
-	Rect			tempRect;
-	
-	GetPort(&wasPort);						// Remember old grafPort.
-	
-	tempPort = (GrafPtr)NewPtrClear(sizeof(GrafPort));
-	OpenPort(tempPort);						// Create a new empty port.
-	
-	NumToString((long)theValue, tempStr);	// Convert value passed in to a string.
-	MoveTo(20, 40);							// Move the pen to the upperleft corner.
-	SetRect(&tempRect, 18, 20, 122, 42);	// Create a rect up there as well.
-	EraseRect(&tempRect);					// Erase the rect (to make a white hole).
-	DrawString(tempStr);					// And draw our text into that hole.
-	
-	ClosePort(tempPort);					// Get rid of out temp port.
-	SetPort((GrafPtr)wasPort);				// And set port back to the old one.
-}
-
 //--------------------------------------------------------------  LogNextTick
 
 // Simple function to set a global (tickNext) to the current TickCount() plus
@@ -271,35 +244,6 @@ Boolean DoWeHaveGestalt (void)
 	return (TrapExists(kGestaltTrap));
 }
 
-//--------------------------------------------------------------  CenterAlert
-
-// Handy function to center any alert within the main monitor.
-
-void CenterAlert (short alertID)
-{
-	AlertTHndl	alertHandle;
-	Rect		theScreen, alertRect;
-	short		horiOff, vertOff;
-	
-	theScreen = qd.screenBits.bounds;		// Get main monitor's bounds.
-	theScreen.top += LMGetMBarHeight();		// Account for menubar height.
-											// Get handle to alert resource.
-	alertHandle = (AlertTHndl)GetResource('ALRT', alertID);
-	if (alertHandle != 0L)					// Make sure we got it!
-	{
-											// Get a copy of it's bounds and zero.
-		alertRect = (**alertHandle).boundsRect;
-		OffsetRect(&alertRect, -alertRect.left, -alertRect.top);
-											// Calculate offsets for centering bounds.
-		horiOff = ((theScreen.right - theScreen.left) - alertRect.right) / 2;	
-		vertOff = ((theScreen.bottom - theScreen.top) - alertRect.bottom) / 3;
-											// And offset the bounds copy.
-		OffsetRect(&alertRect, horiOff, vertOff + LMGetMBarHeight());
-											// Set alerts bounds to our centered rect.
-		(**alertHandle).boundsRect = alertRect;
-	}
-}
-
 //--------------------------------------------------------------  RectWide
 
 // Handy function for returning the absolute width of a rectangle.
@@ -353,7 +297,7 @@ void PasStringCopy (StringPtr p1, StringPtr p2)
 
 //--------------------------------------------------------------  CenterDialog
 
-// Like CenterAlert(), this function centers a Dialog on the main monitor.
+// This function centers a dialog on the main monitor.
 
 void CenterDialog (short dialogID)
 {

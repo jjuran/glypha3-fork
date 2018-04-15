@@ -21,7 +21,6 @@
 #define kMaxNumUpdateRects		32
 
 
-void QuickUnionRect (Rect *, Rect *, Rect *);
 void CheckPlayerWrapAround (void);
 void DrawHand (void);
 void DrawEye (void);
@@ -599,38 +598,6 @@ void DumpMainToWorkMap (void)
 	CopyBits(&(((GrafPtr)mainWindow)->portBits),
 			&((GrafPtr)workSrcMap)->portBits,
 			&backSrcRect, &backSrcRect, srcCopy, 0L);
-}
-
-//--------------------------------------------------------------  QuickUnionRect
-
-// The Mac Toolbox gives you a UnionRect() function, but, like any Toolbox
-// routine, if we can do it faster, we ought to.  Well, the function below
-// is quick because (among other reasons), it assumes that the two rects
-// being compared are the same size.
-
-void QuickUnionRect (Rect *rect1, Rect *rect2, Rect *whole)
-{
-	if (rect1->left < rect2->left)		// See if we're to use rect1's left.
-	{
-		whole->left = rect1->left;
-		whole->right = rect2->right;
-	}
-	else								// Use rect2's left.
-	{
-		whole->left = rect2->left;
-		whole->right = rect1->right;
-	}
-	
-	if (rect1->top < rect2->top)		// See if we're to use rect1's top.
-	{
-		whole->top = rect1->top;
-		whole->bottom = rect2->bottom;
-	}
-	else								// Use rect2's top.
-	{
-		whole->top = rect2->top;
-		whole->bottom = rect1->bottom;
-	}
 }
 
 //--------------------------------------------------------------  AddToUpdateRects

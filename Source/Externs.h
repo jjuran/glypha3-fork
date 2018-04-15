@@ -208,7 +208,6 @@ void LogNextTick (long);
 void WaitForNextTick (void);
 Boolean TrapExists (short);
 Boolean DoWeHaveGestalt (void);
-void CenterAlert (short);
 short RectWide (Rect *);
 short RectTall (Rect *);
 void CenterRectInRect (Rect *, Rect *);
