@@ -11,6 +11,7 @@
 #include "Externs.h"
 
 #include <Dialogs.h>
+#include <Gestalt.h>
 #include <LowMem.h>
 #include <Palettes.h>					// Need "Palettes.h" for the depth calls.
 
@@ -216,6 +217,29 @@ void SwitchToDepth (short newDepth, Boolean doColor)
 // After calling ToolBoxInit(), Glypha will call this function to see
 // if the current Mac we're running on is capable of running Glypha.
 
+static
+Boolean HostIsOSX()
+{
+	SInt32 response;
+	
+	if (TARGET_API_MAC_OSX)
+	{
+		return TRUE;
+	}
+	
+	if (TARGET_API_MAC_CARBON)
+	{
+		Gestalt(gestaltSystemVersion, &response);
+		
+		if ( response >= 0x1000 )
+		{
+			return TRUE;
+		}
+	}
+	
+	return Gestalt(gestaltMacOSCompatibilityBoxAttr, &response) == noErr;
+}
+
 void CheckEnvirons (void)
 {
 	if (!DoWeHaveColor())			// We absolutely need Color QuickDraw.
@@ -227,6 +251,18 @@ void CheckEnvirons (void)
 	FindOurDevice();				// handle to the main device (monitor).
 	
 	wasDepth = WhatsOurDepth();		// Find out our monitor's depth.
+	
+	if (HostIsOSX())
+	{
+		/*
+			Don't switch resolutions in Mac OS X.  CopyBits() handles the
+			mismatch just fine (and the hardware is capable enough that the
+			extra work isn't an issue), whereas the mode switch is visually
+			disruptive and unpleasant.
+		*/
+		return;
+	}
+	
 	if (wasDepth != 8)				// If it's not 8-bit we'll need to switch depths.
 	{								// Test 1st to see if monitor capable of 8-bit.
 		if (CanWeDisplay8Bit(thisGDevice))
