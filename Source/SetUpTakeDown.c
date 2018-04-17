@@ -380,6 +380,20 @@ void OpenMainWindow (void)
 
 // This function loads up the menus and displays the menu bar.
 
+static inline
+Boolean HasAquaMenus()
+{
+	if (TARGET_API_MAC_CARBON)
+	{
+		SInt32 response;
+		OSErr err = Gestalt(gestaltMenuMgrAttr, &response);
+		
+		return err == noErr  &&  response & (1 << gestaltMenuMgrAquaLayoutBit);
+	}
+	
+	return FALSE;
+}
+
 void InitMenubar (void)
 {
 	appleMenu = GetMenu(128);		// Get the Apple menu (AboutÉ).
@@ -391,6 +405,15 @@ void InitMenubar (void)
 	gameMenu = GetMenu(129);		// Next load the Game menu.
 	if (gameMenu == 0L)				// Make sure it loaded as well.
 		RedAlert("\pCouldn't Load Menus Error");
+	if (HasAquaMenus())
+	{
+		SInt16 last = CountMenuItems(gameMenu);
+		
+		// Delete "Quit" and the separator above it.
+		
+		DeleteMenuItem(gameMenu, last    );
+		DeleteMenuItem(gameMenu, last - 1);
+	}
 	InsertMenu(gameMenu, 0);		// And add it next to the menu bar.
 	
 	optionsMenu = GetMenu(130);		// Finally load the Options menu.
