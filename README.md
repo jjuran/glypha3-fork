@@ -38,3 +38,10 @@ I have some good news though:  New, much lighter build requirements are coming s
 
 [MacRelix]:    <https://www.macrelix.org/>
 [metamage_1]:  <https://github.com/jjuran/metamage_1>
+
+Running
+-------
+
+Glypha III's system requirements are unchanged, except that it no longer switches the screen depth in Mac OS X (even when running in Classic) -- so technically, 256 colors is no longer a requirement.
+
+While Glypha III can run in Mac OS X's Classic environment, the performance suffers.  For best results on Mac OS X, build Glypha III as a Carbon application and run it natively.
