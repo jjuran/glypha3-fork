@@ -713,7 +713,7 @@ void HandleWalkingEnemy (short i)
 			theEnemies[i].srcNum = 21 - theEnemies[i].srcNum;
 			break;
 		}
-		theEnemies[i].hVel = -6 << 4;
+		theEnemies[i].hVel = -(6 << 4);
 	}
 	
 	theEnemies[i].frame++;				// Increment number of frames it has walked for.
