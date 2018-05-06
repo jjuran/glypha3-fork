@@ -21,6 +21,43 @@ This fork of Glypha III uses a custom build tool called A-line.  The CodeWarrior
 
 Well, everything *specific to Glypha III*, that is.  Knowledge of how to build a Mac application generally is distributed between additional project config files, A-line itself, and other programs that A-line calls to do the heavy lifting.
 
+To build Glypha III as a Mach-O application, you'll need:
+
+  * Mac OS X with developer tools, and the 10.4 SDK (earlier might work, but is untested)
+  * Git (which you can build from source)
+  * the [metamage_1][] repository (in order to build A-line and cpres)
+
+First, get the repositories.  (Normally you should use `https:` instead of `git:`, but older Mac OS X systems can't verify the TLS certificates.)
+
+	git clone git://github.com/jjuran/glypha3-fork.git
+	git clone git://github.com/jjuran/metamage_1.git
+
+Next, build the tools you'll need:
+
+	cd metamage_1
+	./build.pl A-line cpres
+
+Install them in a directory listed in `$PATH` (assumed to be `~/bin` here):
+
+	cp var/build/*-mach-carb-dbg/bin/*/{A-line,cpres} ~/bin/
+
+Build A-line's project catalog:
+
+	cd ..
+	ALINE_SRC_ROOT=$PWD A-line -t
+
+Finally, build Glypha III.  On PPC:
+
+	A-line glypha3
+
+Or on x86:
+
+	A-line -j2 -P glypha3
+
+And run it!
+
+	open ~/var/build/ppc-mach-carb-dbg/bin/glypha3/Glypha\ III.app
+
 To build Glypha III as a 68K or CFM PPC application, you'll need:
 
   * a PowerPC classic Mac OS environment (SheepShaver and OS X's Classic are okay)
@@ -33,8 +70,6 @@ To build Glypha III as a 68K or CFM PPC application, you'll need:
   * lots of patience
 
 I'm sorry it's this difficult.  This is what happens when an OS doesn't come with free developer tools.
-
-I have some good news though:  New, much lighter build requirements are coming soon -- and you'll only need a little patience.
 
 [MacRelix]:    <https://www.macrelix.org/>
 [metamage_1]:  <https://github.com/jjuran/metamage_1>
