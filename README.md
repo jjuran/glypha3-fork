@@ -46,17 +46,13 @@ Build A-line's project catalog:
 	cd ..
 	ALINE_SRC_ROOT=$PWD A-line -t
 
-Finally, build Glypha III.  On PPC:
+Finally, build Glypha III:
 
 	A-line glypha3
 
-Or on x86:
-
-	A-line -j2 -P glypha3
-
 And run it!
 
-	open ~/var/build/ppc-mach-carb-dbg/bin/glypha3/Glypha\ III.app
+	open ~/var/build/*-mach-carb-dbg/bin/glypha3/Glypha\ III.app
 
 To build Glypha III as a 68K or CFM PPC application, you'll need:
 
