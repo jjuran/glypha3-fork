@@ -23,7 +23,7 @@ Well, everything *specific to Glypha III*, that is.  Knowledge of how to build a
 
 To build Glypha III as a Mach-O application, you'll need:
 
-  * Mac OS X with developer tools, and the 10.4 SDK (earlier might work, but is untested)
+  * Mac OS X with developer tools (the 10.4 and 10.5 SDKs are known to work)
   * Git (which you can build from source)
   * the [metamage_1][] repository (in order to build A-line and cpres)
 
