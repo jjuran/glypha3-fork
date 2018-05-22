@@ -241,6 +241,26 @@ void CloseWall (void)
 // difference is that we must first draw all the high scores offscreen before
 // lifting the wall to reveal them.
 
+enum
+{
+	color_128,
+	color_132,
+	color_133,
+	color_134,
+	color_164,
+};
+
+static const RGBColor myColors[] =
+{
+	{0x6666, 0x6666, 0x9999},  // 128
+	{0x6666, 0x3333, 0xFFFF},  // 132
+	{0x6666, 0x3333, 0xCCCC},  // 133
+	{0x6666, 0x3333, 0x9999},  // 134
+	{0x3333, 0x6666, 0x9999},  // 164
+};
+
+#define Index2Color(index, color)  (*(color) = myColors[color_##index])
+
 void OpenHighScores (void)
 {
 	RGBColor	theRGBColor, wasColor;
