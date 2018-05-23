@@ -464,13 +464,9 @@ void HandleOSEvent (EventRecord *theEvent)
 
 //--------------------------------------------------------------  HandleHighLevelEvent
 
-// Again, it's a fact I'm lazy.  AppleEvents are fairly easy to implement but
-// a nightmare to try and explain.  Filling out the below function is left as
-// and exercise to the reader.
-
 void HandleHighLevelEvent (EventRecord *theEvent)
 {	
-//	theErr = AEProcessAppleEvent(theEvent);
+	OSErr err = AEProcessAppleEvent(theEvent);
 }
 
 //--------------------------------------------------------------  HandleEvent

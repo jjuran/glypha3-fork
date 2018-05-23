@@ -261,6 +261,50 @@ Boolean HostIsOSX()
 	return Gestalt(gestaltMacOSCompatibilityBoxAttr, &response) == noErr;
 }
 
+static
+pascal OSErr on_Quit(const AppleEvent* event, AppleEvent* reply, long refCon)
+{
+	quitting = true;
+	
+	return noErr;
+}
+
+static
+void InstallAppleEventHandlers()
+{
+	enum
+	{
+		aevt = kCoreEventClass,
+		quit = kAEQuitApplication,
+	};
+	
+	OSErr err;
+	SInt32 response;
+	
+	err = Gestalt(gestaltAppleEventsAttr, &response);
+	
+	if ( err == noErr )
+	{
+	#if TARGET_RT_MAC_CFM
+		
+		AEEventHandlerUPP on_Quit_UPP = NewAEEventHandlerUPP( &on_Quit );
+		
+	#else
+		
+		#define on_Quit_UPP (&on_Quit)
+		
+	#endif
+		
+		/*
+			There's no point installing handlers that just return
+			errAEEventNotHandled.  We don't need any special behavior for
+			Open App, Open Doc, or Print, so let the system handle them.
+		*/
+		
+		err = AEInstallEventHandler( aevt, quit, on_Quit_UPP, 0, false );
+	}
+}
+
 void CheckEnvirons (void)
 {
 	if (!DoWeHaveColor())			// We absolutely need Color QuickDraw.
@@ -269,6 +313,9 @@ void CheckEnvirons (void)
 	if (!DoWeHaveSystem605())		// We absolutely need System 6.0.5. or more recent.
 		RedAlert("\pGlypha II requires System 6.0.5 or better to run.");
 									// If we passed the above 2 tests, get a
+	
+	InstallAppleEventHandlers();    // requires Gestalt, included in 6.0.4+.
+	
 	FindOurDevice();				// handle to the main device (monitor).
 	
 	wasDepth = WhatsOurDepth();		// Find out our monitor's depth.

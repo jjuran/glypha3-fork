@@ -14,7 +14,12 @@ Remedy
 
 Implement the [Quit Apple event][quit-event] to unblock work on this bug.
 
-[quit-event]:  <quit-apple-event.md>
+[quit-event]:  <FIXED/quit-apple-event.md>
+
+Status
+------
+
+The Quit Apple event has been implemented, so this is now unblocked.
 
 History
 -------

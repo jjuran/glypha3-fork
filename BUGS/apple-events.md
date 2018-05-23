@@ -7,14 +7,21 @@ While in a sense it can get away with this on the pretext that it's designed for
 
 In particular, sending a [Quit event fails][quit-event].
 
-[quit-event]:  <quit-apple-event.md>
+[quit-event]:  <FIXED/quit-apple-event.md>
 
 Remedy
 ------
 
 Implement the required Apple events.
 
+Status
+------
+
+The Quit Apple event has been implemented, downtrading the seriousness of this bug.  Since Glypha III doesn't have documents as such, it's debatable whether the other three "required" Apple events really are mandatory.
+
 History
 -------
 
 Since Glypha III dates from 1995 (years after System 7 shipped), this has arguably been a bug since the beginning.
+
+Partially fixed in May 2018.
