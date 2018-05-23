@@ -1097,7 +1097,8 @@ void PlayGame (void)
 	long		waitUntil;
 	
 	offsetPt.h = 0;								// Set up ShieldCursor() point.
-	offsetPt.v = 20;
+	offsetPt.v = 0;
+	GlobalToLocal(&offsetPt);
 	ShieldCursor(&mainWindowRect, offsetPt);	// Hide the cursor.
 	waitUntil = TickCount() + kTicksPerFrame;	// Set up speed governor variable.
 	
