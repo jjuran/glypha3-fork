@@ -23,11 +23,18 @@ Well, everything *specific to Glypha III*, that is.  Knowledge of how to build a
 
 To build Glypha III as a Mach-O application, you'll need:
 
-  * Mac OS X with developer tools (the 10.4 and 10.5 SDKs are known to work)
+  * Mac OS X with developer tools (the 10.4 through 10.12 SDKs should all work)
   * Git (which you can build from source)
   * the [metamage_1][] repository (in order to build A-line and cpres)
+  * the [macward-compat][] repository (only needed for 10.7 SDK and later)
 
-First, get the repositories.  (Normally you should use `https:` instead of `git:`, but older Mac OS X systems can't verify the TLS certificates.)
+First, get the repositories:
+
+	git clone https://github.com/jjuran/glypha3-fork.git
+	git clone https://github.com/jjuran/metamage_1.git
+	git clone https://github.com/jjuran/macward-compat.git
+
+If your older Mac OS X system can't verify the TLS certificate, use `git:` instead of `https:`:
 
 	git clone git://github.com/jjuran/glypha3-fork.git
 	git clone git://github.com/jjuran/metamage_1.git
@@ -35,6 +42,7 @@ First, get the repositories.  (Normally you should use `https:` instead of `git:
 Next, build the tools you'll need:
 
 	cd metamage_1
+	make macward-compat.git  # only needed for 10.7 SDK and later
 	./build.pl A-line cpres
 
 Install them in a directory listed in `$PATH` (assumed to be `~/bin` here):
@@ -69,6 +77,7 @@ I'm sorry it's this difficult.  This is what happens when an OS doesn't come wit
 
 [MacRelix]:    <https://www.macrelix.org/>
 [metamage_1]:  <https://github.com/jjuran/metamage_1>
+[macward-compat]:  <https://github.com/jjuran/macward-compat>
 
 Running
 -------
