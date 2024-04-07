@@ -1,7 +1,7 @@
 [FIXED] High score colors are too dark
 ======================================
 
-The high scores are drawn in dark blue text on a background in Mac OS X, even in Classic.  They're supposed to be in multiple brighter colors.
+The high scores are drawn in dark blue text on a black background in Mac OS X, even in Classic.  They're supposed to be in multiple brighter colors.
 
 The problem is that the colors are sourced from the color lookup table, but in Mac OS X (including Classic), Glypha III no longer switches screen depths, so the 256-color lookup table it expects isn't in effect.
 
