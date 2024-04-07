@@ -17,7 +17,7 @@ Implement the required Apple events.
 Status
 ------
 
-The Quit Apple event has been implemented, downtrading the seriousness of this bug.  Since Glypha III doesn't have documents as such, it's debatable whether the other three "required" Apple events really are mandatory.
+The Quit Apple event has been implemented, downgrading the seriousness of this bug.  Since Glypha III doesn't have documents as such, it's debatable whether the other three "required" Apple events really are mandatory.
 
 History
 -------
