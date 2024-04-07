@@ -204,6 +204,32 @@ OSErr DumpBufferSounds (void)
 	return (theErr);
 }
 
+static
+OSErr OpenOneSoundChannel( SndChannelPtr* channel, SndCallBackUPP callback )
+{
+	/*
+		This function works around an execution bug in SheepShaver.
+		Possibly the JIT engine is getting confused when we pass a
+		reference to static storage directly to SndNewChannel().
+		
+		The symptom is that Glypha III works fine on the first launch,
+		and crashes on the /second/ launch.
+		
+		(This is not specific to Glypha III -- this has been observed
+		with other programs, including a trivial test application that
+		only creates and disposes a sound channel.)
+		
+		Our workaround is to pass the channel pointer address
+		indirectly, on the stack, as an argument to a function.
+		
+		(Applications using A5 references also avoid this issue.)
+	*/
+	
+	const long init = initMono | initNoInterp;
+	
+	return SndNewChannel( channel, sampledSynth, init, callback );
+}
+
 //--------------------------------------------------------  OpenSoundChannel
 // This should perhaps be called OpenSoundChannels() since it opens two.
 // It is called once (at initialization) to set up the two sound channels
@@ -237,14 +263,12 @@ OSErr OpenSoundChannel (void)
 	if (channelOpen)								// Error checking.
 		return (theErr);
 	
-	theErr = SndNewChannel(&soundChannels[0], 		// Open channel 1.
-			sampledSynth, initNoInterp + initMono,
+	theErr = OpenOneSoundChannel(&soundChannels[0], // Open channel 1.
 			(SndCallBackUPP)externalCallBackUPP);
 	if (theErr == noErr)							// See if it worked.
 		channelOpen = TRUE;
 	
-	theErr = SndNewChannel(&soundChannels[1], 		// Open channel 2.
-			sampledSynth, initNoInterp + initMono,
+	theErr = OpenOneSoundChannel(&soundChannels[1], // Open channel 2.
 			(SndCallBackUPP)externalCallBackUPP);
 	if (theErr == noErr)							// See if it worked.
 		channelOpen = TRUE;
