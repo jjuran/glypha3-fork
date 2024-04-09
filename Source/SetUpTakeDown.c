@@ -338,6 +338,11 @@ void CheckEnvirons (void)
 	
 	wasDepth = WhatsOurDepth();		// Find out our monitor's depth.
 	
+	if (wasDepth == 8)
+	{
+		return;
+	}
+	
 	if (HostIsOSX())
 	{
 		/*
@@ -349,12 +354,19 @@ void CheckEnvirons (void)
 		return;
 	}
 	
-	if (wasDepth != 8)				// If it's not 8-bit we'll need to switch depths.
-	{								// Test 1st to see if monitor capable of 8-bit.
-		if (CanWeDisplay8Bit(thisGDevice))
-			SwitchToDepth(8, TRUE);	// If so, switch to 256 colors.
-		else						// If not, we have to quit.
-			RedAlert("\pGlypha II only runs in 256 colors.");
+	/*
+		We're not at 8-bit depth (and not in Mac OS X).
+		If we can switch depth, do it -- but if not, only
+		report failure and quit if the depth is too low.
+	*/
+	
+	if (CanWeDisplay8Bit(thisGDevice))
+	{
+		SwitchToDepth(8, TRUE);
+	}
+	else if (wasDepth < 8)
+	{
+		RedAlert("\pGlypha II only runs in 256 colors.");
 	}
 }
 
